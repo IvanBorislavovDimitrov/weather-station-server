@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceModel> implements BaseService<M> {
 
+    protected final ModelMapper modelMapper;
     private final BaseRepository<E> baseRepository;
-    private final ModelMapper modelMapper;
 
     protected BaseServiceImpl(BaseRepository<E> baseRepository, ModelMapper modelMapper) {
         this.baseRepository = baseRepository;

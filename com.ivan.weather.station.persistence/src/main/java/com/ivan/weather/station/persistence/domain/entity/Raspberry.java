@@ -1,9 +1,8 @@
 package com.ivan.weather.station.persistence.domain.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "raspberries")
@@ -13,6 +12,8 @@ public class Raspberry extends IdEntity {
     private String route;
     @Lob
     private String description;
+    @OneToMany(mappedBy = "raspberry", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Measurement.class)
+    private List<Measurement> measurements = new ArrayList<>();
 
     public String getDescription() {
         return description;
@@ -28,5 +29,13 @@ public class Raspberry extends IdEntity {
 
     public void setRoute(String route) {
         this.route = route;
+    }
+
+    public List<Measurement> getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(List<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }
