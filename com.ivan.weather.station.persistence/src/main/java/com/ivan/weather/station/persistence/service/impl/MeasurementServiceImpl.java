@@ -27,8 +27,8 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
 
     @Override
     public void save(MeasurementServiceModel measurementServiceModel) {
-        String raspberryId = measurementServiceModel.getRaspberry().getId();
-        Raspberry raspberry = raspberryRepository.findById(raspberryId).orElseThrow(() -> new IllegalArgumentException("Not found"));
+        String raspberryRoute = measurementServiceModel.getRaspberry().getRoute();
+        Raspberry raspberry = raspberryRepository.findByRoute(raspberryRoute).orElseThrow(() -> new IllegalArgumentException("Not found"));
         Measurement measurement = modelMapper.map(measurementServiceModel, Measurement.class);
         raspberry.getMeasurements().add(measurement);
         measurement.setRaspberry(raspberry);

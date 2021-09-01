@@ -6,7 +6,7 @@ public class MeasurementBindingModel {
     private double temperature;
     private double humidity;
     private double pressure;
-    private String raspberryId;
+    private String raspberryRoute;
 
     public String getId() {
         return id;
@@ -40,12 +40,11 @@ public class MeasurementBindingModel {
         this.pressure = pressure;
     }
 
-    public String getRaspberryId() {
-        return raspberryId;
+    public String getRaspberryRoute() {
+        return raspberryRoute;
     }
 
-    public void setRaspberryId(String raspberryId) {
-        this.raspberryId = raspberryId;
+    public void setRaspberryRoute(String raspberryRoute) {
+        this.raspberryRoute = raspberryRoute;
     }
-
 }

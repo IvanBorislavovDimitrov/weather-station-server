@@ -18,7 +18,7 @@ public class MeasurementServiceModel extends IdServiceModel {
         measurementServiceModel.setHumidity(measurementBindingModel.getHumidity());
         measurementServiceModel.setPressure(measurementBindingModel.getPressure());
         RaspberryServiceModel raspberryServiceModel = new RaspberryServiceModel();
-        raspberryServiceModel.setId(measurementBindingModel.getRaspberryId());
+        raspberryServiceModel.setRoute(measurementBindingModel.getRaspberryRoute());
         measurementServiceModel.setRaspberry(raspberryServiceModel);
         return measurementServiceModel;
     }

@@ -5,6 +5,11 @@ import com.ivan.weather.station.persistence.repository.api.RaspberryRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.Optional;
+
 @Repository
 public class RaspberryRepositoryImpl extends BaseRepositoryImpl<Raspberry> implements RaspberryRepository {
 
@@ -17,4 +22,14 @@ public class RaspberryRepositoryImpl extends BaseRepositoryImpl<Raspberry> imple
         return Raspberry.class;
     }
 
+    @Override
+    public Optional<Raspberry> findByRoute(String route) {
+        return executeInTransaction(session -> {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Raspberry> query = criteriaBuilder.createQuery(Raspberry.class);
+            Root<Raspberry> root = query.from(Raspberry.class);
+            query.select(root).where(criteriaBuilder.equal(root.get("route"), route));
+            return getOrEmpty(session, query);
+        });
+    }
 }
