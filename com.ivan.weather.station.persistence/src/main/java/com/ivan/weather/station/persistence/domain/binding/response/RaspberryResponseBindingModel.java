@@ -1,6 +1,6 @@
-package com.ivan.weather.station.persistence.domain.binding;
+package com.ivan.weather.station.persistence.domain.binding.response;
 
-public class RaspberryBindingModel {
+public class RaspberryResponseBindingModel {
 
     private String id;
     private String route;

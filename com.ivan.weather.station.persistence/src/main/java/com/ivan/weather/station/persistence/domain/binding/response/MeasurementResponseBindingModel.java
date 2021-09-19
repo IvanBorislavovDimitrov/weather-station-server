@@ -1,6 +1,6 @@
-package com.ivan.weather.station.persistence.domain.binding;
+package com.ivan.weather.station.persistence.domain.binding.response;
 
-public class MeasurementBindingModel {
+public class MeasurementResponseBindingModel {
 
     private String id;
     private double temperature;

@@ -1,6 +1,6 @@
 package com.ivan.weather.station.web.controller;
 
-import com.ivan.weather.station.persistence.domain.binding.MeasurementBindingModel;
+import com.ivan.weather.station.persistence.domain.binding.request.MeasurementRequestBindingModel;
 import com.ivan.weather.station.persistence.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.persistence.service.api.MeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class MeasurementController {
     }
 
     @PostMapping
-    public ResponseEntity<MeasurementBindingModel> create(@RequestBody MeasurementBindingModel measurementBindingModel) {
-        MeasurementServiceModel measurementServiceModel = MeasurementServiceModel.from(measurementBindingModel);
+    public ResponseEntity<MeasurementRequestBindingModel> create(@RequestBody MeasurementRequestBindingModel measurementRequestBindingModel) {
+        MeasurementServiceModel measurementServiceModel = MeasurementServiceModel.from(measurementRequestBindingModel);
         measurementService.save(measurementServiceModel);
-        return ResponseEntity.ok(measurementBindingModel);
+        return ResponseEntity.ok(measurementRequestBindingModel);
     }
 }

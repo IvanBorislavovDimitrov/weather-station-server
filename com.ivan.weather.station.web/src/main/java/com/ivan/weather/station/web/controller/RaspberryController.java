@@ -1,6 +1,6 @@
 package com.ivan.weather.station.web.controller;
 
-import com.ivan.weather.station.persistence.domain.binding.RaspberryBindingModel;
+import com.ivan.weather.station.persistence.domain.binding.request.RaspberryRequestBindingModel;
 import com.ivan.weather.station.persistence.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.persistence.service.api.RaspberryService;
 import org.modelmapper.ModelMapper;
@@ -26,18 +26,18 @@ public class RaspberryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RaspberryBindingModel>> getAll() {
+    public ResponseEntity<List<RaspberryRequestBindingModel>> getAll() {
         List<RaspberryServiceModel> raspberryServiceModels = raspberryService.findAll();
-        List<RaspberryBindingModel> raspberryBindingModelStream = raspberryServiceModels.stream()
-                .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel, RaspberryBindingModel.class))
+        List<RaspberryRequestBindingModel> raspberryRequestBindingModelStream = raspberryServiceModels.stream()
+                .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel, RaspberryRequestBindingModel.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(raspberryBindingModelStream);
+        return ResponseEntity.ok(raspberryRequestBindingModelStream);
     }
 
     @PostMapping
-    public ResponseEntity<RaspberryBindingModel> create(@RequestBody RaspberryBindingModel raspberryBindingModel) {
-        RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
+    public ResponseEntity<RaspberryRequestBindingModel> create(@RequestBody RaspberryRequestBindingModel raspberryRequestBindingModel) {
+        RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryRequestBindingModel, RaspberryServiceModel.class);
         raspberryService.save(raspberryServiceModel);
-        return ResponseEntity.ok(raspberryBindingModel);
+        return ResponseEntity.ok(raspberryRequestBindingModel);
     }
 }
