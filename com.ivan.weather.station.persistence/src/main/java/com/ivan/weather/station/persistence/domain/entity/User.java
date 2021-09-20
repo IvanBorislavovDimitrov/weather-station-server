@@ -1,5 +1,9 @@
 package com.ivan.weather.station.persistence.domain.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +24,14 @@ public class User extends IdEntity implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Fetch(value = FetchMode.SUBSELECT)
     @ManyToMany(mappedBy = "users", targetEntity = Role.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> roles = Collections.emptyList();
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "owner", targetEntity = Raspberry.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Raspberry> raspberries = Collections.emptyList();
     @Basic
     private boolean isEnabled;
 
@@ -88,5 +98,13 @@ public class User extends IdEntity implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Raspberry> getRaspberries() {
+        return raspberries;
+    }
+
+    public void setRaspberries(List<Raspberry> raspberries) {
+        this.raspberries = raspberries;
     }
 }

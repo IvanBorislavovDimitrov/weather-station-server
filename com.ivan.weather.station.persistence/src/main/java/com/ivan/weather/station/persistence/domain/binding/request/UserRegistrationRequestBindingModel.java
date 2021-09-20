@@ -1,14 +1,11 @@
 package com.ivan.weather.station.persistence.domain.binding.request;
 
-import java.util.Collections;
-import java.util.List;
-
 public class UserRegistrationRequestBindingModel {
 
     private String username;
     private String password;
+    private String confirmPassword;
     private String email;
-    private List<String> roles = Collections.emptyList();
 
     public String getUsername() {
         return username;
@@ -34,11 +31,11 @@ public class UserRegistrationRequestBindingModel {
         this.email = email;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

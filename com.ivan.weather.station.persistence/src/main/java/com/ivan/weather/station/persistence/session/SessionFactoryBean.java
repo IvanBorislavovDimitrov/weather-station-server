@@ -2,6 +2,8 @@ package com.ivan.weather.station.persistence.session;
 
 import com.ivan.weather.station.persistence.domain.entity.Measurement;
 import com.ivan.weather.station.persistence.domain.entity.Raspberry;
+import com.ivan.weather.station.persistence.domain.entity.Role;
+import com.ivan.weather.station.persistence.domain.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -28,6 +30,8 @@ public class SessionFactoryBean {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         configuration.addAnnotatedClass(Raspberry.class);
         configuration.addAnnotatedClass(Measurement.class);
+        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Role.class);
         StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
         configuration.setProperties(properties);
         standardServiceRegistryBuilder.applySettings(configuration.getProperties());

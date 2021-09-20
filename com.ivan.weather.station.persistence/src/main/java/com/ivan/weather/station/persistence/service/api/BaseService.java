@@ -11,4 +11,6 @@ public interface BaseService<M extends IdServiceModel> {
     M findById(String id);
 
     List<M> findAll();
+
+    long count();
 }

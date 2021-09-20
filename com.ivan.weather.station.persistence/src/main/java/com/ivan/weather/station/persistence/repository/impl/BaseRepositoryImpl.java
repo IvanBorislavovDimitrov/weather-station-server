@@ -32,6 +32,14 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
     }
 
     @Override
+    public void update(E obj) {
+        executeInTransaction(session -> {
+            session.update(obj);
+            return null;
+        });
+    }
+
+    @Override
     public Optional<E> findById(String id) {
         return executeInTransaction(session -> {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -63,6 +71,18 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
             criteriaQuery.select(root);
             Query<E> query = session.createQuery(criteriaQuery);
             return query.getResultList();
+        });
+    }
+
+    @Override
+    public long count() {
+        return executeInTransaction(session -> {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Long> cr = criteriaBuilder.createQuery(Long.class);
+            Root<E> root = cr.from(getEntityClass());
+            cr.select(criteriaBuilder.count(root));
+            Query<Long> query = session.createQuery(cr);
+            return query.getSingleResult();
         });
     }
 

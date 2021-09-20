@@ -43,6 +43,11 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public long count() {
+        return baseRepository.count();
+    }
+
     protected abstract Class<E> getEntityClass();
 
     protected abstract Class<M> getModelClass();

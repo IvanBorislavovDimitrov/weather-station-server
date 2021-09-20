@@ -9,8 +9,12 @@ public interface BaseRepository<E extends IdEntity> {
 
     void save(E obj);
 
+    void update(E obj);
+
     Optional<E> findById(String id);
 
     List<E> findAll();
+
+    long count();
 
 }

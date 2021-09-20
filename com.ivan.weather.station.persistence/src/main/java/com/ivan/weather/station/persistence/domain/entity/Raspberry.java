@@ -14,6 +14,9 @@ public class Raspberry extends IdEntity {
     private String description;
     @OneToMany(mappedBy = "raspberry", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Measurement.class)
     private List<Measurement> measurements = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private User owner;
 
     public String getDescription() {
         return description;
@@ -37,5 +40,13 @@ public class Raspberry extends IdEntity {
 
     public void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
