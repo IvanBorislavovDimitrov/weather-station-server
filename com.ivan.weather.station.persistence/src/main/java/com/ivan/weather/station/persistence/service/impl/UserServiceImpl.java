@@ -1,8 +1,6 @@
 package com.ivan.weather.station.persistence.service.impl;
 
-import com.ivan.weather.station.persistence.domain.entity.Role;
 import com.ivan.weather.station.persistence.domain.entity.User;
-import com.ivan.weather.station.persistence.domain.model.RoleServiceModel;
 import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
 import com.ivan.weather.station.persistence.repository.api.RoleRepository;
 import com.ivan.weather.station.persistence.repository.api.UserRepository;
@@ -13,9 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> implements UserService {
@@ -59,5 +54,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    @Override
+    public UserServiceModel findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(user -> modelMapper.map(user, UserServiceModel.class))
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+
     }
 }

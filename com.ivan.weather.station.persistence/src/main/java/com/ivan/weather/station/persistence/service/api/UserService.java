@@ -8,4 +8,5 @@ public interface UserService extends BaseService<UserServiceModel>, UserDetailsS
 
     void activate(String username);
 
+    UserServiceModel findUserByUsername(String username);
 }
