@@ -1,6 +1,7 @@
 package com.ivan.weather.station.web.security;
 
 import com.ivan.weather.station.persistence.service.api.UserService;
+import com.ivan.weather.station.web.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -18,10 +20,12 @@ import org.springframework.web.filter.CorsFilter;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
+    private final JwtFilter jwtFilter;
 
     @Autowired
-    public WebSecurityConfiguration(UserService userService) {
+    public WebSecurityConfiguration(UserService userService, JwtFilter jwtFilter) {
         this.userService = userService;
+        this.jwtFilter = jwtFilter;
     }
 
     @Override
@@ -29,14 +33,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/raspberry", "/user/register",  "/user/authenticate", "/user/activate/**")
+                .antMatchers("/raspberry", "/user/register", "/user/authenticate", "/user/activate/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .csrf()
                 .disable()
-                .userDetailsService(userService);
+                .userDetailsService(userService)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean

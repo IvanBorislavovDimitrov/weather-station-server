@@ -68,7 +68,8 @@ public class UserController {
         User userServiceModel = (User) userService.loadUserByUsername(authenticationRequest.getUsername());
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         String jwt = JwtUtil.generateToken(userServiceModel, userServiceModel.getRoles()
-                .stream().map(Role::getRoleType)
+                .stream()
+                .map(Role::getRoleType)
                 .map(Role.RoleType::toString)
                 .collect(Collectors.toList()));
         return ResponseEntity.ok(new JwtTokenResponse(jwt));
