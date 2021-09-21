@@ -1,6 +1,7 @@
 package com.ivan.weather.station.web.controller;
 
 import com.ivan.weather.station.persistence.domain.binding.request.UserRegistrationRequestBindingModel;
+import com.ivan.weather.station.persistence.domain.binding.response.UserRegistrationResponseBindingModel;
 import com.ivan.weather.station.persistence.domain.entity.Role;
 import com.ivan.weather.station.persistence.domain.entity.User;
 import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<Void> register(@RequestBody UserRegistrationRequestBindingModel userRegistrationRequestBindingModel) {
+    public ResponseEntity<UserRegistrationResponseBindingModel> register(@RequestBody UserRegistrationRequestBindingModel userRegistrationRequestBindingModel) {
         if (!Objects.equals(userRegistrationRequestBindingModel.getConfirmPassword(), userRegistrationRequestBindingModel.getPassword())) {
             return ResponseEntity.badRequest()
                     .build();
@@ -52,7 +53,7 @@ public class UserController {
                 .setRecipient(userServiceModel.getEmail())
                 .setTitle("Activate profile").build();
         emailClient.sendAsync(email);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(modelMapper.map(userRegistrationRequestBindingModel, UserRegistrationResponseBindingModel.class));
     }
 
     @PostMapping(value = "/activate/{username}")

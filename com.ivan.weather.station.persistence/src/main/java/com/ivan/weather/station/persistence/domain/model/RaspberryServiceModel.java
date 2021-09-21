@@ -2,6 +2,7 @@ package com.ivan.weather.station.persistence.domain.model;
 
 public class RaspberryServiceModel extends IdServiceModel {
 
+    private String name;
     private String route;
     private String description;
 
@@ -19,5 +20,13 @@ public class RaspberryServiceModel extends IdServiceModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

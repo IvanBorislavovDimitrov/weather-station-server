@@ -3,6 +3,7 @@ package com.ivan.weather.station.web.controller;
 import com.ivan.weather.station.persistence.domain.binding.request.RaspberryRequestBindingModel;
 import com.ivan.weather.station.persistence.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.persistence.service.api.RaspberryService;
+import com.ivan.weather.station.web.initializator.RaspberryInitializator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,11 +19,13 @@ public class RaspberryController {
 
     private final RaspberryService raspberryService;
     private final ModelMapper modelMapper;
+    private final RaspberryInitializator raspberryInitializator;
 
     @Autowired
-    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper) {
+    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper, RaspberryInitializator raspberryInitializator) {
         this.raspberryService = raspberryService;
         this.modelMapper = modelMapper;
+        this.raspberryInitializator = raspberryInitializator;
     }
 
     @GetMapping
@@ -35,9 +38,15 @@ public class RaspberryController {
     }
 
     @PostMapping
-    public ResponseEntity<RaspberryRequestBindingModel> create(@RequestBody RaspberryRequestBindingModel raspberryRequestBindingModel) {
+    public ResponseEntity<RaspberryRequestBindingModel> add(@RequestBody RaspberryRequestBindingModel raspberryRequestBindingModel) {
         RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryRequestBindingModel, RaspberryServiceModel.class);
         raspberryService.save(raspberryServiceModel);
         return ResponseEntity.ok(raspberryRequestBindingModel);
+    }
+
+    @PostMapping(value = "/initialize")
+    public ResponseEntity<Void> initRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
+        raspberryInitializator.initializeRaspberryStartingCall(requestBindingModel.getRoute());
+        return ResponseEntity.ok().build();
     }
 }

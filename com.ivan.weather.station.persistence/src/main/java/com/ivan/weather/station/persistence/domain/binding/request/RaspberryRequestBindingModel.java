@@ -2,6 +2,7 @@ package com.ivan.weather.station.persistence.domain.binding.request;
 
 public class RaspberryRequestBindingModel {
 
+    private String name;
     private String route;
     private String description;
 
@@ -21,4 +22,11 @@ public class RaspberryRequestBindingModel {
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
