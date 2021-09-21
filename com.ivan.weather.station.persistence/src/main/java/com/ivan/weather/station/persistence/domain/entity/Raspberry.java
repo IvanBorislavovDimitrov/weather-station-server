@@ -14,6 +14,8 @@ public class Raspberry extends IdEntity {
     private String route;
     @Lob
     private String description;
+    @Column(name = "is_started")
+    private boolean isStarted;
     @OneToMany(mappedBy = "raspberry", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Measurement.class)
     private List<Measurement> measurements = new ArrayList<>();
     @ManyToOne
@@ -58,5 +60,13 @@ public class Raspberry extends IdEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }

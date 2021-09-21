@@ -44,9 +44,18 @@ public class RaspberryController {
         return ResponseEntity.ok(raspberryRequestBindingModel);
     }
 
-    @PostMapping(value = "/initialize")
-    public ResponseEntity<Void> initRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
-        raspberryInitializator.initializeRaspberryStartingCall(requestBindingModel.getRoute());
+    @PostMapping(value = "/start")
+    public ResponseEntity<Void> startRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
+        raspberryInitializator.startRaspberry(requestBindingModel.getRoute());
+        raspberryService.start(requestBindingModel.getId());
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(value = "/stop")
+    public ResponseEntity<Void> stopRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
+        raspberryInitializator.stopRaspberry(requestBindingModel.getRoute());
+        raspberryService.stop(requestBindingModel.getId());
+        return ResponseEntity.ok().build();
+    }
+    
 }

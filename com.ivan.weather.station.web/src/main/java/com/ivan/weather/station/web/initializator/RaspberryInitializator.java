@@ -14,9 +14,17 @@ public class RaspberryInitializator {
         this.webClient = webClient;
     }
 
-    public void initializeRaspberryStartingCall(String raspberryRoute) {
+    public void startRaspberry(String raspberryRoute) {
         webClient.post()
-                .uri(raspberryRoute)
+                .uri(raspberryRoute + "/start")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    public void stopRaspberry(String raspberryRoute) {
+        webClient.post()
+                .uri(raspberryRoute + "/stop")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
