@@ -6,6 +6,7 @@ public class RaspberryResponseBindingModel {
     private String name;
     private String route;
     private String description;
+    private boolean isStarted;
 
     public String getRoute() {
         return route;
@@ -37,5 +38,13 @@ public class RaspberryResponseBindingModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean isStarted) {
+        this.isStarted = isStarted;
     }
 }

@@ -5,6 +5,7 @@ public class RaspberryServiceModel extends IdServiceModel {
     private String name;
     private String route;
     private String description;
+    private boolean isStarted;
     private UserServiceModel owner;
 
     public String getRoute() {
@@ -37,5 +38,13 @@ public class RaspberryServiceModel extends IdServiceModel {
 
     public void setOwner(UserServiceModel owner) {
         this.owner = owner;
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
     }
 }
