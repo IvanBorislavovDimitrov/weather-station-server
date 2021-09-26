@@ -57,5 +57,5 @@ public class RaspberryController {
         raspberryService.stop(requestBindingModel.getId());
         return ResponseEntity.ok().build();
     }
-    
+
 }

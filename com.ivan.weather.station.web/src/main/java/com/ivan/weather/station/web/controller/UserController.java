@@ -1,6 +1,7 @@
 package com.ivan.weather.station.web.controller;
 
 import com.ivan.weather.station.persistence.domain.binding.request.UserRegistrationRequestBindingModel;
+import com.ivan.weather.station.persistence.domain.binding.response.RaspberryResponseBindingModel;
 import com.ivan.weather.station.persistence.domain.binding.response.UserRegistrationResponseBindingModel;
 import com.ivan.weather.station.persistence.domain.entity.Role;
 import com.ivan.weather.station.persistence.domain.entity.User;
@@ -15,10 +16,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -54,6 +59,16 @@ public class UserController {
                 .setTitle("Activate profile").build();
         emailClient.sendAsync(email);
         return ResponseEntity.ok(modelMapper.map(userRegistrationRequestBindingModel, UserRegistrationResponseBindingModel.class));
+    }
+
+    @GetMapping("/raspberries")
+    public ResponseEntity<List<RaspberryResponseBindingModel>> findUserRaspberries() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUserName = authentication.getName();
+            return ResponseEntity.ok(userService.findUserRaspberries(currentUserName));
+        }
+        return ResponseEntity.status(403).build();
     }
 
     @PostMapping(value = "/activate/{username}")

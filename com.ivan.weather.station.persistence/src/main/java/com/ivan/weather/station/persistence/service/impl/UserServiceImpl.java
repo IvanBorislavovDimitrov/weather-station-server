@@ -1,5 +1,6 @@
 package com.ivan.weather.station.persistence.service.impl;
 
+import com.ivan.weather.station.persistence.domain.binding.response.RaspberryResponseBindingModel;
 import com.ivan.weather.station.persistence.domain.entity.User;
 import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
 import com.ivan.weather.station.persistence.repository.api.RoleRepository;
@@ -11,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> implements UserService {
@@ -62,5 +66,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
                 .map(user -> modelMapper.map(user, UserServiceModel.class))
                 .orElseThrow(() -> new UsernameNotFoundException(username));
 
+    }
+
+    @Override
+    public List<RaspberryResponseBindingModel> findUserRaspberries(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return user.getRaspberries().stream()
+                .map(raspberry -> modelMapper.map(raspberry, RaspberryResponseBindingModel.class))
+                .collect(Collectors.toList());
     }
 }
