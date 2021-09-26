@@ -2,12 +2,15 @@ package com.ivan.weather.station.web.controller;
 
 import com.ivan.weather.station.persistence.domain.binding.request.RaspberryRequestBindingModel;
 import com.ivan.weather.station.persistence.domain.model.RaspberryServiceModel;
+import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
 import com.ivan.weather.station.persistence.service.api.RaspberryService;
 import com.ivan.weather.station.web.initializator.RaspberryInitializator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +43,9 @@ public class RaspberryController {
     @PostMapping
     public ResponseEntity<RaspberryRequestBindingModel> add(@RequestBody RaspberryRequestBindingModel raspberryRequestBindingModel) {
         RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryRequestBindingModel, RaspberryServiceModel.class);
+        UserServiceModel owner = new UserServiceModel();
+        owner.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        raspberryServiceModel.setOwner(owner);
         raspberryService.save(raspberryServiceModel);
         return ResponseEntity.ok(raspberryRequestBindingModel);
     }

@@ -5,6 +5,7 @@ public class RaspberryServiceModel extends IdServiceModel {
     private String name;
     private String route;
     private String description;
+    private UserServiceModel owner;
 
     public String getRoute() {
         return route;
@@ -28,5 +29,13 @@ public class RaspberryServiceModel extends IdServiceModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public UserServiceModel getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserServiceModel owner) {
+        this.owner = owner;
     }
 }
