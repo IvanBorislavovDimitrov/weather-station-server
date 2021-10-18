@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, MeasurementServiceModel> implements MeasurementService {
@@ -34,6 +36,14 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
         measurement.setRaspberry(raspberry);
         measurement.setAddedOn(LocalDateTime.now());
         measurementRepository.save(measurement);
+    }
+
+    @Override
+    public List<MeasurementServiceModel> getMeasurementsFor24Hours(String raspberryId) {
+        List<Measurement> measurementsFor24Hours = measurementRepository.findMeasurementsFor24Hours(raspberryId);
+        return measurementsFor24Hours.stream()
+                .map(measurement -> modelMapper.map(measurement, MeasurementServiceModel.class))
+                .collect(Collectors.toList());
     }
 
     @Override

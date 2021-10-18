@@ -1,5 +1,7 @@
 package com.ivan.weather.station.persistence.domain.binding.response;
 
+import java.time.LocalDateTime;
+
 public class MeasurementResponseBindingModel {
 
     private String id;
@@ -7,6 +9,15 @@ public class MeasurementResponseBindingModel {
     private double humidity;
     private double pressure;
     private String raspberryRoute;
+    private LocalDateTime addedOn;
+
+    public LocalDateTime getAddedOn() {
+        return addedOn;
+    }
+
+    public void setAddedOn(LocalDateTime addedOn) {
+        this.addedOn = addedOn;
+    }
 
     public String getId() {
         return id;

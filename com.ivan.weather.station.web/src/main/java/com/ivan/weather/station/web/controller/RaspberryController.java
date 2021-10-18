@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/raspberry", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/raspberry", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RaspberryController {
 
     private final RaspberryService raspberryService;
