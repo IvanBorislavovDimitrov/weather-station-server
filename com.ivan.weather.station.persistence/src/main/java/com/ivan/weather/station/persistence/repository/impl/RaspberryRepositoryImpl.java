@@ -1,6 +1,6 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.domain.entity.Raspberry;
+import com.ivan.weather.station.persistence.entity.Raspberry;
 import com.ivan.weather.station.persistence.repository.api.RaspberryRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

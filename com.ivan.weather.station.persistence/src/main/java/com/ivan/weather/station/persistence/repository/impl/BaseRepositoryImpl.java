@@ -1,6 +1,6 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.domain.entity.IdEntity;
+import com.ivan.weather.station.persistence.entity.IdEntity;
 import com.ivan.weather.station.persistence.repository.api.BaseRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

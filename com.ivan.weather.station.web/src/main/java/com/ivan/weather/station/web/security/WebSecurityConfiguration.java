@@ -1,6 +1,6 @@
 package com.ivan.weather.station.web.security;
 
-import com.ivan.weather.station.persistence.service.api.UserService;
+import com.ivan.weather.station.core.service.api.UserService;
 import com.ivan.weather.station.web.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

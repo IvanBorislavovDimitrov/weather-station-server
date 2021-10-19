@@ -15,10 +15,10 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-
     <modules>
         <module>com.ivan.weather.station.web</module>
         <module>com.ivan.weather.station.persistence</module>
+        <module>com.ivan.weather.station.core</module>
     </modules>
 
     <properties>

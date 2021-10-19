@@ -1,17 +1,18 @@
 package com.ivan.weather.station.web.controller;
 
-import com.ivan.weather.station.persistence.domain.binding.request.MeasurementRequestBindingModel;
-import com.ivan.weather.station.persistence.domain.binding.response.MeasurementResponseBindingModel;
-import com.ivan.weather.station.persistence.domain.model.MeasurementServiceModel;
-import com.ivan.weather.station.persistence.service.api.MeasurementService;
+import com.ivan.weather.station.core.calculator.MeasurementCalculator;
+import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseBindingModel;
+import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
+import com.ivan.weather.station.core.service.api.MeasurementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/measurement", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,11 +35,9 @@ public class MeasurementController {
     }
 
     @GetMapping(value = "/twenty-four/raspberry/{raspberryId}")
-    public ResponseEntity<List<MeasurementResponseBindingModel>> getMeasurementFor24Hours(@PathVariable String raspberryId) {
-        List<MeasurementServiceModel> measurementServiceModels = measurementService.getMeasurementsFor24Hours(raspberryId);
-        return ResponseEntity.ok(measurementServiceModels.stream()
-                .map(measurementServiceModel -> modelMapper.map(measurementServiceModel, MeasurementResponseBindingModel.class))
-                .collect(Collectors.toList()));
+    public ResponseEntity<Map<LocalDateTime, MeasurementResponseBindingModel>> getMeasurementFor24Hours(@PathVariable String raspberryId) {
+        return ResponseEntity.ok(new MeasurementCalculator(measurementService)
+                .calculateMeasurementsFor24Hours(raspberryId));
     }
 
 }

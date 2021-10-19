@@ -1,6 +1,6 @@
 package com.ivan.weather.station.persistence.repository.api;
 
-import com.ivan.weather.station.persistence.domain.entity.Raspberry;
+import com.ivan.weather.station.persistence.entity.Raspberry;
 
 import java.util.Optional;
 

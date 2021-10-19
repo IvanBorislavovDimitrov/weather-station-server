@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>weather-pom</groupId>
-            <artifactId>com.ivan.weather.station.persistence</artifactId>
+            <artifactId>com.ivan.weather.station.core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

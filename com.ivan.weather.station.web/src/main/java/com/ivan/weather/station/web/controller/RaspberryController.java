@@ -1,9 +1,9 @@
 package com.ivan.weather.station.web.controller;
 
-import com.ivan.weather.station.persistence.domain.binding.request.RaspberryRequestBindingModel;
-import com.ivan.weather.station.persistence.domain.model.RaspberryServiceModel;
-import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
-import com.ivan.weather.station.persistence.service.api.RaspberryService;
+import com.ivan.weather.station.core.domain.binding.request.RaspberryRequestBindingModel;
+import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
+import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.service.api.RaspberryService;
 import com.ivan.weather.station.web.initializator.RaspberryInitializator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

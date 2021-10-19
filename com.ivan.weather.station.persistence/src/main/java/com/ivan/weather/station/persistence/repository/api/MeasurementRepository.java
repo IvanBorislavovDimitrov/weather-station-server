@@ -1,6 +1,6 @@
 package com.ivan.weather.station.persistence.repository.api;
 
-import com.ivan.weather.station.persistence.domain.entity.Measurement;
+import com.ivan.weather.station.persistence.entity.Measurement;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.domain.entity.Role;
+import com.ivan.weather.station.persistence.entity.Role;
 import com.ivan.weather.station.persistence.repository.api.RoleRepository;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

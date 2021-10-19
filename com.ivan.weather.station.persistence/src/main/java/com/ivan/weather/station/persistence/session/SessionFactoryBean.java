@@ -1,9 +1,9 @@
 package com.ivan.weather.station.persistence.session;
 
-import com.ivan.weather.station.persistence.domain.entity.Measurement;
-import com.ivan.weather.station.persistence.domain.entity.Raspberry;
-import com.ivan.weather.station.persistence.domain.entity.Role;
-import com.ivan.weather.station.persistence.domain.entity.User;
+import com.ivan.weather.station.persistence.entity.Measurement;
+import com.ivan.weather.station.persistence.entity.Raspberry;
+import com.ivan.weather.station.persistence.entity.Role;
+import com.ivan.weather.station.persistence.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

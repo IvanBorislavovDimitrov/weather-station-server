@@ -1,7 +1,7 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.domain.entity.Role;
-import com.ivan.weather.station.persistence.domain.entity.User;
+import com.ivan.weather.station.persistence.entity.Role;
+import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.persistence.repository.api.RoleRepository;
 import com.ivan.weather.station.persistence.repository.api.UserRepository;
 import org.hibernate.SessionFactory;

@@ -1,12 +1,12 @@
 package com.ivan.weather.station.web.controller;
 
-import com.ivan.weather.station.persistence.domain.binding.request.UserRegistrationRequestBindingModel;
-import com.ivan.weather.station.persistence.domain.binding.response.RaspberryResponseBindingModel;
-import com.ivan.weather.station.persistence.domain.binding.response.UserRegistrationResponseBindingModel;
-import com.ivan.weather.station.persistence.domain.entity.Role;
-import com.ivan.weather.station.persistence.domain.entity.User;
-import com.ivan.weather.station.persistence.domain.model.UserServiceModel;
-import com.ivan.weather.station.persistence.service.api.UserService;
+import com.ivan.weather.station.core.domain.binding.request.UserRegistrationRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.UserRegistrationResponseBindingModel;
+import com.ivan.weather.station.persistence.entity.Role;
+import com.ivan.weather.station.persistence.entity.User;
+import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.service.api.UserService;
 import com.ivan.weather.station.web.authentication.AuthenticationRequest;
 import com.ivan.weather.station.web.authentication.JwtTokenResponse;
 import com.ivan.weather.station.web.mail.Email;
