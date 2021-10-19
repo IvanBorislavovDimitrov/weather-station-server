@@ -39,9 +39,9 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
     }
 
     @Override
-    public List<MeasurementServiceModel> getMeasurementsFor24Hours(String raspberryId) {
-        List<Measurement> measurementsFor24Hours = measurementRepository.findMeasurementsFor24Hours(raspberryId);
-        return measurementsFor24Hours.stream()
+    public List<MeasurementServiceModel> getMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId) {
+        List<Measurement> measurements = measurementRepository.findMeasurementsBetween(startPeriod, endPeriod, raspberryId);
+        return measurements.stream()
                 .map(measurement -> modelMapper.map(measurement, MeasurementServiceModel.class))
                 .collect(Collectors.toList());
     }

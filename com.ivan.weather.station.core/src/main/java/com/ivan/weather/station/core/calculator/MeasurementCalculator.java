@@ -3,27 +3,35 @@ package com.ivan.weather.station.core.calculator;
 import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseBindingModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.core.service.api.MeasurementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Component
 public class MeasurementCalculator {
 
     private final MeasurementService measurementService;
 
+    @Autowired
     public MeasurementCalculator(MeasurementService measurementService) {
         this.measurementService = measurementService;
     }
 
-    public Map<LocalDateTime, MeasurementResponseBindingModel> calculateMeasurementsFor24Hours(String raspberryId) {
+    public Map<LocalDateTime, MeasurementResponseBindingModel> calculateMeasurementsBetween(LocalDateTime startPeriod,
+                                                                                            LocalDateTime endPeriod,
+                                                                                            String raspberryId) {
         Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements = new HashMap<>();
-        List<MeasurementServiceModel> measurements = getSortedMeasurementsFor24Hours(raspberryId);
-        LocalDateTime initialPeriod = LocalDateTime.now().minusDays(1);
-        for (int i = 0; i < 24; i++) {
+        List<MeasurementServiceModel> measurements = getSortedMeasurements(startPeriod, endPeriod, raspberryId);
+        LocalDateTime initialPeriod = startPeriod;
+        long hoursBetween = ChronoUnit.HOURS.between(startPeriod, endPeriod);
+        for (int i = 0; i < hoursBetween; i++) {
             LocalDateTime nextPeriod = initialPeriod.plusHours(i);
             List<MeasurementServiceModel> measurementsBetween = getMeasurementsBetween(initialPeriod, nextPeriod, measurements);
             averagedMeasurements.put(initialPeriod, calculateAverageMeasurement(measurementsBetween));
@@ -32,8 +40,10 @@ public class MeasurementCalculator {
         return averagedMeasurements;
     }
 
-    private List<MeasurementServiceModel> getSortedMeasurementsFor24Hours(String raspberryId) {
-        return measurementService.getMeasurementsFor24Hours(raspberryId)
+    private List<MeasurementServiceModel> getSortedMeasurements(LocalDateTime startPeriod,
+                                                                LocalDateTime endPeriod,
+                                                                String raspberryId) {
+        return measurementService.getMeasurementsBetween(startPeriod, endPeriod, raspberryId)
                 .stream()
                 .sorted(Comparator.comparing(MeasurementServiceModel::getAddedOn))
                 .collect(Collectors.toList());

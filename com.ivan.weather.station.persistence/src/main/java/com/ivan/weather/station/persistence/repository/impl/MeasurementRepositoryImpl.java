@@ -21,14 +21,15 @@ public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> i
     }
 
     @Override
-    public List<Measurement> findMeasurementsFor24Hours(String raspberryId) {
+    public List<Measurement> findMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId) {
         return executeInTransaction(session -> {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Measurement> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
             Root<Measurement> root = criteriaQuery.from(getEntityClass());
             Join<Measurement, Raspberry> join = root.join("raspberry");
             criteriaQuery.where(criteriaBuilder.equal(join.get("id"), raspberryId));
-            criteriaQuery.where(criteriaBuilder.greaterThan(root.get("addedOn"), LocalDateTime.now().minusDays(1)));
+            criteriaQuery.where(criteriaBuilder.greaterThan(root.get("addedOn"), startPeriod));
+            criteriaQuery.where(criteriaBuilder.lessThan(root.get("addedOn"), endPeriod));
             return session.createQuery(criteriaQuery).getResultList();
         });
     }

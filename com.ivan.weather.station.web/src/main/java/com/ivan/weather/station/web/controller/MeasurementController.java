@@ -1,6 +1,7 @@
 package com.ivan.weather.station.web.controller;
 
 import com.ivan.weather.station.core.calculator.MeasurementCalculator;
+import com.ivan.weather.station.core.domain.binding.request.AveragedMeasurementRequestModel;
 import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
 import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseBindingModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
@@ -20,11 +21,13 @@ public class MeasurementController {
 
     private final MeasurementService measurementService;
     private final ModelMapper modelMapper;
+    private final MeasurementCalculator measurementCalculator;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper) {
+    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper, MeasurementCalculator measurementCalculator) {
         this.measurementService = measurementService;
         this.modelMapper = modelMapper;
+        this.measurementCalculator = measurementCalculator;
     }
 
     @PostMapping
@@ -34,10 +37,12 @@ public class MeasurementController {
         return ResponseEntity.ok(measurementRequestBindingModel);
     }
 
-    @GetMapping(value = "/twenty-four/raspberry/{raspberryId}")
-    public ResponseEntity<Map<LocalDateTime, MeasurementResponseBindingModel>> getMeasurementFor24Hours(@PathVariable String raspberryId) {
-        return ResponseEntity.ok(new MeasurementCalculator(measurementService)
-                .calculateMeasurementsFor24Hours(raspberryId));
+    @GetMapping(value = "/twenty-four/raspberry/")
+    public ResponseEntity<Map<LocalDateTime, MeasurementResponseBindingModel>> getMeasurementFor24Hours(@RequestBody AveragedMeasurementRequestModel averagedMeasurementRequestModel) {
+        Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements = measurementCalculator.calculateMeasurementsBetween(averagedMeasurementRequestModel.getStartPeriod(),
+                averagedMeasurementRequestModel.getEndPeriod(),
+                averagedMeasurementRequestModel.getRaspberryId());
+        return ResponseEntity.ok(averagedMeasurements);
     }
 
 }
