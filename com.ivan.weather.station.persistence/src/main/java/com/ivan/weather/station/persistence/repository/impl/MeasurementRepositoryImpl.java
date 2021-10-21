@@ -6,10 +6,7 @@ import com.ivan.weather.station.persistence.repository.api.MeasurementRepository
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,9 +24,10 @@ public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> i
             CriteriaQuery<Measurement> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
             Root<Measurement> root = criteriaQuery.from(getEntityClass());
             Join<Measurement, Raspberry> join = root.join("raspberry");
-            criteriaQuery.where(criteriaBuilder.equal(join.get("id"), raspberryId));
-            criteriaQuery.where(criteriaBuilder.greaterThan(root.get("addedOn"), startPeriod));
-            criteriaQuery.where(criteriaBuilder.lessThan(root.get("addedOn"), endPeriod));
+            Predicate equalById = criteriaBuilder.equal(join.get("id"), raspberryId);
+            Predicate greaterThan = criteriaBuilder.greaterThan(root.get("addedOn"), startPeriod);
+            Predicate lessThan = criteriaBuilder.lessThan(root.get("addedOn"), endPeriod);
+            criteriaQuery.where(criteriaBuilder.and(equalById, greaterThan, lessThan));
             return session.createQuery(criteriaQuery).getResultList();
         });
     }

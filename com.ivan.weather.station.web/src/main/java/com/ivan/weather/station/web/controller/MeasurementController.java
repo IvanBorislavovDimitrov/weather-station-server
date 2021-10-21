@@ -39,8 +39,9 @@ public class MeasurementController {
 
     @GetMapping(value = "/twenty-four/raspberry/")
     public ResponseEntity<Map<LocalDateTime, MeasurementResponseBindingModel>> getMeasurementFor24Hours(@RequestBody AveragedMeasurementRequestModel averagedMeasurementRequestModel) {
-        Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements = measurementCalculator.calculateMeasurementsBetween(averagedMeasurementRequestModel.getStartPeriod(),
-                averagedMeasurementRequestModel.getEndPeriod(),
+        Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements =
+                measurementCalculator.calculateMeasurementsBetween(LocalDateTime.now().minusDays(10),
+                LocalDateTime.now(),
                 averagedMeasurementRequestModel.getRaspberryId());
         return ResponseEntity.ok(averagedMeasurements);
     }

@@ -32,7 +32,7 @@ public class MeasurementCalculator {
         LocalDateTime initialPeriod = startPeriod;
         long hoursBetween = ChronoUnit.HOURS.between(startPeriod, endPeriod);
         for (int i = 0; i < hoursBetween; i++) {
-            LocalDateTime nextPeriod = initialPeriod.plusHours(i);
+            LocalDateTime nextPeriod = initialPeriod.plusHours(1);
             List<MeasurementServiceModel> measurementsBetween = getMeasurementsBetween(initialPeriod, nextPeriod, measurements);
             averagedMeasurements.put(initialPeriod, calculateAverageMeasurement(measurementsBetween));
             initialPeriod = nextPeriod;
