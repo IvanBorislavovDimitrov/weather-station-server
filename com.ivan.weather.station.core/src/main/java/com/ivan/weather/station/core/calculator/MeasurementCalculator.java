@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.calculator;
 
-import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.core.service.api.MeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -24,10 +21,10 @@ public class MeasurementCalculator {
         this.measurementService = measurementService;
     }
 
-    public Map<LocalDateTime, MeasurementResponseBindingModel> calculateMeasurementsBetween(LocalDateTime startPeriod,
-                                                                                            LocalDateTime endPeriod,
-                                                                                            String raspberryId) {
-        Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements = new HashMap<>();
+    public Map<LocalDateTime, MeasurementResponseModel> calculateMeasurementsBetween(LocalDateTime startPeriod,
+                                                                                     LocalDateTime endPeriod,
+                                                                                     String raspberryId) {
+        Map<LocalDateTime, MeasurementResponseModel> averagedMeasurements = new TreeMap<>();
         List<MeasurementServiceModel> measurements = getSortedMeasurements(startPeriod, endPeriod, raspberryId);
         LocalDateTime initialPeriod = startPeriod;
         long hoursBetween = ChronoUnit.HOURS.between(startPeriod, endPeriod);
@@ -58,7 +55,7 @@ public class MeasurementCalculator {
                 .collect(Collectors.toList());
     }
 
-    private MeasurementResponseBindingModel calculateAverageMeasurement(List<MeasurementServiceModel> measurements) {
+    private MeasurementResponseModel calculateAverageMeasurement(List<MeasurementServiceModel> measurements) {
         double temperature = 0;
         double humidity = 0;
         double pressure = 0;
@@ -67,7 +64,7 @@ public class MeasurementCalculator {
             humidity += measurement.getHumidity();
             pressure += measurement.getPressure();
         }
-        MeasurementResponseBindingModel measurementResponseBindingModel = new MeasurementResponseBindingModel();
+        MeasurementResponseModel measurementResponseBindingModel = new MeasurementResponseModel();
         measurementResponseBindingModel.setTemperature(temperature / measurements.size());
         measurementResponseBindingModel.setHumidity(humidity / measurements.size());
         measurementResponseBindingModel.setPressure(pressure / measurements.size());

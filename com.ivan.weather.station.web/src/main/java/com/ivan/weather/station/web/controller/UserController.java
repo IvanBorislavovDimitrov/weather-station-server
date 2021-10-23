@@ -1,8 +1,8 @@
 package com.ivan.weather.station.web.controller;
 
 import com.ivan.weather.station.core.domain.binding.request.UserRegistrationRequestBindingModel;
-import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseBindingModel;
-import com.ivan.weather.station.core.domain.binding.response.UserRegistrationResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
+import com.ivan.weather.station.core.domain.binding.response.UserRegistrationResponseModel;
 import com.ivan.weather.station.persistence.entity.Role;
 import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserRegistrationResponseBindingModel> register(@RequestBody UserRegistrationRequestBindingModel userRegistrationRequestBindingModel) {
+    public ResponseEntity<UserRegistrationResponseModel> register(@RequestBody UserRegistrationRequestBindingModel userRegistrationRequestBindingModel) {
         if (!Objects.equals(userRegistrationRequestBindingModel.getConfirmPassword(), userRegistrationRequestBindingModel.getPassword())) {
             return ResponseEntity.badRequest()
                     .build();
@@ -58,11 +58,11 @@ public class UserController {
                 .setRecipient(userServiceModel.getEmail())
                 .setTitle("Activate profile").build();
         emailClient.sendAsync(email);
-        return ResponseEntity.ok(modelMapper.map(userRegistrationRequestBindingModel, UserRegistrationResponseBindingModel.class));
+        return ResponseEntity.ok(modelMapper.map(userRegistrationRequestBindingModel, UserRegistrationResponseModel.class));
     }
 
     @GetMapping("/raspberries")
-    public ResponseEntity<List<RaspberryResponseBindingModel>> findUserRaspberries() {
+    public ResponseEntity<List<RaspberryResponseModel>> findUserRaspberries() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String currentUserName = authentication.getName();

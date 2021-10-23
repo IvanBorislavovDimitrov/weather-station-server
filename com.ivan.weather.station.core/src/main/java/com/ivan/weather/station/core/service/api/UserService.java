@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.service.api;
 
-import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
@@ -13,5 +13,5 @@ public interface UserService extends BaseService<UserServiceModel>, UserDetailsS
 
     UserServiceModel findUserByUsername(String username);
 
-    List<RaspberryResponseBindingModel> findUserRaspberries(String username);
+    List<RaspberryResponseModel> findUserRaspberries(String username);
 }

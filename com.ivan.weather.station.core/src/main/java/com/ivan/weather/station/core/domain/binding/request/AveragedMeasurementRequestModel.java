@@ -1,10 +1,14 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 
 public class AveragedMeasurementRequestModel {
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime startPeriod;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime endPeriod;
     private String raspberryId;
 

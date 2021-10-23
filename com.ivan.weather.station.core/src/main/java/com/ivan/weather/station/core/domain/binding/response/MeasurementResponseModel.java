@@ -2,7 +2,7 @@ package com.ivan.weather.station.core.domain.binding.response;
 
 import java.time.LocalDateTime;
 
-public class MeasurementResponseBindingModel {
+public class MeasurementResponseModel {
 
     private String id;
     private double temperature;

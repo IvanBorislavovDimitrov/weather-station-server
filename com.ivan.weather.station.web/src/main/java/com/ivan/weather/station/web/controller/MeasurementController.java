@@ -3,7 +3,8 @@ package com.ivan.weather.station.web.controller;
 import com.ivan.weather.station.core.calculator.MeasurementCalculator;
 import com.ivan.weather.station.core.domain.binding.request.AveragedMeasurementRequestModel;
 import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
-import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.DateWithMeasurementsResponseModel;
+import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.core.service.api.MeasurementService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -37,13 +40,15 @@ public class MeasurementController {
         return ResponseEntity.ok(measurementRequestBindingModel);
     }
 
-    @GetMapping(value = "/twenty-four/raspberry/")
-    public ResponseEntity<Map<LocalDateTime, MeasurementResponseBindingModel>> getMeasurementFor24Hours(@RequestBody AveragedMeasurementRequestModel averagedMeasurementRequestModel) {
-        Map<LocalDateTime, MeasurementResponseBindingModel> averagedMeasurements =
-                measurementCalculator.calculateMeasurementsBetween(LocalDateTime.now().minusDays(10),
-                LocalDateTime.now(),
-                averagedMeasurementRequestModel.getRaspberryId());
-        return ResponseEntity.ok(averagedMeasurements);
+    @GetMapping(value = "/charts/hour")
+    public ResponseEntity<List<DateWithMeasurementsResponseModel>> getMeasurementFor24Hours(AveragedMeasurementRequestModel averagedMeasurementRequestModel) {
+        Map<LocalDateTime, MeasurementResponseModel> averagedMeasurements =
+                measurementCalculator.calculateMeasurementsBetween(averagedMeasurementRequestModel.getStartPeriod(),
+                        averagedMeasurementRequestModel.getEndPeriod(),
+                        averagedMeasurementRequestModel.getRaspberryId());
+        List<DateWithMeasurementsResponseModel> dateWithMeasurements = new ArrayList<>();
+        averagedMeasurements.forEach((key, value) -> dateWithMeasurements.add(new DateWithMeasurementsResponseModel(key, value)));
+        return ResponseEntity.ok(dateWithMeasurements);
     }
 
 }

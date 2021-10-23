@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.service.impl;
 
-import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseBindingModel;
+import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
 import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
 import com.ivan.weather.station.persistence.repository.api.RoleRepository;
@@ -69,10 +69,10 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
     }
 
     @Override
-    public List<RaspberryResponseBindingModel> findUserRaspberries(String username) {
+    public List<RaspberryResponseModel> findUserRaspberries(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
         return user.getRaspberries().stream()
-                .map(raspberry -> modelMapper.map(raspberry, RaspberryResponseBindingModel.class))
+                .map(raspberry -> modelMapper.map(raspberry, RaspberryResponseModel.class))
                 .collect(Collectors.toList());
     }
 }
