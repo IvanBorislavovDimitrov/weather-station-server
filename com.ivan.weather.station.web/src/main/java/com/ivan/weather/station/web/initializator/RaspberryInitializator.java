@@ -16,7 +16,7 @@ public class RaspberryInitializator {
 
     public void startRaspberry(String raspberryRoute) {
         webClient.post()
-                .uri(raspberryRoute + "/start")
+                .uri("http://" + raspberryRoute + ":8080/start")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
@@ -24,7 +24,7 @@ public class RaspberryInitializator {
 
     public void stopRaspberry(String raspberryRoute) {
         webClient.post()
-                .uri(raspberryRoute + "/stop")
+                .uri("http://" + raspberryRoute + ":8080/stop")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();
