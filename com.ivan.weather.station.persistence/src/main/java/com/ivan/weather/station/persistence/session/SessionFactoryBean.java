@@ -21,8 +21,8 @@ public class SessionFactoryBean {
         properties.setProperty("connection.driver_class", "org.postgresql.Driver");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         properties.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/weather_station");
-        properties.setProperty("hibernate.connection.username", "ivan");
-        properties.setProperty("hibernate.connection.password", "34273427");
+        properties.setProperty("hibernate.connection.username", "postgres");
+        properties.setProperty("hibernate.connection.password", "123456");
         properties.setProperty("hibernate.current_session_context_class", "org.hibernate.context.internal.ManagedSessionContext");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");

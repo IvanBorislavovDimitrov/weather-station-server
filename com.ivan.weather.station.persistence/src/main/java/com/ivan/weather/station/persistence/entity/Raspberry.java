@@ -2,6 +2,7 @@ package com.ivan.weather.station.persistence.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,8 @@ public class Raspberry extends IdEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
+    @OneToMany(mappedBy = "raspberry", targetEntity = AnomalyDetectionRule.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<AnomalyDetectionRule> anomalyDetectionRules = Collections.emptyList();
 
     public String getDescription() {
         return description;
@@ -68,5 +71,13 @@ public class Raspberry extends IdEntity {
 
     public void setStarted(boolean started) {
         isStarted = started;
+    }
+
+    public List<AnomalyDetectionRule> getAnomalyDetectionRules() {
+        return anomalyDetectionRules;
+    }
+
+    public void setAnomalyDetectionRules(List<AnomalyDetectionRule> anomalyDetectionRules) {
+        this.anomalyDetectionRules = anomalyDetectionRules;
     }
 }

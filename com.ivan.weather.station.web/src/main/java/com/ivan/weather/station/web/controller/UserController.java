@@ -54,7 +54,7 @@ public class UserController {
         UserServiceModel userServiceModel = modelMapper.map(userRegistrationRequestBindingModel, UserServiceModel.class);
         userService.save(userServiceModel);
         Email email = new Email.Builder()
-                .setContent("Active user by clicking the following linK " + "http://127.0.0.1/user/activate/" + userServiceModel.getUsername())
+                .setContent("Active user by clicking the following linK " + "http://127.0.0.1:8080/user/activate/" + userServiceModel.getUsername())
                 .setRecipient(userServiceModel.getEmail())
                 .setTitle("Activate profile").build();
         emailClient.sendAsync(email);
