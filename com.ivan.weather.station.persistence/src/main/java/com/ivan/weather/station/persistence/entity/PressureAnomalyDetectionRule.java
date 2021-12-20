@@ -28,4 +28,14 @@ public class PressureAnomalyDetectionRule extends AnomalyDetectionRule {
     public void setPressureAboveValue(double pressureAboveValue) {
         this.pressureAboveValue = pressureAboveValue;
     }
+
+    @Override
+    public double getBelowValue() {
+        return getPressureBelowValue();
+    }
+
+    @Override
+    public double getAboveValue() {
+        return getPressureAboveValue();
+    }
 }

@@ -4,7 +4,7 @@ import com.ivan.weather.station.core.domain.binding.parser.AnomalyDetectionRuleP
 import com.ivan.weather.station.core.domain.binding.parser.HumidityAnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.parser.PressureAnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.parser.TemperatureAnomalyDetectionRuleParser;
-import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingRequest;
+import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 
 import java.text.MessageFormat;
@@ -15,18 +15,18 @@ public enum AnomalyDetectionRuleType {
 
     TEMPERATURE("temperature") {
         @Override
-        public TemperatureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest) {
-            return new TemperatureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingRequest);
+        public TemperatureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new TemperatureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
         }
     }, HUMIDITY("humidity") {
         @Override
-        public HumidityAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest) {
-            return new HumidityAnomalyDetectionRuleParser(anomalyDetectionRuleBindingRequest);
+        public HumidityAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new HumidityAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
         }
     }, PRESSURE("pressure") {
         @Override
-        public PressureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest) {
-            return new PressureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingRequest);
+        public PressureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new PressureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
         }
     };
 
@@ -43,5 +43,9 @@ public enum AnomalyDetectionRuleType {
                 .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Invalid type provided: \"{0}\"", ruleName)));
     }
 
-    public abstract AnomalyDetectionRuleParser<? extends AnomalyDetectionRuleServiceModel> getRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest);
+    public String getValue() {
+        return value;
+    }
+
+    public abstract AnomalyDetectionRuleParser<? extends AnomalyDetectionRuleServiceModel> getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel);
 }

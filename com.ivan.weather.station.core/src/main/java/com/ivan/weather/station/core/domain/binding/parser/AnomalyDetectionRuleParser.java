@@ -1,26 +1,26 @@
 package com.ivan.weather.station.core.domain.binding.parser;
 
-import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingRequest;
+import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 
 public abstract class AnomalyDetectionRuleParser<T extends AnomalyDetectionRuleServiceModel> {
 
-    private final AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest;
+    private final AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel;
 
-    protected AnomalyDetectionRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest) {
-        this.anomalyDetectionRuleBindingRequest = anomalyDetectionRuleBindingRequest;
+    protected AnomalyDetectionRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+        this.anomalyDetectionRuleBindingModel = anomalyDetectionRuleBindingModel;
     }
 
     protected T parse() {
         T anomalyDetectionRuleServiceModel = getModel();
-        anomalyDetectionRuleServiceModel.setRuleBelowActivated(anomalyDetectionRuleBindingRequest.isRuleBelowActivated());
-        anomalyDetectionRuleServiceModel.setRuleAboveActivated(anomalyDetectionRuleBindingRequest.isRuleAboveActivated());
+        anomalyDetectionRuleServiceModel.setRuleBelowActivated(anomalyDetectionRuleBindingModel.isRuleBelowActivated());
+        anomalyDetectionRuleServiceModel.setRuleAboveActivated(anomalyDetectionRuleBindingModel.isRuleAboveActivated());
         return anomalyDetectionRuleServiceModel;
     }
 
     protected abstract T getModel();
 
-    public AnomalyDetectionRuleBindingRequest getAnomalyDetectionRuleBindingRequest() {
-        return anomalyDetectionRuleBindingRequest;
+    public AnomalyDetectionRuleBindingModel getAnomalyDetectionRuleBindingRequest() {
+        return anomalyDetectionRuleBindingModel;
     }
 }

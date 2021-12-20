@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
-public class AnomalyDetectionRuleBindingRequest {
+public class AnomalyDetectionRuleBindingModel {
 
     private boolean ruleBelowActivated;
     private boolean ruleAboveActivated;

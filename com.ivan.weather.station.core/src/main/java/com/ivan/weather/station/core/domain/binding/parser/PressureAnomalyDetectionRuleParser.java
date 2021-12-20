@@ -1,12 +1,12 @@
 package com.ivan.weather.station.core.domain.binding.parser;
 
-import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingRequest;
+import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.PressureAnomalyDetectionRuleServiceModel;
 
 public class PressureAnomalyDetectionRuleParser extends AnomalyDetectionRuleParser<PressureAnomalyDetectionRuleServiceModel> {
 
-    public PressureAnomalyDetectionRuleParser(AnomalyDetectionRuleBindingRequest anomalyDetectionRuleBindingRequest) {
-        super(anomalyDetectionRuleBindingRequest);
+    public PressureAnomalyDetectionRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+        super(anomalyDetectionRuleBindingModel);
     }
 
     @Override
