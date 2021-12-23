@@ -54,6 +54,15 @@ public class AnomalyDetectionRuleServiceImpl extends BaseServiceImpl<AnomalyDete
     }
 
     @Override
+    public AnomalyDetectionRuleServiceModel findById(String id) {
+        AnomalyDetectionRule anomalyDetectionRule = anomalyDetectionRuleRepository.findById(id)
+                                                                                  .orElseThrow(() -> new IllegalArgumentException("Anomaly not found!"));
+        return AnomalyDetectionRuleType.from(anomalyDetectionRule.getType())
+                                       .getRuleServiceParser(anomalyDetectionRule)
+                                       .parse();
+    }
+
+    @Override
     protected Class<AnomalyDetectionRule> getEntityClass() {
         return AnomalyDetectionRule.class;
     }

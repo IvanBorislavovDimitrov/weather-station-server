@@ -24,8 +24,8 @@ import com.ivan.weather.station.persistence.entity.Role;
 import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.web.authentication.AuthenticationRequest;
 import com.ivan.weather.station.web.authentication.JwtTokenResponse;
-import com.ivan.weather.station.web.mail.Email;
-import com.ivan.weather.station.web.mail.EmailClient;
+import com.ivan.weather.station.core.mail.Email;
+import com.ivan.weather.station.core.mail.EmailClient;
 import com.ivan.weather.station.web.util.JwtUtil;
 
 @RestController

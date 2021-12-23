@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +23,11 @@ import com.ivan.weather.station.core.service.api.MeasurementService;
 public class MeasurementController {
 
     private final MeasurementService measurementService;
-    private final ModelMapper modelMapper;
     private final MeasurementCalculator measurementCalculator;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, ModelMapper modelMapper,
-                                 MeasurementCalculator measurementCalculator) {
+    public MeasurementController(MeasurementService measurementService, MeasurementCalculator measurementCalculator) {
         this.measurementService = measurementService;
-        this.modelMapper = modelMapper;
         this.measurementCalculator = measurementCalculator;
     }
 

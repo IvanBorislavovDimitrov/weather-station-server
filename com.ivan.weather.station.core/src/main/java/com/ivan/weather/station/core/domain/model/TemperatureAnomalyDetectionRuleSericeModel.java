@@ -47,4 +47,10 @@ public class TemperatureAnomalyDetectionRuleSericeModel extends AnomalyDetection
     protected <T extends AnomalyDetectionRule> T getEntity() {
         return (T) new TemperatureAnomalyDetectionRule();
     }
+
+    @Override
+    public boolean isOutOfConstraint(MeasurementServiceModel measurement) {
+        return (measurement.getTemperature() > getTemperatureAboveValue() && isRuleAboveActivated())
+            || (measurement.getTemperature() < getTemperatureBelowValue() && isRuleBelowActivated());
+    }
 }

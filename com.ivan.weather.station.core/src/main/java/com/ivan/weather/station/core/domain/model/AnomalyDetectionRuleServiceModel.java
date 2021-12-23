@@ -24,6 +24,8 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
         return anomalyDetectionRule;
     }
 
+    public abstract boolean isOutOfConstraint(MeasurementServiceModel measurement);
+
     protected abstract <T extends AnomalyDetectionRule> T getEntity();
 
     public boolean isRuleBelowActivated() {

@@ -1,4 +1,4 @@
-package com.ivan.weather.station.web.mail;
+package com.ivan.weather.station.core.mail;
 
 public class Email {
 

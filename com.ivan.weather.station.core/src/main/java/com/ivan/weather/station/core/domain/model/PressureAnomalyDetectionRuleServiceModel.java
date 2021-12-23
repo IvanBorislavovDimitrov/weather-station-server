@@ -48,4 +48,9 @@ public class PressureAnomalyDetectionRuleServiceModel extends AnomalyDetectionRu
         return (T) new PressureAnomalyDetectionRule();
     }
 
+    @Override
+    public boolean isOutOfConstraint(MeasurementServiceModel measurement) {
+        return (measurement.getPressure() > getPressureAboveValue() && isRuleAboveActivated())
+            || (measurement.getPressure() < getPressureBelowValue() && isRuleBelowActivated());
+    }
 }

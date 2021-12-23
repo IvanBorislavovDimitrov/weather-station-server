@@ -47,4 +47,10 @@ public class HumidityAnomalyDetectionRuleServiceModel extends AnomalyDetectionRu
     protected <T extends AnomalyDetectionRule> T getEntity() {
         return (T) new HumidityAnomalyDetectionRule();
     }
+
+    @Override
+    public boolean isOutOfConstraint(MeasurementServiceModel measurement) {
+        return (measurement.getHumidity() > getHumidityAboveValue() && isRuleAboveActivated())
+            || (measurement.getHumidity() < getHumidityBelowValue() && isRuleBelowActivated());
+    }
 }
