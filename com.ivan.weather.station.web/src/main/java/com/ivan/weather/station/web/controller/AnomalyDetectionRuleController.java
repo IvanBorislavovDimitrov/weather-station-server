@@ -43,4 +43,14 @@ public class AnomalyDetectionRuleController {
         AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRuleServiceModel.toResponseModel();
         return ResponseEntity.ok(anomalyDetectionRuleResponseModel);
     }
+
+    @GetMapping("/raspberry/{raspberryId}")
+    public ResponseEntity<List<AnomalyDetectionRuleResponseModel>> getAnomaliesByRaspberry(@PathVariable String raspberryId) {
+        List<AnomalyDetectionRuleServiceModel> anomalyDetectionRuleServiceModels = anomalyDetectionRuleService.findByRaspberryId(raspberryId);
+        return ResponseEntity.ok(anomalyDetectionRuleServiceModels.stream()
+                                                                  .map(AnomalyDetectionRuleServiceModel::toResponseModel)
+                                                                  .collect(Collectors.toList()));
+
+    }
+
 }

@@ -63,6 +63,17 @@ public class AnomalyDetectionRuleServiceImpl extends BaseServiceImpl<AnomalyDete
     }
 
     @Override
+    public List<AnomalyDetectionRuleServiceModel> findByRaspberryId(String raspberryId) {
+        List<AnomalyDetectionRule> anomalyDetectionRules = anomalyDetectionRuleRepository.findByRaspberryId(raspberryId);
+        return anomalyDetectionRules.stream()
+                                    .map(anomalyDetectionRule -> AnomalyDetectionRuleType.from(anomalyDetectionRule.getType())
+                                                                                         .getRuleServiceParser(anomalyDetectionRule)
+                                                                                         .parse())
+                                    .collect(Collectors.toList());
+
+    }
+
+    @Override
     protected Class<AnomalyDetectionRule> getEntityClass() {
         return AnomalyDetectionRule.class;
     }
