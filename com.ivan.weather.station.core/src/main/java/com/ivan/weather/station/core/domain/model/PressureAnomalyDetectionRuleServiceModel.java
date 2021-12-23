@@ -2,6 +2,8 @@ package com.ivan.weather.station.core.domain.model;
 
 import com.ivan.weather.station.core.domain.binding.response.AnomalyDetectionRuleResponseModel;
 import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleType;
+import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
+import com.ivan.weather.station.persistence.entity.PressureAnomalyDetectionRule;
 
 public class PressureAnomalyDetectionRuleServiceModel extends AnomalyDetectionRuleServiceModel {
 
@@ -31,6 +33,19 @@ public class PressureAnomalyDetectionRuleServiceModel extends AnomalyDetectionRu
         anomalyDetectionRuleResponseModel.setValueAbove(getPressureAboveValue());
         anomalyDetectionRuleResponseModel.setType(AnomalyDetectionRuleType.PRESSURE.getValue());
         return anomalyDetectionRuleResponseModel;
+    }
+
+    @Override
+    public <T extends AnomalyDetectionRule> T toEntityModel() {
+        PressureAnomalyDetectionRule pressureAnomalyDetectionRule = super.toEntityModel();
+        pressureAnomalyDetectionRule.setPressureAboveValue(getPressureAboveValue());
+        pressureAnomalyDetectionRule.setPressureBelowValue(getPressureBelowValue());
+        return (T) pressureAnomalyDetectionRule;
+    }
+
+    @Override
+    protected <T extends AnomalyDetectionRule> T getEntity() {
+        return (T) new PressureAnomalyDetectionRule();
     }
 
 }

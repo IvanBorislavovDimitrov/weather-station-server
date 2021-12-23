@@ -2,6 +2,7 @@ package com.ivan.weather.station.core.domain.binding.parser;
 
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
+import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 
 public abstract class AnomalyDetectionRuleParser<T extends AnomalyDetectionRuleServiceModel> {
 
@@ -11,10 +12,13 @@ public abstract class AnomalyDetectionRuleParser<T extends AnomalyDetectionRuleS
         this.anomalyDetectionRuleBindingModel = anomalyDetectionRuleBindingModel;
     }
 
-    protected T parse() {
+    public T parse() {
         T anomalyDetectionRuleServiceModel = getModel();
         anomalyDetectionRuleServiceModel.setRuleBelowActivated(anomalyDetectionRuleBindingModel.isRuleBelowActivated());
         anomalyDetectionRuleServiceModel.setRuleAboveActivated(anomalyDetectionRuleBindingModel.isRuleAboveActivated());
+        RaspberryServiceModel raspberryServiceModel = new RaspberryServiceModel();
+        raspberryServiceModel.setId(anomalyDetectionRuleBindingModel.getRaspberryId());
+        anomalyDetectionRuleServiceModel.setRaspberry(raspberryServiceModel);
         return anomalyDetectionRuleServiceModel;
     }
 

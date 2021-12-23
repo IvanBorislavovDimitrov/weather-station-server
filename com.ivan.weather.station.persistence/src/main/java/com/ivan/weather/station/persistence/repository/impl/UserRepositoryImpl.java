@@ -1,19 +1,21 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.entity.Role;
-import com.ivan.weather.station.persistence.entity.User;
-import com.ivan.weather.station.persistence.repository.api.RoleRepository;
-import com.ivan.weather.station.persistence.repository.api.UserRepository;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.ivan.weather.station.persistence.entity.Role;
+import com.ivan.weather.station.persistence.entity.User;
+import com.ivan.weather.station.persistence.repository.api.RoleRepository;
+import com.ivan.weather.station.persistence.repository.api.UserRepository;
 
 @Repository
 public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements UserRepository {
@@ -32,14 +34,17 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements User
         if (count() == 0) {
             user.setRoles(roles);
             for (Role role : roles) {
-                role.getUsers().add(user);
+                role.getUsers()
+                    .add(user);
             }
         } else {
             user.setRoles(roles.stream()
-                    .filter(role -> role.getRoleType().equals(Role.RoleType.USER))
-                    .collect(Collectors.toList()));
+                               .filter(role -> role.getRoleType()
+                                                   .equals(Role.RoleType.USER))
+                               .collect(Collectors.toList()));
             for (Role role : roles) {
-                role.getUsers().add(user);
+                role.getUsers()
+                    .add(user);
             }
         }
         super.save(user);
@@ -51,7 +56,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User> implements User
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
             Root<User> root = criteriaQuery.from(getEntityClass());
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("username"), username));
+            criteriaQuery.select(root)
+                         .where(criteriaBuilder.equal(root.get("username"), username));
             return getOrEmpty(session, criteriaQuery);
         });
     }

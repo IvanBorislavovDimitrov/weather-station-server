@@ -10,7 +10,7 @@ public class HumidityAnomalyDetectionRuleParser extends AnomalyDetectionRulePars
     }
 
     @Override
-    protected HumidityAnomalyDetectionRuleServiceModel parse() {
+    public HumidityAnomalyDetectionRuleServiceModel parse() {
         HumidityAnomalyDetectionRuleServiceModel humidityAnomalyDetectionRuleServiceModel = super.parse();
         humidityAnomalyDetectionRuleServiceModel.setHumidityBelowValue(getAnomalyDetectionRuleBindingRequest().getValueBelow());
         humidityAnomalyDetectionRuleServiceModel.setHumidityAboveValue(getAnomalyDetectionRuleBindingRequest().getValueAbove());

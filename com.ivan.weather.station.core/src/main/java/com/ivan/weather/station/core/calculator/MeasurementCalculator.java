@@ -1,15 +1,19 @@
 package com.ivan.weather.station.core.calculator;
 
-import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseModel;
-import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
-import com.ivan.weather.station.core.service.api.MeasurementService;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseModel;
+import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
+import com.ivan.weather.station.core.service.api.MeasurementService;
 
 @Component
 public class MeasurementCalculator {
@@ -21,8 +25,7 @@ public class MeasurementCalculator {
         this.measurementService = measurementService;
     }
 
-    public Map<LocalDateTime, MeasurementResponseModel> calculateMeasurementsBetween(LocalDateTime startPeriod,
-                                                                                     LocalDateTime endPeriod,
+    public Map<LocalDateTime, MeasurementResponseModel> calculateMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod,
                                                                                      String raspberryId) {
         Map<LocalDateTime, MeasurementResponseModel> averagedMeasurements = new TreeMap<>();
         List<MeasurementServiceModel> measurements = getSortedMeasurements(startPeriod, endPeriod, raspberryId);
@@ -37,22 +40,21 @@ public class MeasurementCalculator {
         return averagedMeasurements;
     }
 
-    private List<MeasurementServiceModel> getSortedMeasurements(LocalDateTime startPeriod,
-                                                                LocalDateTime endPeriod,
-                                                                String raspberryId) {
+    private List<MeasurementServiceModel> getSortedMeasurements(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId) {
         return measurementService.getMeasurementsBetween(startPeriod, endPeriod, raspberryId)
-                .stream()
-                .sorted(Comparator.comparing(MeasurementServiceModel::getAddedOn))
-                .collect(Collectors.toList());
+                                 .stream()
+                                 .sorted(Comparator.comparing(MeasurementServiceModel::getAddedOn))
+                                 .collect(Collectors.toList());
     }
 
-    private List<MeasurementServiceModel> getMeasurementsBetween(LocalDateTime startPeriod,
-                                                                 LocalDateTime endPeriod,
+    private List<MeasurementServiceModel> getMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod,
                                                                  List<MeasurementServiceModel> measurements) {
         return measurements.stream()
-                .filter(measurement -> measurement.getAddedOn().isAfter(startPeriod))
-                .filter(measurement -> measurement.getAddedOn().isBefore(endPeriod))
-                .collect(Collectors.toList());
+                           .filter(measurement -> measurement.getAddedOn()
+                                                             .isAfter(startPeriod))
+                           .filter(measurement -> measurement.getAddedOn()
+                                                             .isBefore(endPeriod))
+                           .collect(Collectors.toList());
     }
 
     private MeasurementResponseModel calculateAverageMeasurement(List<MeasurementServiceModel> measurements) {

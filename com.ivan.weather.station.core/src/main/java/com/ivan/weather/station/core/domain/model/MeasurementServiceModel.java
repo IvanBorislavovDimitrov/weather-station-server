@@ -1,8 +1,8 @@
 package com.ivan.weather.station.core.domain.model;
 
-import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
-
 import java.time.LocalDateTime;
+
+import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
 
 public class MeasurementServiceModel extends IdServiceModel {
 

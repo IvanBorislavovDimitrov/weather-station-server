@@ -29,13 +29,4 @@ public class HumidityAnomalyDetectionRule extends AnomalyDetectionRule {
         this.humidityAboveValue = humidityAboveValue;
     }
 
-    @Override
-    public double getBelowValue() {
-        return getHumidityBelowValue();
-    }
-
-    @Override
-    public double getAboveValue() {
-        return getHumidityAboveValue();
-    }
 }

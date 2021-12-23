@@ -1,14 +1,15 @@
 package com.ivan.weather.station.core.service.impl;
 
-import com.ivan.weather.station.persistence.entity.Raspberry;
-import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
-import com.ivan.weather.station.core.domain.model.UserServiceModel;
-import com.ivan.weather.station.persistence.repository.api.RaspberryRepository;
-import com.ivan.weather.station.core.service.api.RaspberryService;
-import com.ivan.weather.station.core.service.api.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
+import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.service.api.RaspberryService;
+import com.ivan.weather.station.core.service.api.UserService;
+import com.ivan.weather.station.persistence.entity.Raspberry;
+import com.ivan.weather.station.persistence.repository.api.RaspberryRepository;
 
 @Service
 public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberryServiceModel> implements RaspberryService {
@@ -25,7 +26,8 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
 
     @Override
     public void save(RaspberryServiceModel raspberryServiceModel) {
-        String username = raspberryServiceModel.getOwner().getUsername();
+        String username = raspberryServiceModel.getOwner()
+                                               .getUsername();
         UserServiceModel userServiceModel = userService.findUserByUsername(username);
         raspberryServiceModel.setOwner(userServiceModel);
         super.save(raspberryServiceModel);
@@ -33,14 +35,16 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
 
     @Override
     public void start(String id) {
-        Raspberry raspberry = raspberryRepository.findById(id).orElseThrow(() -> new RuntimeException("ID not found"));
+        Raspberry raspberry = raspberryRepository.findById(id)
+                                                 .orElseThrow(() -> new RuntimeException("ID not found"));
         raspberry.setStarted(true);
         raspberryRepository.update(raspberry);
     }
 
     @Override
     public void stop(String id) {
-        Raspberry raspberry = raspberryRepository.findById(id).orElseThrow(() -> new RuntimeException("ID not found"));
+        Raspberry raspberry = raspberryRepository.findById(id)
+                                                 .orElseThrow(() -> new RuntimeException("ID not found"));
         raspberry.setStarted(false);
         raspberryRepository.update(raspberry);
     }

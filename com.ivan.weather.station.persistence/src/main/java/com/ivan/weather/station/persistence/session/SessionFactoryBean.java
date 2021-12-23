@@ -1,16 +1,14 @@
 package com.ivan.weather.station.persistence.session;
 
-import com.ivan.weather.station.persistence.entity.Measurement;
-import com.ivan.weather.station.persistence.entity.Raspberry;
-import com.ivan.weather.station.persistence.entity.Role;
-import com.ivan.weather.station.persistence.entity.User;
+import java.util.Properties;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Properties;
+import com.ivan.weather.station.persistence.entity.*;
 
 @Configuration
 public class SessionFactoryBean {
@@ -28,6 +26,10 @@ public class SessionFactoryBean {
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
+        configuration.addAnnotatedClass(AnomalyDetectionRule.class);
+        configuration.addAnnotatedClass(TemperatureAnomalyDetectionRule.class);
+        configuration.addAnnotatedClass(HumidityAnomalyDetectionRule.class);
+        configuration.addAnnotatedClass(PressureAnomalyDetectionRule.class);
         configuration.addAnnotatedClass(Raspberry.class);
         configuration.addAnnotatedClass(Measurement.class);
         configuration.addAnnotatedClass(User.class);

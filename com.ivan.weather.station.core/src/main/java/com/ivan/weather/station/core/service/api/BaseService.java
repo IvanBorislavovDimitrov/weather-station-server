@@ -1,8 +1,8 @@
 package com.ivan.weather.station.core.service.api;
 
-import com.ivan.weather.station.core.domain.model.IdServiceModel;
-
 import java.util.List;
+
+import com.ivan.weather.station.core.domain.model.IdServiceModel;
 
 public interface BaseService<M extends IdServiceModel> {
 

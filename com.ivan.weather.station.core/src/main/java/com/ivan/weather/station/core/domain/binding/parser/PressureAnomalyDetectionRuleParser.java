@@ -10,7 +10,7 @@ public class PressureAnomalyDetectionRuleParser extends AnomalyDetectionRulePars
     }
 
     @Override
-    protected PressureAnomalyDetectionRuleServiceModel parse() {
+    public PressureAnomalyDetectionRuleServiceModel parse() {
         PressureAnomalyDetectionRuleServiceModel pressureAnomalyDetectionRuleServiceModel = super.parse();
         pressureAnomalyDetectionRuleServiceModel.setPressureBelowValue(getAnomalyDetectionRuleBindingRequest().getValueBelow());
         pressureAnomalyDetectionRuleServiceModel.setPressureAboveValue(getAnomalyDetectionRuleBindingRequest().getValueAbove());

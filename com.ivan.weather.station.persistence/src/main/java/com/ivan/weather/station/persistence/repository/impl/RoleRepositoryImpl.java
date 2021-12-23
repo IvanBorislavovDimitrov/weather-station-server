@@ -1,12 +1,13 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.entity.Role;
-import com.ivan.weather.station.persistence.repository.api.RoleRepository;
+import javax.annotation.PostConstruct;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
+import com.ivan.weather.station.persistence.entity.Role;
+import com.ivan.weather.station.persistence.repository.api.RoleRepository;
 
 @Repository
 public class RoleRepositoryImpl extends BaseRepositoryImpl<Role> implements RoleRepository {

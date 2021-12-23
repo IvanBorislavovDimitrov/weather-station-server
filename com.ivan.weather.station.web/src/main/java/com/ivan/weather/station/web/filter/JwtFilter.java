@@ -1,6 +1,13 @@
 package com.ivan.weather.station.web.filter;
 
-import com.ivan.weather.station.web.util.JwtUtil;
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,12 +22,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Optional;
+import com.ivan.weather.station.web.util.JwtUtil;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -36,7 +38,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (!StringUtils.startsWithIgnoreCase(authorizationHeader, "Bearer")) {
             filterChain.doFilter(request, response);
@@ -45,7 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String jwt = authorizationHeader.substring(7);
         Optional<String> username = JwtUtil.extractUsername(jwt);
         if (username.isPresent() && SecurityContextHolder.getContext()
-                .getAuthentication() == null) {
+                                                         .getAuthentication() == null) {
             UserDetails userDetails;
             try {
                 userDetails = userService.loadUserByUsername(username.get());
@@ -56,11 +58,11 @@ public class JwtFilter extends OncePerRequestFilter {
             }
             if (JwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-                        null,
-                        userDetails.getAuthorities());
+                                                                                                                                  null,
+                                                                                                                                  userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext()
-                        .setAuthentication(usernamePasswordAuthenticationToken);
+                                     .setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
         filterChain.doFilter(request, response);

@@ -1,15 +1,15 @@
 package com.ivan.weather.station.core.domain.binding.type;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Objects;
+
 import com.ivan.weather.station.core.domain.binding.parser.AnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.parser.HumidityAnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.parser.PressureAnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.parser.TemperatureAnomalyDetectionRuleParser;
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
-
-import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Objects;
 
 public enum AnomalyDetectionRuleType {
 
@@ -18,12 +18,14 @@ public enum AnomalyDetectionRuleType {
         public TemperatureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
             return new TemperatureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
         }
-    }, HUMIDITY("humidity") {
+    },
+    HUMIDITY("humidity") {
         @Override
         public HumidityAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
             return new HumidityAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
         }
-    }, PRESSURE("pressure") {
+    },
+    PRESSURE("pressure") {
         @Override
         public PressureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
             return new PressureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
@@ -38,14 +40,15 @@ public enum AnomalyDetectionRuleType {
 
     public static AnomalyDetectionRuleType from(String ruleName) {
         return Arrays.stream(AnomalyDetectionRuleType.values())
-                .filter(rule -> Objects.equals(rule.value, ruleName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Invalid type provided: \"{0}\"", ruleName)));
+                     .filter(rule -> Objects.equals(rule.value, ruleName))
+                     .findFirst()
+                     .orElseThrow(() -> new IllegalArgumentException(MessageFormat.format("Invalid type provided: \"{0}\"", ruleName)));
     }
 
     public String getValue() {
         return value;
     }
 
-    public abstract AnomalyDetectionRuleParser<? extends AnomalyDetectionRuleServiceModel> getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel);
+    public abstract AnomalyDetectionRuleParser<? extends AnomalyDetectionRuleServiceModel>
+           getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel);
 }

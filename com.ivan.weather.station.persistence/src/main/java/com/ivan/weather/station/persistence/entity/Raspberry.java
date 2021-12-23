@@ -1,9 +1,13 @@
 package com.ivan.weather.station.persistence.entity;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "raspberries")
@@ -17,11 +21,13 @@ public class Raspberry extends IdEntity {
     private String description;
     @Column(name = "is_started")
     private boolean isStarted;
+    @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "raspberry", fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Measurement.class)
     private List<Measurement> measurements = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
+    @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "raspberry", targetEntity = AnomalyDetectionRule.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AnomalyDetectionRule> anomalyDetectionRules = Collections.emptyList();
 

@@ -1,11 +1,11 @@
 package com.ivan.weather.station.persistence.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 public class IdEntity {

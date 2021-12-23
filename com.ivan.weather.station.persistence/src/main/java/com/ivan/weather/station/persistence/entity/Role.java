@@ -1,14 +1,15 @@
 package com.ivan.weather.station.persistence.entity;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+import javax.persistence.*;
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
-import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
 
 @Entity
 @Table(name = "roles")
@@ -21,8 +22,7 @@ public class Role extends IdEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     @Fetch(value = FetchMode.SUBSELECT)
     @ManyToMany
-    @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "roles_users", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = Collections.emptyList();
 
     public RoleType getRoleType() {

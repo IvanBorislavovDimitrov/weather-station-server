@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "anomaly_detection_rules")
-public abstract class AnomalyDetectionRule extends IdEntity {
+public class AnomalyDetectionRule extends IdEntity {
 
     @Column(name = "rule_below_activated")
     private boolean ruleBelowActivated;
@@ -14,10 +14,6 @@ public abstract class AnomalyDetectionRule extends IdEntity {
     @ManyToOne
     @JoinColumn(name = "raspberry_id", referencedColumnName = "id")
     private Raspberry raspberry;
-
-    public abstract double getBelowValue();
-
-    public abstract double getAboveValue();
 
     public boolean isRuleBelowActivated() {
         return ruleBelowActivated;

@@ -1,15 +1,16 @@
 package com.ivan.weather.station.web.util;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.time.Instant;
+import java.util.*;
+import java.util.function.Function;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.Instant;
-import java.util.*;
-import java.util.function.Function;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 public final class JwtUtil {
 
@@ -25,12 +26,12 @@ public final class JwtUtil {
 
     private static String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ONE_DAY))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+                   .setClaims(claims)
+                   .setSubject(subject)
+                   .setIssuedAt(new Date(System.currentTimeMillis()))
+                   .setExpiration(new Date(System.currentTimeMillis() + ONE_DAY))
+                   .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                   .compact();
     }
 
     public static Optional<String> extractUsername(String token) {
@@ -49,9 +50,9 @@ public final class JwtUtil {
 
     private static Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
+                   .setSigningKey(SECRET_KEY)
+                   .parseClaimsJws(token)
+                   .getBody();
     }
 
     public static boolean validateToken(String token, UserDetails userDetails) {
@@ -74,7 +75,8 @@ public final class JwtUtil {
     }
 
     private static Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration).orElse(new Date(Instant.now().getEpochSecond()));
+        return extractClaim(token, Claims::getExpiration).orElse(new Date(Instant.now()
+                                                                                 .getEpochSecond()));
     }
 
 }

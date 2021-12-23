@@ -1,19 +1,21 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.entity.IdEntity;
-import com.ivan.weather.station.persistence.repository.api.BaseRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.ivan.weather.station.persistence.entity.IdEntity;
+import com.ivan.weather.station.persistence.repository.api.BaseRepository;
 
 public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepository<E> {
 
@@ -45,7 +47,8 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<E> criteriaQuery = criteriaBuilder.createQuery(getEntityClass());
             Root<E> root = criteriaQuery.from(getEntityClass());
-            criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
+            criteriaQuery.select(root)
+                         .where(criteriaBuilder.equal(root.get("id"), id));
             return getOrEmpty(session, criteriaQuery);
         });
     }
@@ -59,7 +62,8 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
     }
 
     private <T> Optional<T> getSingleResult(Session session, CriteriaQuery<T> criteriaQuery) {
-        return Optional.of(session.createQuery(criteriaQuery).getSingleResult());
+        return Optional.of(session.createQuery(criteriaQuery)
+                                  .getSingleResult());
     }
 
     @Override

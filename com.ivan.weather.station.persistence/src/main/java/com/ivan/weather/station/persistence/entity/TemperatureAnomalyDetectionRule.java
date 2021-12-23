@@ -29,13 +29,4 @@ public class TemperatureAnomalyDetectionRule extends AnomalyDetectionRule {
         this.temperatureAboveValue = temperatureAboveValue;
     }
 
-    @Override
-    public double getBelowValue() {
-        return getTemperatureBelowValue();
-    }
-
-    @Override
-    public double getAboveValue() {
-        return getTemperatureAboveValue();
-    }
 }

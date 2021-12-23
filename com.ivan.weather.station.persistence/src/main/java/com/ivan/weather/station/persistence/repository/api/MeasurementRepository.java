@@ -1,9 +1,9 @@
 package com.ivan.weather.station.persistence.repository.api;
 
-import com.ivan.weather.station.persistence.entity.Measurement;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.ivan.weather.station.persistence.entity.Measurement;
 
 public interface MeasurementRepository extends BaseRepository<Measurement> {
 

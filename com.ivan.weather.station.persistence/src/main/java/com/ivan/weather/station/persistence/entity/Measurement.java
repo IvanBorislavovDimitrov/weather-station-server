@@ -1,7 +1,8 @@
 package com.ivan.weather.station.persistence.entity;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "measurements")

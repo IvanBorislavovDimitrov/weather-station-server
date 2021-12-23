@@ -29,13 +29,4 @@ public class PressureAnomalyDetectionRule extends AnomalyDetectionRule {
         this.pressureAboveValue = pressureAboveValue;
     }
 
-    @Override
-    public double getBelowValue() {
-        return getPressureBelowValue();
-    }
-
-    @Override
-    public double getAboveValue() {
-        return getPressureAboveValue();
-    }
 }

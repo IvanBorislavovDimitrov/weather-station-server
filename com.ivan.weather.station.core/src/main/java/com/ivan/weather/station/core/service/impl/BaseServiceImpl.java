@@ -1,14 +1,15 @@
 package com.ivan.weather.station.core.service.impl;
 
-import com.ivan.weather.station.persistence.entity.IdEntity;
-import com.ivan.weather.station.core.domain.model.IdServiceModel;
-import com.ivan.weather.station.persistence.repository.api.BaseRepository;
-import com.ivan.weather.station.core.service.api.BaseService;
-import org.modelmapper.ModelMapper;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+
+import com.ivan.weather.station.core.domain.model.IdServiceModel;
+import com.ivan.weather.station.core.service.api.BaseService;
+import com.ivan.weather.station.persistence.entity.IdEntity;
+import com.ivan.weather.station.persistence.repository.api.BaseRepository;
 
 public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceModel> implements BaseService<M> {
 
@@ -39,8 +40,8 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
     public List<M> findAll() {
         List<E> entities = baseRepository.findAll();
         return entities.stream()
-                .map(entity -> modelMapper.map(entity, getModelClass()))
-                .collect(Collectors.toList());
+                       .map(entity -> modelMapper.map(entity, getModelClass()))
+                       .collect(Collectors.toList());
     }
 
     @Override
@@ -51,6 +52,5 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
     protected abstract Class<E> getEntityClass();
 
     protected abstract Class<M> getModelClass();
-
 
 }

@@ -1,8 +1,8 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class AveragedMeasurementRequestModel {
 

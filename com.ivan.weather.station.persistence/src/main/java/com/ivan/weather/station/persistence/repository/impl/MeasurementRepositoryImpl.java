@@ -1,14 +1,16 @@
 package com.ivan.weather.station.persistence.repository.impl;
 
-import com.ivan.weather.station.persistence.entity.Measurement;
-import com.ivan.weather.station.persistence.entity.Raspberry;
-import com.ivan.weather.station.persistence.repository.api.MeasurementRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.criteria.*;
+
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.ivan.weather.station.persistence.entity.Measurement;
+import com.ivan.weather.station.persistence.entity.Raspberry;
+import com.ivan.weather.station.persistence.repository.api.MeasurementRepository;
 
 @Repository
 public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> implements MeasurementRepository {
@@ -28,7 +30,8 @@ public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> i
             Predicate greaterThan = criteriaBuilder.greaterThan(root.get("addedOn"), startPeriod);
             Predicate lessThan = criteriaBuilder.lessThan(root.get("addedOn"), endPeriod);
             criteriaQuery.where(criteriaBuilder.and(equalById, greaterThan, lessThan));
-            return session.createQuery(criteriaQuery).getResultList();
+            return session.createQuery(criteriaQuery)
+                          .getResultList();
         });
     }
 

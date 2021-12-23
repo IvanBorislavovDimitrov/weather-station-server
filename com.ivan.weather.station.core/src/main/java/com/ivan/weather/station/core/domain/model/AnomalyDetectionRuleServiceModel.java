@@ -1,6 +1,7 @@
 package com.ivan.weather.station.core.domain.model;
 
 import com.ivan.weather.station.core.domain.binding.response.AnomalyDetectionRuleResponseModel;
+import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
 
 public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
 
@@ -15,6 +16,15 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
         anomalyDetectionRuleResponseModel.setRaspberryId(getRaspberry().getId());
         return anomalyDetectionRuleResponseModel;
     }
+
+    public <T extends AnomalyDetectionRule> T toEntityModel() {
+        T anomalyDetectionRule = getEntity();
+        anomalyDetectionRule.setRuleAboveActivated(isRuleAboveActivated());
+        anomalyDetectionRule.setRuleBelowActivated(isRuleBelowActivated());
+        return anomalyDetectionRule;
+    }
+
+    protected abstract <T extends AnomalyDetectionRule> T getEntity();
 
     public boolean isRuleBelowActivated() {
         return ruleBelowActivated;

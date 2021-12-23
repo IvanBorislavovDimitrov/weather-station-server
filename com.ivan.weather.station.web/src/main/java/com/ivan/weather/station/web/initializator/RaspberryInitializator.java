@@ -16,18 +16,18 @@ public class RaspberryInitializator {
 
     public void startRaspberry(String raspberryRoute) {
         webClient.post()
-                .uri("http://" + raspberryRoute + ":8080/start")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+                 .uri("http://" + raspberryRoute + ":8080/start")
+                 .retrieve()
+                 .bodyToMono(String.class)
+                 .block();
     }
 
     public void stopRaspberry(String raspberryRoute) {
         webClient.post()
-                .uri("http://" + raspberryRoute + ":8080/stop")
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+                 .uri("http://" + raspberryRoute + ":8080/stop")
+                 .retrieve()
+                 .bodyToMono(String.class)
+                 .block();
     }
 
 }

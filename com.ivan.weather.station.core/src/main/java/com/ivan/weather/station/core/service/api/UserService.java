@@ -1,11 +1,11 @@
 package com.ivan.weather.station.core.service.api;
 
-import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
-
-import java.util.List;
 
 public interface UserService extends BaseService<UserServiceModel>, UserDetailsService {
 
