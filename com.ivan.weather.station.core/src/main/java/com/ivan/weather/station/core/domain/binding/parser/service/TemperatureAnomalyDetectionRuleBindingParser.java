@@ -1,11 +1,11 @@
-package com.ivan.weather.station.core.domain.binding.parser;
+package com.ivan.weather.station.core.domain.binding.parser.service;
 
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.TemperatureAnomalyDetectionRuleSericeModel;
 
-public class TemperatureAnomalyDetectionRuleParser extends AnomalyDetectionRuleParser<TemperatureAnomalyDetectionRuleSericeModel> {
+public class TemperatureAnomalyDetectionRuleBindingParser extends AnomalyDetectionRuleBindingParser<TemperatureAnomalyDetectionRuleSericeModel> {
 
-    public TemperatureAnomalyDetectionRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+    public TemperatureAnomalyDetectionRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
         super(anomalyDetectionRuleBindingModel);
     }
 

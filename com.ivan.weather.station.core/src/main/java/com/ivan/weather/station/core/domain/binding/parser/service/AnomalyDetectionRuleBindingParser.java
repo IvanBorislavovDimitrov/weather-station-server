@@ -1,14 +1,14 @@
-package com.ivan.weather.station.core.domain.binding.parser;
+package com.ivan.weather.station.core.domain.binding.parser.service;
 
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 
-public abstract class AnomalyDetectionRuleParser<T extends AnomalyDetectionRuleServiceModel> {
+public abstract class AnomalyDetectionRuleBindingParser<T extends AnomalyDetectionRuleServiceModel> {
 
     private final AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel;
 
-    protected AnomalyDetectionRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+    protected AnomalyDetectionRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
         this.anomalyDetectionRuleBindingModel = anomalyDetectionRuleBindingModel;
     }
 

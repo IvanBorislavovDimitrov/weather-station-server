@@ -1,11 +1,11 @@
-package com.ivan.weather.station.core.domain.binding.parser;
+package com.ivan.weather.station.core.domain.binding.parser.service;
 
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.HumidityAnomalyDetectionRuleServiceModel;
 
-public class HumidityAnomalyDetectionRuleParser extends AnomalyDetectionRuleParser<HumidityAnomalyDetectionRuleServiceModel> {
+public class HumidityAnomalyDetectionRuleBindingParser extends AnomalyDetectionRuleBindingParser<HumidityAnomalyDetectionRuleServiceModel> {
 
-    public HumidityAnomalyDetectionRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+    public HumidityAnomalyDetectionRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
         super(anomalyDetectionRuleBindingModel);
     }
 

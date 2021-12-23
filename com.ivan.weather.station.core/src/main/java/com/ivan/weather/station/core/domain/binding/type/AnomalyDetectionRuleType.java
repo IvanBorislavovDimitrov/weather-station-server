@@ -4,31 +4,58 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Objects;
 
-import com.ivan.weather.station.core.domain.binding.parser.AnomalyDetectionRuleParser;
-import com.ivan.weather.station.core.domain.binding.parser.HumidityAnomalyDetectionRuleParser;
-import com.ivan.weather.station.core.domain.binding.parser.PressureAnomalyDetectionRuleParser;
-import com.ivan.weather.station.core.domain.binding.parser.TemperatureAnomalyDetectionRuleParser;
+import com.ivan.weather.station.core.domain.binding.parser.entity.AnomalyDetectionRuleServiceParser;
+import com.ivan.weather.station.core.domain.binding.parser.entity.HumidityAnomalyDetectionRuleServiceParser;
+import com.ivan.weather.station.core.domain.binding.parser.entity.PressureAnomalyDetectionRuleServiceParser;
+import com.ivan.weather.station.core.domain.binding.parser.entity.TemperatureAnomalyDetectionRuleServiceParser;
+import com.ivan.weather.station.core.domain.binding.parser.service.AnomalyDetectionRuleBindingParser;
+import com.ivan.weather.station.core.domain.binding.parser.service.HumidityAnomalyDetectionRuleBindingParser;
+import com.ivan.weather.station.core.domain.binding.parser.service.PressureAnomalyDetectionRuleBindingParser;
+import com.ivan.weather.station.core.domain.binding.parser.service.TemperatureAnomalyDetectionRuleBindingParser;
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
+import com.ivan.weather.station.persistence.constant.Constants;
+import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
 
 public enum AnomalyDetectionRuleType {
 
-    TEMPERATURE("temperature") {
+    TEMPERATURE(Constants.TEMPERATURE_TYPE) {
         @Override
-        public TemperatureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
-            return new TemperatureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
+        public TemperatureAnomalyDetectionRuleBindingParser
+               getRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new TemperatureAnomalyDetectionRuleBindingParser(anomalyDetectionRuleBindingModel);
+        }
+
+        @Override
+        public AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
+               getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule) {
+            return new TemperatureAnomalyDetectionRuleServiceParser(anomalyDetectionRule);
         }
     },
-    HUMIDITY("humidity") {
+    HUMIDITY(Constants.HUMIDITY_TYPE) {
         @Override
-        public HumidityAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
-            return new HumidityAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
+        public HumidityAnomalyDetectionRuleBindingParser
+               getRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new HumidityAnomalyDetectionRuleBindingParser(anomalyDetectionRuleBindingModel);
+        }
+
+        @Override
+        public AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
+               getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule) {
+            return new HumidityAnomalyDetectionRuleServiceParser(anomalyDetectionRule);
         }
     },
-    PRESSURE("pressure") {
+    PRESSURE(Constants.PRESSURE_TYPE) {
         @Override
-        public PressureAnomalyDetectionRuleParser getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
-            return new PressureAnomalyDetectionRuleParser(anomalyDetectionRuleBindingModel);
+        public PressureAnomalyDetectionRuleBindingParser
+               getRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+            return new PressureAnomalyDetectionRuleBindingParser(anomalyDetectionRuleBindingModel);
+        }
+
+        @Override
+        public AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
+               getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule) {
+            return new PressureAnomalyDetectionRuleServiceParser(anomalyDetectionRule);
         }
     };
 
@@ -49,6 +76,9 @@ public enum AnomalyDetectionRuleType {
         return value;
     }
 
-    public abstract AnomalyDetectionRuleParser<? extends AnomalyDetectionRuleServiceModel>
-           getRuleParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel);
+    public abstract AnomalyDetectionRuleBindingParser<? extends AnomalyDetectionRuleServiceModel>
+           getRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel);
+
+    public abstract AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
+           getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule);
 }

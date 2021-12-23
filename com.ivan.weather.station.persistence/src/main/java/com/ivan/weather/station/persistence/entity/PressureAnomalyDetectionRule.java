@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.ivan.weather.station.persistence.constant.Constants;
+
 @Entity
 @Table(name = "pressure_anomaly_detection_rule")
 public class PressureAnomalyDetectionRule extends AnomalyDetectionRule {
@@ -12,6 +14,11 @@ public class PressureAnomalyDetectionRule extends AnomalyDetectionRule {
     private double pressureBelowValue;
     @Column(name = "pressureAboveValue")
     private double pressureAboveValue;
+
+    @Override
+    public String getType() {
+        return Constants.PRESSURE_TYPE;
+    }
 
     public double getPressureBelowValue() {
         return pressureBelowValue;

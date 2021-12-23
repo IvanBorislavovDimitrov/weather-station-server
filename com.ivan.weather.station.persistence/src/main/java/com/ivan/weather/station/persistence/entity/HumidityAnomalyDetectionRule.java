@@ -1,5 +1,7 @@
 package com.ivan.weather.station.persistence.entity;
 
+import com.ivan.weather.station.persistence.constant.Constants;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,6 +14,11 @@ public class HumidityAnomalyDetectionRule extends AnomalyDetectionRule {
     private double humidityBelowValue;
     @Column(name = "humidity_above_value")
     private double humidityAboveValue;
+
+    @Override
+    public String getType() {
+        return Constants.HUMIDITY_TYPE;
+    }
 
     public double getHumidityBelowValue() {
         return humidityBelowValue;

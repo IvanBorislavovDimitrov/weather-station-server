@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.ivan.weather.station.persistence.constant.Constants;
+
 @Entity
 @Table(name = "temperature_anomaly_detection_rules")
 public class TemperatureAnomalyDetectionRule extends AnomalyDetectionRule {
@@ -12,6 +14,11 @@ public class TemperatureAnomalyDetectionRule extends AnomalyDetectionRule {
     private double temperatureBelowValue;
     @Column(name = "temperature_above_value")
     private double temperatureAboveValue;
+
+    @Override
+    public String getType() {
+        return Constants.TEMPERATURE_TYPE;
+    }
 
     public double getTemperatureBelowValue() {
         return temperatureBelowValue;

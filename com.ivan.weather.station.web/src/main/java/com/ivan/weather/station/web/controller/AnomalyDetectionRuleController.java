@@ -37,7 +37,7 @@ public class AnomalyDetectionRuleController {
     public ResponseEntity<AnomalyDetectionRuleResponseModel>
            add(@RequestBody AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
         AnomalyDetectionRuleType anomalyDetectionRuleType = AnomalyDetectionRuleType.from(anomalyDetectionRuleBindingModel.getType());
-        AnomalyDetectionRuleServiceModel anomalyDetectionRuleServiceModel = anomalyDetectionRuleType.getRuleParser(anomalyDetectionRuleBindingModel)
+        AnomalyDetectionRuleServiceModel anomalyDetectionRuleServiceModel = anomalyDetectionRuleType.getRuleBindingParser(anomalyDetectionRuleBindingModel)
                                                                                                     .parse();
         anomalyDetectionRuleService.save(anomalyDetectionRuleServiceModel);
         AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRuleServiceModel.toResponseModel();

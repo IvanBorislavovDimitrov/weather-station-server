@@ -1,10 +1,13 @@
 package com.ivan.weather.station.core.service.impl;
 
-import com.ivan.weather.station.core.domain.model.IdServiceModel;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleType;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 import com.ivan.weather.station.core.service.api.AnomalyDetectionRuleService;
 import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
@@ -38,6 +41,16 @@ public class AnomalyDetectionRuleServiceImpl extends BaseServiceImpl<AnomalyDete
         AnomalyDetectionRule anomalyDetectionRule = anomalyDetectionRuleServiceModel.toEntityModel();
         anomalyDetectionRule.setRaspberry(raspberry);
         anomalyDetectionRuleRepository.save(anomalyDetectionRule);
+    }
+
+    @Override
+    public List<AnomalyDetectionRuleServiceModel> findAll() {
+        List<AnomalyDetectionRule> anomalyDetectionRules = anomalyDetectionRuleRepository.findAll();
+        return anomalyDetectionRules.stream()
+                                    .map(anomalyDetectionRule -> AnomalyDetectionRuleType.from(anomalyDetectionRule.getType())
+                                                                                         .getRuleServiceParser(anomalyDetectionRule)
+                                                                                         .parse())
+                                    .collect(Collectors.toList());
     }
 
     @Override
