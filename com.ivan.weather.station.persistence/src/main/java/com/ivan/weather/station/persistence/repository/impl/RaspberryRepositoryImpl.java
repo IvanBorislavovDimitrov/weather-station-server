@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ivan.weather.station.persistence.entity.Raspberry;
@@ -15,6 +16,7 @@ import com.ivan.weather.station.persistence.repository.api.RaspberryRepository;
 @Repository
 public class RaspberryRepositoryImpl extends BaseRepositoryImpl<Raspberry> implements RaspberryRepository {
 
+    @Autowired
     public RaspberryRepositoryImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.criteria.*;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ivan.weather.station.persistence.entity.Measurement;
@@ -15,6 +16,7 @@ import com.ivan.weather.station.persistence.repository.api.MeasurementRepository
 @Repository
 public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> implements MeasurementRepository {
 
+    @Autowired
     public MeasurementRepositoryImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
     }

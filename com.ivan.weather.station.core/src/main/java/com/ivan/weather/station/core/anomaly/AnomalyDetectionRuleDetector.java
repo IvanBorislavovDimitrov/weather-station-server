@@ -30,6 +30,7 @@ public class AnomalyDetectionRuleDetector {
                 emailClient.sendAsync(getEmail(email, anomalyDetectionRuleResponseModel.getType(), measurement.getRaspberry()
                                                                                                                  .getName()));
 
+                // TODO: Stop/start power plugs in case of anomaly
             }
         }
     }

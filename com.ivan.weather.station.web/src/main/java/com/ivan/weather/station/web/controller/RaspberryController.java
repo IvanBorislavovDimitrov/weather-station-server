@@ -14,7 +14,7 @@ import com.ivan.weather.station.core.domain.binding.request.RaspberryRequestBind
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
 import com.ivan.weather.station.core.service.api.RaspberryService;
-import com.ivan.weather.station.web.initializator.RaspberryInitializator;
+import com.ivan.weather.station.web.initializator.RaspberryRemoteControl;
 
 @RestController
 @RequestMapping(value = "/raspberry", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -22,13 +22,13 @@ public class RaspberryController {
 
     private final RaspberryService raspberryService;
     private final ModelMapper modelMapper;
-    private final RaspberryInitializator raspberryInitializator;
+    private final RaspberryRemoteControl raspberryRemoteControl;
 
     @Autowired
-    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper, RaspberryInitializator raspberryInitializator) {
+    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper, RaspberryRemoteControl raspberryRemoteControl) {
         this.raspberryService = raspberryService;
         this.modelMapper = modelMapper;
-        this.raspberryInitializator = raspberryInitializator;
+        this.raspberryRemoteControl = raspberryRemoteControl;
     }
 
     @GetMapping
@@ -55,7 +55,7 @@ public class RaspberryController {
 
     @PostMapping(value = "/start")
     public ResponseEntity<Void> startRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
-        raspberryInitializator.startRaspberry(requestBindingModel.getRoute());
+        raspberryRemoteControl.startRaspberry(requestBindingModel.getRoute());
         raspberryService.start(requestBindingModel.getId());
         return ResponseEntity.ok()
                              .build();
@@ -63,7 +63,7 @@ public class RaspberryController {
 
     @PostMapping(value = "/stop")
     public ResponseEntity<Void> stopRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
-        raspberryInitializator.stopRaspberry(requestBindingModel.getRoute());
+        raspberryRemoteControl.stopRaspberry(requestBindingModel.getRoute());
         raspberryService.stop(requestBindingModel.getId());
         return ResponseEntity.ok()
                              .build();

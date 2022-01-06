@@ -30,6 +30,9 @@ public class Raspberry extends IdEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "raspberry", targetEntity = AnomalyDetectionRule.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AnomalyDetectionRule> anomalyDetectionRules = Collections.emptyList();
+    @Fetch(value = FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "raspberry", targetEntity = PowerPlug.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PowerPlug> powerPlugs = Collections.emptyList();
 
     public String getDescription() {
         return description;
@@ -85,5 +88,13 @@ public class Raspberry extends IdEntity {
 
     public void setAnomalyDetectionRules(List<AnomalyDetectionRule> anomalyDetectionRules) {
         this.anomalyDetectionRules = anomalyDetectionRules;
+    }
+
+    public List<PowerPlug> getPowerPlugs() {
+        return powerPlugs;
+    }
+
+    public void setPowerPlugs(List<PowerPlug> powerPlugs) {
+        this.powerPlugs = powerPlugs;
     }
 }

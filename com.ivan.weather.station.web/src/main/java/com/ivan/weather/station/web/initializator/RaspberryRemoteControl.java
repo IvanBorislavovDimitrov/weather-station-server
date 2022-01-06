@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
-public class RaspberryInitializator {
+public class RaspberryRemoteControl {
 
     private final WebClient webClient;
 
     @Autowired
-    public RaspberryInitializator(WebClient webClient) {
+    public RaspberryRemoteControl(WebClient webClient) {
         this.webClient = webClient;
     }
 

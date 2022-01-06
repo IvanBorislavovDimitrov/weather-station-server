@@ -22,7 +22,7 @@ public class SessionFactoryBean {
         properties.setProperty("hibernate.connection.username", "postgres");
         properties.setProperty("hibernate.connection.password", "123456");
         properties.setProperty("hibernate.current_session_context_class", "org.hibernate.context.internal.ManagedSessionContext");
-        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.show_sql", "false");
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
