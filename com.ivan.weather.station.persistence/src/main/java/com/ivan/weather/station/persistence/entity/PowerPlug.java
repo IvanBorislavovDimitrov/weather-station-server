@@ -2,6 +2,8 @@ package com.ivan.weather.station.persistence.entity;
 
 import javax.persistence.*;
 
+import com.ivan.weather.station.persistence.type.PowerPlugType;
+
 @Entity
 @Table(name = "power_plugs")
 public class PowerPlug extends IdEntity {
@@ -22,6 +24,9 @@ public class PowerPlug extends IdEntity {
     @Column(name = "action_on_above_anomaly", nullable = false)
     @Enumerated(EnumType.STRING)
     private Action actionOnAboveAnomaly;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PowerPlugType type;
     @ManyToOne
     @JoinColumn(name = "raspberry_id", referencedColumnName = "id")
     private Raspberry raspberry;
@@ -96,5 +101,13 @@ public class PowerPlug extends IdEntity {
 
     public void setActionOnAboveAnomaly(Action actionOnAboveAnomaly) {
         this.actionOnAboveAnomaly = actionOnAboveAnomaly;
+    }
+
+    public PowerPlugType getType() {
+        return type;
+    }
+
+    public void setType(PowerPlugType type) {
+        this.type = type;
     }
 }

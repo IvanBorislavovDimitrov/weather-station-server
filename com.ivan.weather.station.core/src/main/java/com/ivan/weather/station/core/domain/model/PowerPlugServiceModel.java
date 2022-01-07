@@ -10,6 +10,7 @@ public class PowerPlugServiceModel extends IdServiceModel {
     private String state;
     private String actionOnBelowAnomaly;
     private String actionOnAboveAnomaly;
+    private String type;
 
     public String getName() {
         return name;
@@ -73,5 +74,13 @@ public class PowerPlugServiceModel extends IdServiceModel {
 
     public void setActionOnAboveAnomaly(String actionOnAboveAnomaly) {
         this.actionOnAboveAnomaly = actionOnAboveAnomaly;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

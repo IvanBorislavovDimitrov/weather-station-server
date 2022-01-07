@@ -1,13 +1,23 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
+import javax.validation.constraints.NotNull;
+
 public class PowerPlugRequestModel {
 
+    @NotNull
     private String name;
+    @NotNull
     private String route;
+    @NotNull
     private String description;
+    @NotNull
     private String raspberryId;
+    @NotNull
     private String actionOnBelowAnomaly;
+    @NotNull
     private String actionOnAboveAnomaly;
+    @NotNull
+    private String type;
 
     public String getName() {
         return name;
@@ -55,5 +65,13 @@ public class PowerPlugRequestModel {
 
     public void setActionOnAboveAnomaly(String actionOnAboveAnomaly) {
         this.actionOnAboveAnomaly = actionOnAboveAnomaly;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -1,5 +1,7 @@
 package com.ivan.weather.station.web.controller;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,7 +30,7 @@ public class PowerPlugController {
     }
 
     @PostMapping
-    public ResponseEntity<PowerPlugResponseModel> add(@RequestBody PowerPlugRequestModel powerPlugRequestModel) {
+    public ResponseEntity<PowerPlugResponseModel> add(@RequestBody @Valid PowerPlugRequestModel powerPlugRequestModel) {
         PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugRequestModel, PowerPlugServiceModel.class);
         powerPlugService.save(powerPlugServiceModel);
         PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugRequestModel, PowerPlugResponseModel.class);
