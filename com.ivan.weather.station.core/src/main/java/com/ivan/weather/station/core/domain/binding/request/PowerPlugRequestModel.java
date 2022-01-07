@@ -1,13 +1,11 @@
-package com.ivan.weather.station.core.domain.model;
+package com.ivan.weather.station.core.domain.binding.request;
 
-public class PowerPlugServiceModel extends IdServiceModel {
+public class PowerPlugRequestModel {
 
     private String name;
     private String route;
-    private boolean isStarted;
     private String description;
     private String raspberryId;
-    private String state;
     private String actionOnBelowAnomaly;
     private String actionOnAboveAnomaly;
 
@@ -27,14 +25,6 @@ public class PowerPlugServiceModel extends IdServiceModel {
         this.route = route;
     }
 
-    public boolean isStarted() {
-        return isStarted;
-    }
-
-    public void setStarted(boolean started) {
-        isStarted = started;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -49,14 +39,6 @@ public class PowerPlugServiceModel extends IdServiceModel {
 
     public void setRaspberryId(String raspberryId) {
         this.raspberryId = raspberryId;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getActionOnBelowAnomaly() {

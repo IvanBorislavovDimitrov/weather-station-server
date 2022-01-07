@@ -14,6 +14,14 @@ public class PowerPlug extends IdEntity {
     private boolean isStarted;
     @Lob
     private String description;
+    @Enumerated(EnumType.STRING)
+    private State state;
+    @Column(name = "action_on_below_anomaly", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Action actionOnBelowAnomaly;
+    @Column(name = "action_on_above_anomaly", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Action actionOnAboveAnomaly;
     @ManyToOne
     @JoinColumn(name = "raspberry_id", referencedColumnName = "id")
     private Raspberry raspberry;
@@ -56,5 +64,37 @@ public class PowerPlug extends IdEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public State getAction() {
+        return state;
+    }
+
+    public void setAction(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public Action getActionOnBelowAnomaly() {
+        return actionOnBelowAnomaly;
+    }
+
+    public void setActionOnBelowAnomaly(Action actionOnBelowAnomaly) {
+        this.actionOnBelowAnomaly = actionOnBelowAnomaly;
+    }
+
+    public Action getActionOnAboveAnomaly() {
+        return actionOnAboveAnomaly;
+    }
+
+    public void setActionOnAboveAnomaly(Action actionOnAboveAnomaly) {
+        this.actionOnAboveAnomaly = actionOnAboveAnomaly;
     }
 }

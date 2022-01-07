@@ -1,10 +1,9 @@
-package com.ivan.weather.station.core.domain.model;
+package com.ivan.weather.station.core.domain.binding.response;
 
-public class PowerPlugServiceModel extends IdServiceModel {
+public class PowerPlugResponseModel {
 
     private String name;
     private String route;
-    private boolean isStarted;
     private String description;
     private String raspberryId;
     private String state;
@@ -25,14 +24,6 @@ public class PowerPlugServiceModel extends IdServiceModel {
 
     public void setRoute(String route) {
         this.route = route;
-    }
-
-    public boolean isStarted() {
-        return isStarted;
-    }
-
-    public void setStarted(boolean started) {
-        isStarted = started;
     }
 
     public String getDescription() {
