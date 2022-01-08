@@ -34,6 +34,7 @@ public class SessionFactoryBean {
         configuration.addAnnotatedClass(Measurement.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
+        configuration.addAnnotatedClass(PowerPlug.class);
         StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder();
         configuration.setProperties(properties);
         standardServiceRegistryBuilder.applySettings(configuration.getProperties());

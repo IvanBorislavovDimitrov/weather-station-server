@@ -71,14 +71,6 @@ public class PowerPlug extends IdEntity {
         this.description = description;
     }
 
-    public State getAction() {
-        return state;
-    }
-
-    public void setAction(State state) {
-        this.state = state;
-    }
-
     public State getState() {
         return state;
     }
