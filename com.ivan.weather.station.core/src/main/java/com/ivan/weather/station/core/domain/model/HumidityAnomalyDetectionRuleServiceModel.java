@@ -53,12 +53,12 @@ public class HumidityAnomalyDetectionRuleServiceModel extends AnomalyDetectionRu
 
     @Override
     public boolean isOutOfUpperConstraint(MeasurementServiceModel measurement) {
-        return (measurement.getHumidity() > getHumidityAboveValue() && isRuleAboveActivated());
+        return isRuleAboveActivated() && measurement.getHumidity() > getHumidityAboveValue();
     }
 
     @Override
     public boolean isOutOfDownConstraint(MeasurementServiceModel measurement) {
-        return (measurement.getHumidity() < getHumidityBelowValue() && isRuleBelowActivated());
+        return isRuleBelowActivated() && measurement.getHumidity() < getHumidityBelowValue();
     }
 
     @Override

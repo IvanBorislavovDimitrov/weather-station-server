@@ -53,12 +53,12 @@ public class TemperatureAnomalyDetectionRuleSericeModel extends AnomalyDetection
 
     @Override
     public boolean isOutOfUpperConstraint(MeasurementServiceModel measurement) {
-        return (measurement.getTemperature() > getTemperatureAboveValue() && isRuleAboveActivated());
+        return isRuleAboveActivated() && measurement.getTemperature() > getTemperatureAboveValue();
     }
 
     @Override
     public boolean isOutOfDownConstraint(MeasurementServiceModel measurement) {
-        return (measurement.getTemperature() < getTemperatureBelowValue() && isRuleBelowActivated());
+        return isRuleBelowActivated() && measurement.getTemperature() < getTemperatureBelowValue();
     }
 
     @Override

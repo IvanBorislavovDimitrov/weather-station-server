@@ -15,7 +15,7 @@ public class PowerPlugRemoteControl {
     }
 
     public void executeAction(String powerPlugRoute, String action) {
-        webClient.post()
+        webClient.get()
                  .uri("http://" + powerPlugRoute + "/relay/0?turn=" + action)
                  .retrieve()
                  .bodyToMono(String.class)
