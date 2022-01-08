@@ -43,7 +43,7 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
                                                  .orElseThrow(() -> new IllegalArgumentException("Not found"));
         measurementServiceModel.getRaspberry()
                                .setName(raspberry.getName());
-        anomalyDetectionRuleDetector.detectForAnomalies(measurementServiceModel, parseAnomalyDetectionRules(raspberry), raspberry.getOwner()
+        anomalyDetectionRuleDetector.detectForAnomalies(measurementServiceModel, raspberry, raspberry.getOwner()
                                                                                                                                  .getEmail());
         Measurement measurement = modelMapper.map(measurementServiceModel, Measurement.class);
         raspberry.getMeasurements()
@@ -53,14 +53,6 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
         measurementRepository.save(measurement);
     }
 
-    private List<AnomalyDetectionRuleServiceModel> parseAnomalyDetectionRules(Raspberry raspberry) {
-        return raspberry.getAnomalyDetectionRules()
-                        .stream()
-                        .map(anomalyDetectionRule -> AnomalyDetectionRuleType.from(anomalyDetectionRule.getType())
-                                                                             .getRuleServiceParser(anomalyDetectionRule)
-                                                                             .parse())
-                        .collect(Collectors.toList());
-    }
 
     @Override
     public List<MeasurementServiceModel> getMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId) {

@@ -19,10 +19,9 @@ public class PowerPlugServiceImpl extends BaseServiceImpl<PowerPlug, PowerPlugSe
     private final RaspberryRepository raspberryRepository;
 
     @Autowired
-    public PowerPlugServiceImpl(PowerPlugRepository powerPlugRepository, ModelMapper modelMapper, PowerPlugRepository powerPlugRepository1,
-                                RaspberryRepository raspberryRepository) {
+    public PowerPlugServiceImpl(PowerPlugRepository powerPlugRepository, ModelMapper modelMapper, RaspberryRepository raspberryRepository) {
         super(powerPlugRepository, modelMapper);
-        this.powerPlugRepository = powerPlugRepository1;
+        this.powerPlugRepository = powerPlugRepository;
         this.raspberryRepository = raspberryRepository;
     }
 
