@@ -1,5 +1,7 @@
 package com.ivan.weather.station.core.domain.model;
 
+import java.util.List;
+
 import com.ivan.weather.station.core.domain.binding.response.AnomalyDetectionRuleResponseModel;
 import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
 
@@ -24,7 +26,11 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
         return anomalyDetectionRule;
     }
 
-    public abstract boolean isOutOfConstraint(MeasurementServiceModel measurement);
+    public abstract boolean isOutOfUpperConstraint(MeasurementServiceModel measurement);
+
+    public abstract boolean isOutOfDownConstraint(MeasurementServiceModel measurement);
+
+    public abstract List<PowerPlugServiceModel> getPlugsForAnomaly(List<PowerPlugServiceModel> powerPlugs);
 
     protected abstract <T extends AnomalyDetectionRule> T getEntity();
 

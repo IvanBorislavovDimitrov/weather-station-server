@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ivan.weather.station.core.anomaly.AnomalyDetectionRuleDetector;
-import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleType;
-import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.core.service.api.MeasurementService;
 import com.ivan.weather.station.persistence.entity.Measurement;
@@ -43,8 +41,7 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
                                                  .orElseThrow(() -> new IllegalArgumentException("Not found"));
         measurementServiceModel.getRaspberry()
                                .setName(raspberry.getName());
-        anomalyDetectionRuleDetector.detectForAnomalies(measurementServiceModel, raspberry, raspberry.getOwner()
-                                                                                                                                 .getEmail());
+        anomalyDetectionRuleDetector.detectForAnomalies(measurementServiceModel, raspberry);
         Measurement measurement = modelMapper.map(measurementServiceModel, Measurement.class);
         raspberry.getMeasurements()
                  .add(measurement);
@@ -52,7 +49,6 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
         measurement.setAddedOn(LocalDateTime.now(ZoneOffset.UTC));
         measurementRepository.save(measurement);
     }
-
 
     @Override
     public List<MeasurementServiceModel> getMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId) {

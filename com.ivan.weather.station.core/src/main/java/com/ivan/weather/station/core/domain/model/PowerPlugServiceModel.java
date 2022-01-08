@@ -1,5 +1,7 @@
 package com.ivan.weather.station.core.domain.model;
 
+import com.ivan.weather.station.persistence.enumeration.Action;
+
 public class PowerPlugServiceModel extends IdServiceModel {
 
     private String name;
@@ -8,8 +10,8 @@ public class PowerPlugServiceModel extends IdServiceModel {
     private String description;
     private String raspberryId;
     private String state;
-    private String actionOnBelowAnomaly;
-    private String actionOnAboveAnomaly;
+    private Action actionOnBelowAnomaly;
+    private Action actionOnAboveAnomaly;
     private String type;
 
     public String getName() {
@@ -60,19 +62,19 @@ public class PowerPlugServiceModel extends IdServiceModel {
         this.state = state;
     }
 
-    public String getActionOnBelowAnomaly() {
+    public Action getActionOnBelowAnomaly() {
         return actionOnBelowAnomaly;
     }
 
-    public void setActionOnBelowAnomaly(String actionOnBelowAnomaly) {
+    public void setActionOnBelowAnomaly(Action actionOnBelowAnomaly) {
         this.actionOnBelowAnomaly = actionOnBelowAnomaly;
     }
 
-    public String getActionOnAboveAnomaly() {
+    public Action getActionOnAboveAnomaly() {
         return actionOnAboveAnomaly;
     }
 
-    public void setActionOnAboveAnomaly(String actionOnAboveAnomaly) {
+    public void setActionOnAboveAnomaly(Action actionOnAboveAnomaly) {
         this.actionOnAboveAnomaly = actionOnAboveAnomaly;
     }
 

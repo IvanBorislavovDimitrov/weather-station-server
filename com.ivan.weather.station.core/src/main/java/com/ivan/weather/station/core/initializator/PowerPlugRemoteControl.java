@@ -14,19 +14,12 @@ public class PowerPlugRemoteControl {
         this.webClient = webClient;
     }
 
-    public void turnOnPlug(String powerPlugRoute) {
+    public void executeAction(String powerPlugRoute, String action) {
         webClient.post()
-                 .uri("http://" + powerPlugRoute + "/relay/0?turn=on")
+                 .uri("http://" + powerPlugRoute + "/relay/0?turn=" + action)
                  .retrieve()
                  .bodyToMono(String.class)
                  .block();
     }
 
-    public void turnOffPlug(String powerPlugRoute) {
-        webClient.post()
-                 .uri("http://" + powerPlugRoute + "/relay/0?turn=off")
-                 .retrieve()
-                 .bodyToMono(String.class)
-                 .block();
-    }
 }

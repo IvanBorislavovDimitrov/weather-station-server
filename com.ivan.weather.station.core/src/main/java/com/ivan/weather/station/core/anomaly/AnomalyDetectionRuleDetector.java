@@ -2,9 +2,10 @@ package com.ivan.weather.station.core.anomaly;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.ivan.weather.station.core.initializator.PowerPlugRemoteControl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,8 @@ import com.ivan.weather.station.core.domain.binding.response.AnomalyDetectionRul
 import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleType;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
+import com.ivan.weather.station.core.domain.model.PowerPlugServiceModel;
+import com.ivan.weather.station.core.initializator.PowerPlugRemoteControl;
 import com.ivan.weather.station.core.mail.Email;
 import com.ivan.weather.station.core.mail.EmailClient;
 import com.ivan.weather.station.persistence.entity.Raspberry;
@@ -21,23 +24,39 @@ public class AnomalyDetectionRuleDetector {
 
     private final EmailClient emailClient;
     private final PowerPlugRemoteControl powerPlugRemoteControl;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public AnomalyDetectionRuleDetector(EmailClient emailClient, PowerPlugRemoteControl powerPlugRemoteControl) {
+    public AnomalyDetectionRuleDetector(EmailClient emailClient, PowerPlugRemoteControl powerPlugRemoteControl, ModelMapper modelMapper) {
         this.emailClient = emailClient;
         this.powerPlugRemoteControl = powerPlugRemoteControl;
+        this.modelMapper = modelMapper;
     }
 
-    public void detectForAnomalies(MeasurementServiceModel measurement, Raspberry raspberry, String email) {
+    public void detectForAnomalies(MeasurementServiceModel measurement, Raspberry raspberry) {
         for (AnomalyDetectionRuleServiceModel anomalyDetectionRule : parseAnomalyDetectionRules(raspberry)) {
-            if (anomalyDetectionRule.isOutOfConstraint(measurement)) {
-                AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRule.toResponseModel();
-                emailClient.sendAsync(getEmail(email, anomalyDetectionRuleResponseModel.getType(), measurement.getRaspberry()
-                                                                                                              .getName()));
-
-                // TODO: Stop/start power plugs in case of anomaly
+            if (anomalyDetectionRule.isOutOfUpperConstraint(measurement)) {
+                executeControl(raspberry, anomalyDetectionRule, powerPlug -> powerPlug.getActionOnAboveAnomaly()
+                                                                                      .getActionValue());
+            }
+            if (anomalyDetectionRule.isOutOfDownConstraint(measurement)) {
+                executeControl(raspberry, anomalyDetectionRule, powerPlug -> powerPlug.getActionOnBelowAnomaly()
+                                                                                      .getActionValue());
             }
         }
+    }
+
+    private void executeControl(Raspberry raspberry, AnomalyDetectionRuleServiceModel anomalyDetectionRule,
+                                Function<PowerPlugServiceModel, String> anomalyActionGetter) {
+        AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRule.toResponseModel();
+        List<PowerPlugServiceModel> powerPlugsForAnomaly = anomalyDetectionRule.getPlugsForAnomaly(parsePowerPlugs(raspberry));
+        for (PowerPlugServiceModel powerPlugServiceModel : powerPlugsForAnomaly) {
+            String actionValue = anomalyActionGetter.apply(powerPlugServiceModel);
+            powerPlugRemoteControl.executeAction(powerPlugServiceModel.getRoute(), actionValue);
+        }
+        emailClient.sendAsync(getEmail(raspberry.getOwner()
+                                                .getEmail(),
+                                       anomalyDetectionRuleResponseModel.getType(), raspberry.getName()));
     }
 
     private List<AnomalyDetectionRuleServiceModel> parseAnomalyDetectionRules(Raspberry raspberry) {
@@ -46,6 +65,13 @@ public class AnomalyDetectionRuleDetector {
                         .map(anomalyDetectionRule -> AnomalyDetectionRuleType.from(anomalyDetectionRule.getType())
                                                                              .getRuleServiceParser(anomalyDetectionRule)
                                                                              .parse())
+                        .collect(Collectors.toList());
+    }
+
+    private List<PowerPlugServiceModel> parsePowerPlugs(Raspberry raspberry) {
+        return raspberry.getPowerPlugs()
+                        .stream()
+                        .map(powerPlug -> modelMapper.map(powerPlug, PowerPlugServiceModel.class))
                         .collect(Collectors.toList());
     }
 

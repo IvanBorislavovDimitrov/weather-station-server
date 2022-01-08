@@ -1,5 +1,8 @@
 package com.ivan.weather.station.core.domain.model;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ivan.weather.station.core.domain.binding.response.AnomalyDetectionRuleResponseModel;
 import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleType;
 import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
@@ -49,8 +52,20 @@ public class TemperatureAnomalyDetectionRuleSericeModel extends AnomalyDetection
     }
 
     @Override
-    public boolean isOutOfConstraint(MeasurementServiceModel measurement) {
-        return (measurement.getTemperature() > getTemperatureAboveValue() && isRuleAboveActivated())
-            || (measurement.getTemperature() < getTemperatureBelowValue() && isRuleBelowActivated());
+    public boolean isOutOfUpperConstraint(MeasurementServiceModel measurement) {
+        return (measurement.getTemperature() > getTemperatureAboveValue() && isRuleAboveActivated());
+    }
+
+    @Override
+    public boolean isOutOfDownConstraint(MeasurementServiceModel measurement) {
+        return (measurement.getTemperature() < getTemperatureBelowValue() && isRuleBelowActivated());
+    }
+
+    @Override
+    public List<PowerPlugServiceModel> getPlugsForAnomaly(List<PowerPlugServiceModel> powerPlugs) {
+        return powerPlugs.stream()
+                         .filter(powerPlug -> AnomalyDetectionRuleType.TEMPERATURE.getValue()
+                                                                                  .equalsIgnoreCase(powerPlug.getType()))
+                         .collect(Collectors.toList());
     }
 }
