@@ -13,14 +13,15 @@ public abstract class AnomalyDetectionRuleServiceParser<T extends AnomalyDetecti
     }
 
     public T parse() {
-        T anomalyDetectionEntity = getModel();
-        anomalyDetectionEntity.setRuleAboveActivated(anomalyDetectionRule.isRuleAboveActivated());
-        anomalyDetectionEntity.setRuleBelowActivated(anomalyDetectionRule.isRuleBelowActivated());
+        T anomalyDetectionServiceModel = getModel();
+        anomalyDetectionServiceModel.setId(anomalyDetectionRule.getId());
+        anomalyDetectionServiceModel.setRuleAboveActivated(anomalyDetectionRule.isRuleAboveActivated());
+        anomalyDetectionServiceModel.setRuleBelowActivated(anomalyDetectionRule.isRuleBelowActivated());
         RaspberryServiceModel raspberryServiceModel = new RaspberryServiceModel();
         raspberryServiceModel.setId(anomalyDetectionRule.getRaspberry()
                                                         .getId());
-        anomalyDetectionEntity.setRaspberry(raspberryServiceModel);
-        return anomalyDetectionEntity;
+        anomalyDetectionServiceModel.setRaspberry(raspberryServiceModel);
+        return anomalyDetectionServiceModel;
     }
 
     protected abstract T getModel();

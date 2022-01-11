@@ -13,6 +13,7 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
 
     public AnomalyDetectionRuleResponseModel toResponseModel() {
         AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = new AnomalyDetectionRuleResponseModel();
+        anomalyDetectionRuleResponseModel.setId(getId());
         anomalyDetectionRuleResponseModel.setRuleAboveActivated(isRuleAboveActivated());
         anomalyDetectionRuleResponseModel.setRuleBelowActivated(isRuleBelowActivated());
         anomalyDetectionRuleResponseModel.setRaspberryId(getRaspberry().getId());
@@ -57,4 +58,5 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
     public void setRaspberry(RaspberryServiceModel raspberry) {
         this.raspberry = raspberry;
     }
+
 }

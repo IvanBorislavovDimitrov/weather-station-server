@@ -2,12 +2,21 @@ package com.ivan.weather.station.core.domain.binding.response;
 
 public class AnomalyDetectionRuleResponseModel {
 
+    private String id;
     private boolean ruleBelowActivated;
     private boolean ruleAboveActivated;
     private double valueBelow;
     private double valueAbove;
     private String raspberryId;
     private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public boolean isRuleBelowActivated() {
         return ruleBelowActivated;

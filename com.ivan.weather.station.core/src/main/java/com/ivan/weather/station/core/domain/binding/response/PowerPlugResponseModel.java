@@ -2,6 +2,7 @@ package com.ivan.weather.station.core.domain.binding.response;
 
 public class PowerPlugResponseModel {
 
+    private String id;
     private String name;
     private String route;
     private String description;
@@ -10,6 +11,14 @@ public class PowerPlugResponseModel {
     private String actionOnBelowAnomaly;
     private String actionOnAboveAnomaly;
     private String type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
