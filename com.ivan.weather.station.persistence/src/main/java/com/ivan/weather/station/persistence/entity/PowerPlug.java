@@ -2,6 +2,7 @@ package com.ivan.weather.station.persistence.entity;
 
 import javax.persistence.*;
 
+import com.ivan.weather.station.persistence.enumeration.Action;
 import com.ivan.weather.station.persistence.type.PowerPlugType;
 
 @Entity

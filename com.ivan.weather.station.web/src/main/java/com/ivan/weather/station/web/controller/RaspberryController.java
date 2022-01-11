@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import com.ivan.weather.station.core.domain.binding.request.RaspberryRequestBindingModel;
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
 import com.ivan.weather.station.core.service.api.RaspberryService;
-import com.ivan.weather.station.web.initializator.RaspberryRemoteControl;
 
 @RestController
 @RequestMapping(value = "/raspberry", produces = MediaType.APPLICATION_JSON_VALUE)

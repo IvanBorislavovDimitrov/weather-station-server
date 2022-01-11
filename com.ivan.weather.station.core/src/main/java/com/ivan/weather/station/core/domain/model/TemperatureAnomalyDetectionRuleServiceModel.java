@@ -8,7 +8,7 @@ import com.ivan.weather.station.core.domain.binding.type.AnomalyDetectionRuleTyp
 import com.ivan.weather.station.persistence.entity.AnomalyDetectionRule;
 import com.ivan.weather.station.persistence.entity.TemperatureAnomalyDetectionRule;
 
-public class TemperatureAnomalyDetectionRuleSericeModel extends AnomalyDetectionRuleServiceModel {
+public class TemperatureAnomalyDetectionRuleServiceModel extends AnomalyDetectionRuleServiceModel {
 
     private double temperatureBelowValue;
     private double temperatureAboveValue;

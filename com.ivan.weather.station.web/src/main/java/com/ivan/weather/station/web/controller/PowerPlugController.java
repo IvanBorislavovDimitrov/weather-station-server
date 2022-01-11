@@ -1,15 +1,15 @@
 package com.ivan.weather.station.web.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ivan.weather.station.core.domain.binding.request.PowerPlugRequestModel;
 import com.ivan.weather.station.core.domain.binding.response.PowerPlugResponseModel;
@@ -36,4 +36,14 @@ public class PowerPlugController {
         PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugRequestModel, PowerPlugResponseModel.class);
         return ResponseEntity.ok(powerPlugResponseModel);
     }
+
+    @GetMapping
+    public ResponseEntity<List<PowerPlugResponseModel>> getByRaspberryId(@RequestParam String raspberryId) {
+        List<PowerPlugServiceModel> powerPlugServiceModels = powerPlugService.findAllByRaspberryId(raspberryId);
+        return ResponseEntity.ok(powerPlugServiceModels.stream()
+                                                       .map(powerPlugServiceModel -> modelMapper.map(powerPlugServiceModel,
+                                                                                                     PowerPlugResponseModel.class))
+                                                       .collect(Collectors.toList()));
+    }
+
 }

@@ -1,5 +1,8 @@
 package com.ivan.weather.station.core.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,14 @@ public class PowerPlugServiceImpl extends BaseServiceImpl<PowerPlug, PowerPlugSe
         powerPlug.setRaspberry(raspberry);
         powerPlug.setState(State.TURNED_OFF);
         powerPlugRepository.save(powerPlug);
+    }
+
+    @Override
+    public List<PowerPlugServiceModel> findAllByRaspberryId(String raspberryId) {
+        List<PowerPlug> powerPlugs = powerPlugRepository.findAllByRaspberryId(raspberryId);
+        return powerPlugs.stream()
+                         .map(powerPlug -> modelMapper.map(powerPlug, PowerPlugServiceModel.class))
+                         .collect(Collectors.toList());
     }
 
     @Override
