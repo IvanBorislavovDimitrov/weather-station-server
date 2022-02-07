@@ -15,17 +15,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ivan.weather.station.core.domain.binding.request.UserRegistrationRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.request.UserRegistrationBindingModel;
 import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
 import com.ivan.weather.station.core.domain.binding.response.UserRegistrationResponseModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.mail.Email;
+import com.ivan.weather.station.core.mail.EmailClient;
 import com.ivan.weather.station.core.service.api.UserService;
 import com.ivan.weather.station.persistence.entity.Role;
 import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.web.authentication.AuthenticationRequest;
 import com.ivan.weather.station.web.authentication.JwtTokenResponse;
-import com.ivan.weather.station.core.mail.Email;
-import com.ivan.weather.station.core.mail.EmailClient;
 import com.ivan.weather.station.web.util.JwtUtil;
 
 @RestController
@@ -47,13 +47,12 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserRegistrationResponseModel>
-           register(@RequestBody UserRegistrationRequestBindingModel userRegistrationRequestBindingModel) {
-        if (!Objects.equals(userRegistrationRequestBindingModel.getConfirmPassword(), userRegistrationRequestBindingModel.getPassword())) {
+    public ResponseEntity<UserRegistrationResponseModel> register(@RequestBody UserRegistrationBindingModel userRegistrationBindingModel) {
+        if (!Objects.equals(userRegistrationBindingModel.getConfirmPassword(), userRegistrationBindingModel.getPassword())) {
             return ResponseEntity.badRequest()
                                  .build();
         }
-        UserServiceModel userServiceModel = modelMapper.map(userRegistrationRequestBindingModel, UserServiceModel.class);
+        UserServiceModel userServiceModel = modelMapper.map(userRegistrationBindingModel, UserServiceModel.class);
         userService.save(userServiceModel);
         Email email = new Email.Builder().setContent("Active user by clicking the following linK " + "http://127.0.0.1:8080/user/activate/"
             + userServiceModel.getUsername())
@@ -61,7 +60,7 @@ public class UserController {
                                          .setTitle("Activate profile")
                                          .build();
         emailClient.sendAsync(email);
-        return ResponseEntity.ok(modelMapper.map(userRegistrationRequestBindingModel, UserRegistrationResponseModel.class));
+        return ResponseEntity.ok(modelMapper.map(userRegistrationBindingModel, UserRegistrationResponseModel.class));
     }
 
     @GetMapping("/raspberries")

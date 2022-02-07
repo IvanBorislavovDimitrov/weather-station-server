@@ -1,6 +1,7 @@
 package com.ivan.weather.station.core.service.impl;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,8 @@ public class PowerPlugServiceImpl extends BaseServiceImpl<PowerPlug, PowerPlugSe
     public void save(PowerPlugServiceModel powerPlugServiceModel) {
         Raspberry raspberry = raspberryRepository.findById(powerPlugServiceModel.getRaspberryId())
                                                  .orElseThrow(() -> new IllegalArgumentException("Not found"));
+        powerPlugServiceModel.setType(powerPlugServiceModel.getType()
+                                                           .toUpperCase(Locale.ROOT));
         PowerPlug powerPlug = modelMapper.map(powerPlugServiceModel, PowerPlug.class);
         powerPlug.setRaspberry(raspberry);
         powerPlug.setState(State.TURNED_OFF);

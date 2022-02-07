@@ -2,7 +2,7 @@ package com.ivan.weather.station.core.domain.model;
 
 import java.time.LocalDateTime;
 
-import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.request.MeasurementBindingModel;
 
 public class MeasurementServiceModel extends IdServiceModel {
 
@@ -12,13 +12,13 @@ public class MeasurementServiceModel extends IdServiceModel {
     private LocalDateTime addedOn;
     private RaspberryServiceModel raspberry;
 
-    public static MeasurementServiceModel from(MeasurementRequestBindingModel measurementRequestBindingModel) {
+    public static MeasurementServiceModel from(MeasurementBindingModel measurementBindingModel) {
         var measurementServiceModel = new MeasurementServiceModel();
-        measurementServiceModel.setTemperature(measurementRequestBindingModel.getTemperature());
-        measurementServiceModel.setHumidity(measurementRequestBindingModel.getHumidity());
-        measurementServiceModel.setPressure(measurementRequestBindingModel.getPressure());
+        measurementServiceModel.setTemperature(measurementBindingModel.getTemperature());
+        measurementServiceModel.setHumidity(measurementBindingModel.getHumidity());
+        measurementServiceModel.setPressure(measurementBindingModel.getPressure());
         RaspberryServiceModel raspberryServiceModel = new RaspberryServiceModel();
-        raspberryServiceModel.setRoute(measurementRequestBindingModel.getRaspberryRoute());
+        raspberryServiceModel.setRoute(measurementBindingModel.getRaspberryRoute());
         measurementServiceModel.setRaspberry(raspberryServiceModel);
         return measurementServiceModel;
     }

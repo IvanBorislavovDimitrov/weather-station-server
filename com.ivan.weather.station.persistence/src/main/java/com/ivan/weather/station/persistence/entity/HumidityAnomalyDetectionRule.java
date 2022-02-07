@@ -1,10 +1,10 @@
 package com.ivan.weather.station.persistence.entity;
 
-import com.ivan.weather.station.persistence.constant.Constants;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.ivan.weather.station.persistence.constant.Constants;
 
 @Entity
 @Table(name = "humidity_anomaly_detection_rules")

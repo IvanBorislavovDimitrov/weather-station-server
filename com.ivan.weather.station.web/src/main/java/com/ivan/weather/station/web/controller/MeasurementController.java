@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ivan.weather.station.core.calculator.MeasurementCalculator;
-import com.ivan.weather.station.core.domain.binding.request.AveragedMeasurementRequestModel;
-import com.ivan.weather.station.core.domain.binding.request.MeasurementRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.request.AveragedMeasurementBidingModel;
+import com.ivan.weather.station.core.domain.binding.request.MeasurementBindingModel;
 import com.ivan.weather.station.core.domain.binding.response.DateWithMeasurementsResponseModel;
 import com.ivan.weather.station.core.domain.binding.response.MeasurementResponseModel;
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
@@ -32,19 +32,18 @@ public class MeasurementController {
     }
 
     @PostMapping
-    public ResponseEntity<MeasurementRequestBindingModel>
-           create(@RequestBody MeasurementRequestBindingModel measurementRequestBindingModel) {
-        MeasurementServiceModel measurementServiceModel = MeasurementServiceModel.from(measurementRequestBindingModel);
+    public ResponseEntity<MeasurementBindingModel> create(@RequestBody MeasurementBindingModel measurementBindingModel) {
+        MeasurementServiceModel measurementServiceModel = MeasurementServiceModel.from(measurementBindingModel);
         measurementService.save(measurementServiceModel);
-        return ResponseEntity.ok(measurementRequestBindingModel);
+        return ResponseEntity.ok(measurementBindingModel);
     }
 
     @GetMapping(value = "/charts/hour")
     public ResponseEntity<List<DateWithMeasurementsResponseModel>>
-           getMeasurementFor24Hours(AveragedMeasurementRequestModel averagedMeasurementRequestModel) {
-        Map<LocalDateTime, MeasurementResponseModel> averagedMeasurements = measurementCalculator.calculateMeasurementsBetween(averagedMeasurementRequestModel.getStartPeriod(),
-                                                                                                                               averagedMeasurementRequestModel.getEndPeriod(),
-                                                                                                                               averagedMeasurementRequestModel.getRaspberryId());
+           getMeasurementFor24Hours(AveragedMeasurementBidingModel averagedMeasurementBidingModel) {
+        Map<LocalDateTime, MeasurementResponseModel> averagedMeasurements = measurementCalculator.calculateMeasurementsBetween(averagedMeasurementBidingModel.getStartPeriod(),
+                                                                                                                               averagedMeasurementBidingModel.getEndPeriod(),
+                                                                                                                               averagedMeasurementBidingModel.getRaspberryId());
         List<DateWithMeasurementsResponseModel> dateWithMeasurements = new ArrayList<>();
         averagedMeasurements.forEach((key, value) -> dateWithMeasurements.add(new DateWithMeasurementsResponseModel(key, value)));
         return ResponseEntity.ok(dateWithMeasurements);

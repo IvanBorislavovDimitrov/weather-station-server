@@ -2,7 +2,7 @@ package com.ivan.weather.station.core.domain.binding.request;
 
 import javax.validation.constraints.NotNull;
 
-public class PowerPlugRequestModel {
+public class PowerPlugBindingModel {
 
     @NotNull
     private String name;

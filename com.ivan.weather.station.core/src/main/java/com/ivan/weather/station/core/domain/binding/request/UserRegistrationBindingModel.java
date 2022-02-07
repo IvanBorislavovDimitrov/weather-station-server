@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
-public class UserRegistrationRequestBindingModel {
+public class UserRegistrationBindingModel {
 
     private String username;
     private String password;

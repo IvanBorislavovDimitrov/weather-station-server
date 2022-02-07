@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
-public class MeasurementRequestBindingModel {
+public class MeasurementBindingModel {
 
     private double temperature;
     private double humidity;

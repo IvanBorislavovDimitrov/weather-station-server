@@ -1,6 +1,6 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
-public class RaspberryRequestBindingModel {
+public class RaspberryBindingModel {
 
     private String id;
     private String name;

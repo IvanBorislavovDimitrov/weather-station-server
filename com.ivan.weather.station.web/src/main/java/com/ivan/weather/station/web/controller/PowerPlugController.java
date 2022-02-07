@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.ivan.weather.station.core.domain.binding.request.PowerPlugRequestModel;
+import com.ivan.weather.station.core.domain.binding.request.PowerPlugBindingModel;
 import com.ivan.weather.station.core.domain.binding.response.PowerPlugResponseModel;
 import com.ivan.weather.station.core.domain.model.PowerPlugServiceModel;
 import com.ivan.weather.station.core.service.api.PowerPlugService;
@@ -30,10 +30,10 @@ public class PowerPlugController {
     }
 
     @PostMapping
-    public ResponseEntity<PowerPlugResponseModel> add(@RequestBody @Valid PowerPlugRequestModel powerPlugRequestModel) {
-        PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugRequestModel, PowerPlugServiceModel.class);
+    public ResponseEntity<PowerPlugResponseModel> add(@RequestBody @Valid PowerPlugBindingModel powerPlugBindingModel) {
+        PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugBindingModel, PowerPlugServiceModel.class);
         powerPlugService.save(powerPlugServiceModel);
-        PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugRequestModel, PowerPlugResponseModel.class);
+        PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugBindingModel, PowerPlugResponseModel.class);
         return ResponseEntity.ok(powerPlugResponseModel);
     }
 

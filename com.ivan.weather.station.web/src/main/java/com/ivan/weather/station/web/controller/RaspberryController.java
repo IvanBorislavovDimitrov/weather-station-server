@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.ivan.weather.station.core.domain.binding.request.RaspberryRequestBindingModel;
+import com.ivan.weather.station.core.domain.binding.request.RaspberryBindingModel;
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
 import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
@@ -32,29 +32,29 @@ public class RaspberryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RaspberryRequestBindingModel>> getAll() {
+    public ResponseEntity<List<RaspberryBindingModel>> getAll() {
         List<RaspberryServiceModel> raspberryServiceModels = raspberryService.findAll();
-        List<RaspberryRequestBindingModel> raspberryRequestBindingModelStream = raspberryServiceModels.stream()
-                                                                                                      .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel,
-                                                                                                                                                    RaspberryRequestBindingModel.class))
-                                                                                                      .collect(Collectors.toList());
-        return ResponseEntity.ok(raspberryRequestBindingModelStream);
+        List<RaspberryBindingModel> raspberryBindingModelStream = raspberryServiceModels.stream()
+                                                                                        .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel,
+                                                                                                                                      RaspberryBindingModel.class))
+                                                                                        .collect(Collectors.toList());
+        return ResponseEntity.ok(raspberryBindingModelStream);
     }
 
     @PostMapping
-    public ResponseEntity<RaspberryRequestBindingModel> add(@RequestBody RaspberryRequestBindingModel raspberryRequestBindingModel) {
-        RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryRequestBindingModel, RaspberryServiceModel.class);
+    public ResponseEntity<RaspberryBindingModel> add(@RequestBody RaspberryBindingModel raspberryBindingModel) {
+        RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
         UserServiceModel owner = new UserServiceModel();
         owner.setUsername(SecurityContextHolder.getContext()
                                                .getAuthentication()
                                                .getName());
         raspberryServiceModel.setOwner(owner);
         raspberryService.save(raspberryServiceModel);
-        return ResponseEntity.ok(raspberryRequestBindingModel);
+        return ResponseEntity.ok(raspberryBindingModel);
     }
 
     @PostMapping(value = "/start")
-    public ResponseEntity<Void> startRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
+    public ResponseEntity<Void> startRaspberry(@RequestBody RaspberryBindingModel requestBindingModel) {
         raspberryRemoteControl.startRaspberry(requestBindingModel.getRoute());
         raspberryService.start(requestBindingModel.getId());
         return ResponseEntity.ok()
@@ -62,7 +62,7 @@ public class RaspberryController {
     }
 
     @PostMapping(value = "/stop")
-    public ResponseEntity<Void> stopRaspberry(@RequestBody RaspberryRequestBindingModel requestBindingModel) {
+    public ResponseEntity<Void> stopRaspberry(@RequestBody RaspberryBindingModel requestBindingModel) {
         raspberryRemoteControl.stopRaspberry(requestBindingModel.getRoute());
         raspberryService.stop(requestBindingModel.getId());
         return ResponseEntity.ok()
