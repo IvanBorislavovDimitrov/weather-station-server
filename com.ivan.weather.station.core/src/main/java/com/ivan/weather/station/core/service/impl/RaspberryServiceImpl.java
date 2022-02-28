@@ -1,5 +1,6 @@
 package com.ivan.weather.station.core.service.impl;
 
+import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,15 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
 
     private final RaspberryRepository raspberryRepository;
     private final UserService userService;
+    private final RaspberryRemoteControl raspberryRemoteControl;
 
     @Autowired
-    public RaspberryServiceImpl(RaspberryRepository raspberryRepository, ModelMapper modelMapper, UserService userService) {
+    public RaspberryServiceImpl(RaspberryRepository raspberryRepository, ModelMapper modelMapper, UserService userService,
+                                RaspberryRemoteControl raspberryRemoteControl) {
         super(raspberryRepository, modelMapper);
         this.raspberryRepository = raspberryRepository;
         this.userService = userService;
+        this.raspberryRemoteControl = raspberryRemoteControl;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
     public void start(String id) {
         Raspberry raspberry = raspberryRepository.findById(id)
                                                  .orElseThrow(() -> new RuntimeException("ID not found"));
+        raspberryRemoteControl.startRaspberry(raspberry.getRoute());
         raspberry.setStarted(true);
         raspberryRepository.update(raspberry);
     }
@@ -45,6 +50,7 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
     public void stop(String id) {
         Raspberry raspberry = raspberryRepository.findById(id)
                                                  .orElseThrow(() -> new RuntimeException("ID not found"));
+        raspberryRemoteControl.stopRaspberry(raspberry.getRoute());
         raspberry.setStarted(false);
         raspberryRepository.update(raspberry);
     }

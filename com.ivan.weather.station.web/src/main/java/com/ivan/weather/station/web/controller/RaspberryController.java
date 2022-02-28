@@ -22,13 +22,11 @@ public class RaspberryController {
 
     private final RaspberryService raspberryService;
     private final ModelMapper modelMapper;
-    private final RaspberryRemoteControl raspberryRemoteControl;
 
     @Autowired
-    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper, RaspberryRemoteControl raspberryRemoteControl) {
+    public RaspberryController(RaspberryService raspberryService, ModelMapper modelMapper) {
         this.raspberryService = raspberryService;
         this.modelMapper = modelMapper;
-        this.raspberryRemoteControl = raspberryRemoteControl;
     }
 
     @GetMapping
@@ -55,7 +53,6 @@ public class RaspberryController {
 
     @PostMapping(value = "/start")
     public ResponseEntity<Void> startRaspberry(@RequestBody RaspberryBindingModel requestBindingModel) {
-        raspberryRemoteControl.startRaspberry(requestBindingModel.getRoute());
         raspberryService.start(requestBindingModel.getId());
         return ResponseEntity.ok()
                              .build();
@@ -63,7 +60,6 @@ public class RaspberryController {
 
     @PostMapping(value = "/stop")
     public ResponseEntity<Void> stopRaspberry(@RequestBody RaspberryBindingModel requestBindingModel) {
-        raspberryRemoteControl.stopRaspberry(requestBindingModel.getRoute());
         raspberryService.stop(requestBindingModel.getId());
         return ResponseEntity.ok()
                              .build();

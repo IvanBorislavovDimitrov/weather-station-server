@@ -34,15 +34,12 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
-    private final EmailClient emailClient;
     private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper, EmailClient emailClient,
-                          AuthenticationManager authenticationManager) {
+    public UserController(UserService userService, ModelMapper modelMapper, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.emailClient = emailClient;
         this.authenticationManager = authenticationManager;
     }
 
@@ -54,12 +51,6 @@ public class UserController {
         }
         UserServiceModel userServiceModel = modelMapper.map(userRegistrationBindingModel, UserServiceModel.class);
         userService.save(userServiceModel);
-        Email email = new Email.Builder().setContent("Active user by clicking the following linK " + "http://127.0.0.1:8080/user/activate/"
-            + userServiceModel.getUsername())
-                                         .setRecipient(userServiceModel.getEmail())
-                                         .setTitle("Activate profile")
-                                         .build();
-        emailClient.sendAsync(email);
         return ResponseEntity.ok(modelMapper.map(userRegistrationBindingModel, UserRegistrationResponseModel.class));
     }
 

@@ -1,5 +1,6 @@
 package com.ivan.weather.station.core.initializator;
 
+import com.ivan.weather.station.core.constants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +17,7 @@ public class RaspberryRemoteControl {
 
     public void startRaspberry(String raspberryRoute) {
         webClient.post()
-                 .uri("http://" + raspberryRoute + ":8080/start")
+                 .uri(getRaspberryFullRoute(raspberryRoute, Constants.RASPBERRY_ACTION_START_PATH))
                  .retrieve()
                  .bodyToMono(String.class)
                  .block();
@@ -24,10 +25,14 @@ public class RaspberryRemoteControl {
 
     public void stopRaspberry(String raspberryRoute) {
         webClient.post()
-                 .uri("http://" + raspberryRoute + ":8080/stop")
+                 .uri(getRaspberryFullRoute(raspberryRoute, Constants.RASPBERRY_ACTION_STOP_PATH))
                  .retrieve()
                  .bodyToMono(String.class)
                  .block();
+    }
+
+    private String getRaspberryFullRoute(String raspberryRoute, String raspberryActionStart) {
+        return Constants.HTTP_PREFIX + raspberryRoute + Constants.RASPBERRY_DEFAULT_PORT + raspberryActionStart;
     }
 
 }

@@ -3,6 +3,8 @@ package com.ivan.weather.station.core.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ivan.weather.station.core.mail.Email;
+import com.ivan.weather.station.core.mail.EmailClient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,14 +24,16 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailClient emailClient;
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder,
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, EmailClient emailClient,
                            RoleRepository roleRepository) {
         super(userRepository, modelMapper);
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailClient = emailClient;
         this.roleRepository = roleRepository;
     }
 
@@ -37,6 +41,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
     public void save(UserServiceModel userServiceModel) {
         userServiceModel.setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
         super.save(userServiceModel);
+        Email email = new Email.Builder().setContent("Active user by clicking the following link " + "http://127.0.0.1:3000/user/activate/"
+            + userServiceModel.getUsername())
+                                         .setRecipient(userServiceModel.getEmail())
+                                         .setTitle("Activate profile")
+                                         .build();
+        emailClient.sendAsync(email);
     }
 
     @Override
