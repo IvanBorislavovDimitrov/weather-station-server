@@ -20,7 +20,7 @@ public class SessionFactoryBean {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL9Dialect");
         properties.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/weather_station");
         properties.setProperty("hibernate.connection.username", "postgres");
-        properties.setProperty("hibernate.connection.password", "123");
+        properties.setProperty("hibernate.connection.password", "123456");
         properties.setProperty("hibernate.current_session_context_class", "org.hibernate.context.internal.ManagedSessionContext");
         properties.setProperty("hibernate.show_sql", "false");
         properties.setProperty("hibernate.format_sql", "true");
