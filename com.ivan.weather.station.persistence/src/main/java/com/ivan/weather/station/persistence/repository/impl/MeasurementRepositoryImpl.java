@@ -38,6 +38,19 @@ public class MeasurementRepositoryImpl extends BaseRepositoryImpl<Measurement> i
     }
 
     @Override
+    public int deleteMeasurementsOlderThan(LocalDateTime olderThan) {
+        return executeInTransaction(session -> {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaDelete<Measurement> criteriaQuery = criteriaBuilder.createCriteriaDelete(getEntityClass());
+            Root<Measurement> root = criteriaQuery.from(getEntityClass());
+            Predicate lessThan = criteriaBuilder.lessThan(root.get("addedOn"), olderThan);
+            criteriaQuery.where(lessThan);
+            return session.createQuery(criteriaQuery)
+                          .executeUpdate();
+        });
+    }
+
+    @Override
     protected Class<Measurement> getEntityClass() {
         return Measurement.class;
     }

@@ -8,4 +8,6 @@ import com.ivan.weather.station.persistence.entity.Measurement;
 public interface MeasurementRepository extends BaseRepository<Measurement> {
 
     List<Measurement> findMeasurementsBetween(LocalDateTime startPeriod, LocalDateTime endPeriod, String raspberryId);
+
+    int deleteMeasurementsOlderThan(LocalDateTime olderThan);
 }

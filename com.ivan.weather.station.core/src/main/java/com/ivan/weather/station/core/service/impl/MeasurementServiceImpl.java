@@ -1,7 +1,6 @@
 package com.ivan.weather.station.core.service.impl;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +45,7 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
         raspberry.getMeasurements()
                  .add(measurement);
         measurement.setRaspberry(raspberry);
-        measurement.setAddedOn(LocalDateTime.now(ZoneOffset.UTC));
+        measurement.setAddedOn(LocalDateTime.now());
         measurementRepository.save(measurement);
     }
 
@@ -56,6 +55,11 @@ public class MeasurementServiceImpl extends BaseServiceImpl<Measurement, Measure
         return measurements.stream()
                            .map(measurement -> modelMapper.map(measurement, MeasurementServiceModel.class))
                            .collect(Collectors.toList());
+    }
+
+    @Override
+    public int deleteMeasurementsOlderThan(LocalDateTime olderThan) {
+        return measurementRepository.deleteMeasurementsOlderThan(olderThan);
     }
 
     @Override
