@@ -8,6 +8,8 @@ public interface BaseService<M extends IdServiceModel> {
 
     void save(M obj);
 
+    void update(M obj);
+
     M findById(String id);
 
     List<M> findAll();

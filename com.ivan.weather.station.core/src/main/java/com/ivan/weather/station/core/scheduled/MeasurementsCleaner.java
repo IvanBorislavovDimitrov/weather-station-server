@@ -26,9 +26,9 @@ public class MeasurementsCleaner {
 
     @Scheduled(cron = "0 0 0/6 * * ?")
     public void removeOldMeasurements() {
-        LocalDateTime sevenDaysAgo = LocalDateTime.now()
+        LocalDateTime fiveDaysAgo = LocalDateTime.now()
                                                   .minusDays(5);
-        int deletedMeasurements = measurementService.deleteMeasurementsOlderThan(sevenDaysAgo);
+        int deletedMeasurements = measurementService.deleteMeasurementsOlderThan(fiveDaysAgo);
         LOGGER.info(MessageFormat.format("Measurements deleted: \"{0}\"", deletedMeasurements));
     }
 }

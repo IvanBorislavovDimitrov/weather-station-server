@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ivan.weather.station.core.domain.binding.request.RaspberryBindingModel;
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
-import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
 import com.ivan.weather.station.core.service.api.RaspberryService;
 
 @RestController
@@ -42,13 +41,25 @@ public class RaspberryController {
     @PostMapping
     public ResponseEntity<RaspberryBindingModel> add(@RequestBody RaspberryBindingModel raspberryBindingModel) {
         RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
-        UserServiceModel owner = new UserServiceModel();
-        owner.setUsername(SecurityContextHolder.getContext()
-                                               .getAuthentication()
-                                               .getName());
-        raspberryServiceModel.setOwner(owner);
+        attachUserToRaspberry(raspberryServiceModel);
         raspberryService.save(raspberryServiceModel);
         return ResponseEntity.ok(raspberryBindingModel);
+    }
+
+    @PutMapping
+    public ResponseEntity<RaspberryBindingModel> update(@RequestBody RaspberryBindingModel raspberryBindingModel) {
+        RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
+        attachUserToRaspberry(raspberryServiceModel);
+        raspberryService.update(raspberryServiceModel);
+        return ResponseEntity.ok(raspberryBindingModel);
+    }
+
+    private void attachUserToRaspberry(RaspberryServiceModel raspberryServiceModel) {
+        UserServiceModel owner = new UserServiceModel();
+        owner.setUsername(SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName());
+        raspberryServiceModel.setOwner(owner);
     }
 
     @PostMapping(value = "/start")

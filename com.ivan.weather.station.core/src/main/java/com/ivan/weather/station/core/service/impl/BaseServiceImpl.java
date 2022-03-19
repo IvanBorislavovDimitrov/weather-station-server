@@ -28,6 +28,12 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
     }
 
     @Override
+    public void update(M obj) {
+        E entity = modelMapper.map(obj, getEntityClass());
+        baseRepository.update(entity);
+    }
+
+    @Override
     public M findById(String id) {
         Optional<E> entity = baseRepository.findById(id);
         if (entity.isEmpty()) {
