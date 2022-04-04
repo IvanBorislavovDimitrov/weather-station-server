@@ -1,12 +1,12 @@
 package com.ivan.weather.station.core.service.impl;
 
-import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ivan.weather.station.core.domain.model.RaspberryServiceModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
+import com.ivan.weather.station.core.initializator.RaspberryRemoteControl;
 import com.ivan.weather.station.core.service.api.RaspberryService;
 import com.ivan.weather.station.core.service.api.UserService;
 import com.ivan.weather.station.persistence.entity.Raspberry;
@@ -35,6 +35,13 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
         UserServiceModel userServiceModel = userService.findUserByUsername(username);
         raspberryServiceModel.setOwner(userServiceModel);
         super.save(raspberryServiceModel);
+    }
+
+    @Override
+    public void update(RaspberryServiceModel raspberryServiceModel) {
+        RaspberryServiceModel currentRaspberryServiceModel = findById(raspberryServiceModel.getId());
+        raspberryServiceModel.setStarted(currentRaspberryServiceModel.isStarted());
+        super.update(raspberryServiceModel);
     }
 
     @Override
