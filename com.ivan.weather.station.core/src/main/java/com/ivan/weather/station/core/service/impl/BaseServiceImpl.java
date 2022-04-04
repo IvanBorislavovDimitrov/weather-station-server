@@ -39,7 +39,7 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
         if (entity.isEmpty()) {
             throw new IllegalArgumentException("Not found");
         }
-        return modelMapper.map(entity, getModelClass());
+        return modelMapper.map(entity.get(), getModelClass());
     }
 
     @Override

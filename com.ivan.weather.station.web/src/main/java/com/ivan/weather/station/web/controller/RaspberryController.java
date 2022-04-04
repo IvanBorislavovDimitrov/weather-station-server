@@ -38,6 +38,12 @@ public class RaspberryController {
         return ResponseEntity.ok(raspberryBindingModelStream);
     }
 
+    @GetMapping("/{raspberryId}")
+    public ResponseEntity<RaspberryBindingModel> getById(@PathVariable String raspberryId) {
+        RaspberryServiceModel raspberryServiceModel = raspberryService.findById(raspberryId);
+        return ResponseEntity.ok(modelMapper.map(raspberryServiceModel, RaspberryBindingModel.class));
+    }
+
     @PostMapping
     public ResponseEntity<RaspberryBindingModel> add(@RequestBody RaspberryBindingModel raspberryBindingModel) {
         RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
@@ -57,8 +63,8 @@ public class RaspberryController {
     private void attachUserToRaspberry(RaspberryServiceModel raspberryServiceModel) {
         UserServiceModel owner = new UserServiceModel();
         owner.setUsername(SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getName());
+                                               .getAuthentication()
+                                               .getName());
         raspberryServiceModel.setOwner(owner);
     }
 
