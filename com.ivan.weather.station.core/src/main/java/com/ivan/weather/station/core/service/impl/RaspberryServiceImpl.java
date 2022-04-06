@@ -41,6 +41,9 @@ public class RaspberryServiceImpl extends BaseServiceImpl<Raspberry, RaspberrySe
     public void update(RaspberryServiceModel raspberryServiceModel) {
         RaspberryServiceModel currentRaspberryServiceModel = findById(raspberryServiceModel.getId());
         raspberryServiceModel.setStarted(currentRaspberryServiceModel.isStarted());
+        UserServiceModel userServiceModel = userService.findUserByUsername(raspberryServiceModel.getOwner()
+                                                                                                .getUsername());
+        raspberryServiceModel.setOwner(userServiceModel);
         super.update(raspberryServiceModel);
     }
 

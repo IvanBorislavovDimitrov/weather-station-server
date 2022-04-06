@@ -52,10 +52,12 @@ public class RaspberryController {
         return ResponseEntity.ok(raspberryBindingModel);
     }
 
-    @PutMapping
-    public ResponseEntity<RaspberryBindingModel> update(@RequestBody RaspberryBindingModel raspberryBindingModel) {
+    @PutMapping("{raspberryId}")
+    public ResponseEntity<RaspberryBindingModel> update(@RequestBody RaspberryBindingModel raspberryBindingModel,
+                                                        @PathVariable String raspberryId) {
         RaspberryServiceModel raspberryServiceModel = modelMapper.map(raspberryBindingModel, RaspberryServiceModel.class);
         attachUserToRaspberry(raspberryServiceModel);
+        raspberryServiceModel.setId(raspberryId);
         raspberryService.update(raspberryServiceModel);
         return ResponseEntity.ok(raspberryBindingModel);
     }
