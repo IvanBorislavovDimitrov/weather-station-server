@@ -1,7 +1,10 @@
 package com.ivan.weather.station.core.initializator;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +41,29 @@ public class RaspberryRemoteControl {
 
     private String getLocalIpAddress() {
         try {
-            return InetAddress.getLocalHost()
-                              .getHostAddress();
-        } catch (UnknownHostException e) {
+            InetAddress theOneAddress = getInetAddress();
+            return theOneAddress.getHostAddress();
+        } catch (SocketException e) {
             LOGGER.error(e.getMessage(), e);
-            return "";
+            throw new IllegalArgumentException("No network interface found!");
         }
+    }
+
+    private InetAddress getInetAddress() throws SocketException {
+        InetAddress theOneAddress;
+        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
+        for (NetworkInterface networkInterface : Collections.list(nets)) {
+            if (!networkInterface.isLoopback()) {
+                theOneAddress = Collections.list(networkInterface.getInetAddresses())
+                                           .stream()
+                                           .findFirst()
+                                           .orElse(null);
+                if (theOneAddress != null) {
+                    return theOneAddress;
+                }
+            }
+        }
+        throw new IllegalArgumentException("No network interface found!");
     }
 
     public void stopRaspberry(String raspberryRoute) {
