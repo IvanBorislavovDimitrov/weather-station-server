@@ -42,6 +42,16 @@ public class PowerPlugServiceImpl extends BaseServiceImpl<PowerPlug, PowerPlugSe
     }
 
     @Override
+    public void update(PowerPlugServiceModel powerPlugServiceModel) {
+        PowerPlug powerPlug = powerPlugRepository.findById(powerPlugServiceModel.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Not found"));
+        PowerPlug updatePowerPlug = modelMapper.map(powerPlugServiceModel, PowerPlug.class);
+        updatePowerPlug.setRaspberry(powerPlug.getRaspberry());
+        updatePowerPlug.setStarted(powerPlug.isStarted());
+        powerPlugRepository.update(updatePowerPlug);
+    }
+
+    @Override
     public List<PowerPlugServiceModel> findAllByRaspberryId(String raspberryId) {
         List<PowerPlug> powerPlugs = powerPlugRepository.findAllByRaspberryId(raspberryId);
         return powerPlugs.stream()

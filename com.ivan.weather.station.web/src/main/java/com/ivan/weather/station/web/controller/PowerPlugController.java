@@ -44,6 +44,14 @@ public class PowerPlugController {
         return ResponseEntity.ok(powerPlugResponseModel);
     }
 
+    @PutMapping
+    public ResponseEntity<PowerPlugResponseModel> update(@RequestBody @Valid PowerPlugBindingModel powerPlugBindingModel) {
+        PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugBindingModel, PowerPlugServiceModel.class);
+        powerPlugService.update(powerPlugServiceModel);
+        PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugBindingModel, PowerPlugResponseModel.class);
+        return ResponseEntity.ok(powerPlugResponseModel);
+    }
+
     @GetMapping
     public ResponseEntity<List<PowerPlugResponseModel>> getByRaspberryId(@RequestParam String raspberryId) {
         List<PowerPlugServiceModel> powerPlugServiceModels = powerPlugService.findAllByRaspberryId(raspberryId);
