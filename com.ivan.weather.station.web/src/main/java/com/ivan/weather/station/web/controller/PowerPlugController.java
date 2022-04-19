@@ -17,7 +17,7 @@ import com.ivan.weather.station.core.domain.model.PowerPlugServiceModel;
 import com.ivan.weather.station.core.service.api.PowerPlugService;
 
 @RestController
-@RequestMapping(value = "/power-plug", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/power-plug", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PowerPlugController {
 
     private final PowerPlugService powerPlugService;
@@ -34,6 +34,13 @@ public class PowerPlugController {
         PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugBindingModel, PowerPlugServiceModel.class);
         powerPlugService.save(powerPlugServiceModel);
         PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugBindingModel, PowerPlugResponseModel.class);
+        return ResponseEntity.ok(powerPlugResponseModel);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PowerPlugResponseModel> get(@PathVariable String id) {
+        PowerPlugServiceModel powerPlugServiceModel = powerPlugService.findById(id);
+        PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugServiceModel, PowerPlugResponseModel.class);
         return ResponseEntity.ok(powerPlugResponseModel);
     }
 
