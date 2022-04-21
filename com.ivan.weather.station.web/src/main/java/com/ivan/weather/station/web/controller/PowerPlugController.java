@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.ivan.weather.station.persistence.enumeration.Action;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -44,9 +45,13 @@ public class PowerPlugController {
         return ResponseEntity.ok(powerPlugResponseModel);
     }
 
-    @PutMapping
-    public ResponseEntity<PowerPlugResponseModel> update(@RequestBody @Valid PowerPlugBindingModel powerPlugBindingModel) {
+    @PutMapping("/{id}")
+    public ResponseEntity<PowerPlugResponseModel> update(@PathVariable("id") String powerPlugId,
+                                                         @RequestBody @Valid PowerPlugBindingModel powerPlugBindingModel) {
         PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugBindingModel, PowerPlugServiceModel.class);
+        powerPlugServiceModel.setId(powerPlugId);
+        powerPlugServiceModel.setActionOnAboveAnomaly(Action.from(powerPlugBindingModel.getActionOnAboveAnomaly()));
+        powerPlugServiceModel.setActionOnBelowAnomaly(Action.from(powerPlugBindingModel.getActionOnBelowAnomaly()));
         powerPlugService.update(powerPlugServiceModel);
         PowerPlugResponseModel powerPlugResponseModel = modelMapper.map(powerPlugBindingModel, PowerPlugResponseModel.class);
         return ResponseEntity.ok(powerPlugResponseModel);
