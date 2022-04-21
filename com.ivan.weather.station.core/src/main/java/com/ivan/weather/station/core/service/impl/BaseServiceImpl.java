@@ -51,6 +51,11 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
     }
 
     @Override
+    public void delete(String id) {
+        baseRepository.delete(id);
+    }
+
+    @Override
     public long count() {
         return baseRepository.count();
     }

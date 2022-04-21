@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -89,6 +90,18 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
             cr.select(criteriaBuilder.count(root));
             Query<Long> query = session.createQuery(cr);
             return query.getSingleResult();
+        });
+    }
+
+    @Override
+    public void delete(String id) {
+        executeInTransaction(session -> {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaDelete<E> criteriaDelete = criteriaBuilder.createCriteriaDelete(getEntityClass());
+            Root<E> root = criteriaDelete.from(getEntityClass());
+            criteriaDelete.where(criteriaBuilder.equal(root.get("id"), id));
+            session.createQuery(criteriaDelete).executeUpdate();
+            return null;
         });
     }
 

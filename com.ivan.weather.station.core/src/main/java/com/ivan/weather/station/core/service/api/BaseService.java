@@ -14,5 +14,7 @@ public interface BaseService<M extends IdServiceModel> {
 
     List<M> findAll();
 
+    void delete(String id);
+
     long count();
 }

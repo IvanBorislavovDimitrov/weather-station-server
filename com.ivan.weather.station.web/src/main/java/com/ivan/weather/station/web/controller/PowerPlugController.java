@@ -57,6 +57,13 @@ public class PowerPlugController {
         return ResponseEntity.ok(powerPlugResponseModel);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        powerPlugService.delete(id);
+        return ResponseEntity.ok()
+                             .build();
+    }
+
     @GetMapping
     public ResponseEntity<List<PowerPlugResponseModel>> getByRaspberryId(@RequestParam String raspberryId) {
         List<PowerPlugServiceModel> powerPlugServiceModels = powerPlugService.findAllByRaspberryId(raspberryId);
