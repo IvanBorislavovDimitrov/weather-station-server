@@ -62,6 +62,12 @@ public class AnomalyDetectionRuleController {
         return ResponseEntity.ok(anomalyDetectionRuleServiceModel.toResponseModel());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        anomalyDetectionRuleService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/raspberry/{raspberryId}")
     public ResponseEntity<List<AnomalyDetectionRuleResponseModel>> getAnomaliesByRaspberry(@PathVariable String raspberryId) {
         List<AnomalyDetectionRuleServiceModel> anomalyDetectionRuleServiceModels = anomalyDetectionRuleService.findByRaspberryId(raspberryId);
