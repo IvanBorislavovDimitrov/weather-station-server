@@ -1,12 +1,8 @@
 package com.ivan.weather.station.core.initializator;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.Enumeration;
 
+import com.ivan.weather.station.core.env.EnvironmentGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,30 +20,22 @@ public class RaspberryRemoteControl {
     private static final Logger LOGGER = LoggerFactory.getLogger(RaspberryRemoteControl.class);
 
     private final WebClient webClient;
+    private final EnvironmentGetter environmentGetter;
 
     @Autowired
-    public RaspberryRemoteControl(WebClient webClient) {
+    public RaspberryRemoteControl(WebClient webClient, EnvironmentGetter environmentGetter) {
         this.webClient = webClient;
+        this.environmentGetter = environmentGetter;
     }
 
     public void startRaspberry(String raspberryRoute) {
         webClient.post()
                  .uri(getRaspberryFullRoute(raspberryRoute, Constants.RASPBERRY_ACTION_START_PATH))
                  .contentType(MediaType.APPLICATION_JSON)
-                 .body(BodyInserters.fromValue(new StartRaspberryRequest(getLocalIpAddress())))
+                 .body(BodyInserters.fromValue(new StartRaspberryRequest(environmentGetter.getLocalHostname())))
                  .retrieve()
                  .bodyToMono(String.class)
                  .block();
-    }
-
-    private String getLocalIpAddress() {
-        try {
-            var ip = InetAddress.getLocalHost();
-            return ip.getHostAddress();
-        } catch (UnknownHostException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalArgumentException("No network interface found!");
-        }
     }
 
     public void stopRaspberry(String raspberryRoute) {
