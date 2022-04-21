@@ -12,4 +12,10 @@ public class HelloController {
         return ResponseEntity.ok("Hello");
     }
 
+    @GetMapping("/validate")
+    public ResponseEntity<Void> validateToken() {
+        return ResponseEntity.ok()
+                             .build();
+    }
+
 }
