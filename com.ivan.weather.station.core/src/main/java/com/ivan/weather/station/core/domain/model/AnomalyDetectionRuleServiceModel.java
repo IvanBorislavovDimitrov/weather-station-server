@@ -22,6 +22,7 @@ public abstract class AnomalyDetectionRuleServiceModel extends IdServiceModel {
 
     public <T extends AnomalyDetectionRule> T toEntityModel() {
         T anomalyDetectionRule = getEntity();
+        anomalyDetectionRule.setId(getId());
         anomalyDetectionRule.setRuleAboveActivated(isRuleAboveActivated());
         anomalyDetectionRule.setRuleBelowActivated(isRuleBelowActivated());
         return anomalyDetectionRule;

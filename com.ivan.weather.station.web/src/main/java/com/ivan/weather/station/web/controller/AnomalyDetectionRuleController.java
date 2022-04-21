@@ -15,7 +15,7 @@ import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceMod
 import com.ivan.weather.station.core.service.api.AnomalyDetectionRuleService;
 
 @RestController
-@RequestMapping(value = "/detection", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/detection", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AnomalyDetectionRuleController {
 
     private final AnomalyDetectionRuleService anomalyDetectionRuleService;
@@ -42,6 +42,24 @@ public class AnomalyDetectionRuleController {
         anomalyDetectionRuleService.save(anomalyDetectionRuleServiceModel);
         AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRuleServiceModel.toResponseModel();
         return ResponseEntity.ok(anomalyDetectionRuleResponseModel);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AnomalyDetectionRuleResponseModel>
+           edit(@PathVariable String id, @RequestBody AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
+        AnomalyDetectionRuleType anomalyDetectionRuleType = AnomalyDetectionRuleType.from(anomalyDetectionRuleBindingModel.getType());
+        AnomalyDetectionRuleServiceModel anomalyDetectionRuleServiceModel = anomalyDetectionRuleType.getRuleBindingParser(anomalyDetectionRuleBindingModel)
+                                                                                                    .parse();
+        anomalyDetectionRuleServiceModel.setId(id);
+        anomalyDetectionRuleService.update(anomalyDetectionRuleServiceModel);
+        AnomalyDetectionRuleResponseModel anomalyDetectionRuleResponseModel = anomalyDetectionRuleServiceModel.toResponseModel();
+        return ResponseEntity.ok(anomalyDetectionRuleResponseModel);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AnomalyDetectionRuleResponseModel> get(@PathVariable String id) {
+        AnomalyDetectionRuleServiceModel anomalyDetectionRuleServiceModel = anomalyDetectionRuleService.findById(id);
+        return ResponseEntity.ok(anomalyDetectionRuleServiceModel.toResponseModel());
     }
 
     @GetMapping("/raspberry/{raspberryId}")
