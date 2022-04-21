@@ -46,7 +46,7 @@ public class PowerPlugController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PowerPlugResponseModel> update(@PathVariable("id") String powerPlugId,
+    public ResponseEntity<PowerPlugResponseModel> edit(@PathVariable("id") String powerPlugId,
                                                          @RequestBody @Valid PowerPlugBindingModel powerPlugBindingModel) {
         PowerPlugServiceModel powerPlugServiceModel = modelMapper.map(powerPlugBindingModel, PowerPlugServiceModel.class);
         powerPlugServiceModel.setId(powerPlugId);

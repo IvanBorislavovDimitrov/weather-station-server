@@ -10,7 +10,7 @@ public class PowerPlugBindingModel {
     private String route;
     @NotNull
     private String description;
-    @NotNull
+
     private String raspberryId;
     @NotNull
     private String actionOnBelowAnomaly;
