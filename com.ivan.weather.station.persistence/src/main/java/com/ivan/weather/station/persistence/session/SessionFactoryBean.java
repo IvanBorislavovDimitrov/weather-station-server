@@ -29,7 +29,6 @@ public class SessionFactoryBean {
         configuration.addAnnotatedClass(AnomalyDetectionRule.class);
         configuration.addAnnotatedClass(TemperatureAnomalyDetectionRule.class);
         configuration.addAnnotatedClass(HumidityAnomalyDetectionRule.class);
-        configuration.addAnnotatedClass(PressureAnomalyDetectionRule.class);
         configuration.addAnnotatedClass(Raspberry.class);
         configuration.addAnnotatedClass(Measurement.class);
         configuration.addAnnotatedClass(User.class);

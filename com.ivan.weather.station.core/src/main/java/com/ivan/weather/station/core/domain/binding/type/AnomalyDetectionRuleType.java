@@ -6,11 +6,9 @@ import java.util.Objects;
 
 import com.ivan.weather.station.core.domain.binding.parser.entity.AnomalyDetectionRuleServiceParser;
 import com.ivan.weather.station.core.domain.binding.parser.entity.HumidityAnomalyDetectionRuleServiceParser;
-import com.ivan.weather.station.core.domain.binding.parser.entity.PressureAnomalyDetectionRuleServiceParser;
 import com.ivan.weather.station.core.domain.binding.parser.entity.TemperatureAnomalyDetectionRuleServiceParser;
 import com.ivan.weather.station.core.domain.binding.parser.service.AnomalyDetectionRuleBindingParser;
 import com.ivan.weather.station.core.domain.binding.parser.service.HumidityAnomalyDetectionRuleBindingParser;
-import com.ivan.weather.station.core.domain.binding.parser.service.PressureAnomalyDetectionRuleBindingParser;
 import com.ivan.weather.station.core.domain.binding.parser.service.TemperatureAnomalyDetectionRuleBindingParser;
 import com.ivan.weather.station.core.domain.binding.request.AnomalyDetectionRuleBindingModel;
 import com.ivan.weather.station.core.domain.model.AnomalyDetectionRuleServiceModel;
@@ -43,19 +41,6 @@ public enum AnomalyDetectionRuleType {
         public AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
                getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule) {
             return new HumidityAnomalyDetectionRuleServiceParser(anomalyDetectionRule);
-        }
-    },
-    PRESSURE(Constants.PRESSURE_TYPE) {
-        @Override
-        public PressureAnomalyDetectionRuleBindingParser
-               getRuleBindingParser(AnomalyDetectionRuleBindingModel anomalyDetectionRuleBindingModel) {
-            return new PressureAnomalyDetectionRuleBindingParser(anomalyDetectionRuleBindingModel);
-        }
-
-        @Override
-        public AnomalyDetectionRuleServiceParser<? extends AnomalyDetectionRuleServiceModel>
-               getRuleServiceParser(AnomalyDetectionRule anomalyDetectionRule) {
-            return new PressureAnomalyDetectionRuleServiceParser(anomalyDetectionRule);
         }
     };
 
