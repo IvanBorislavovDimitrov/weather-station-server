@@ -8,7 +8,6 @@ public class MeasurementServiceModel extends IdServiceModel {
 
     private double temperature;
     private double humidity;
-    private double pressure;
     private LocalDateTime addedOn;
     private RaspberryServiceModel raspberry;
 
@@ -16,7 +15,6 @@ public class MeasurementServiceModel extends IdServiceModel {
         var measurementServiceModel = new MeasurementServiceModel();
         measurementServiceModel.setTemperature(measurementBindingModel.getTemperature());
         measurementServiceModel.setHumidity(measurementBindingModel.getHumidity());
-        measurementServiceModel.setPressure(measurementBindingModel.getPressure());
         RaspberryServiceModel raspberryServiceModel = new RaspberryServiceModel();
         raspberryServiceModel.setRoute(measurementBindingModel.getRaspberryRoute());
         measurementServiceModel.setRaspberry(raspberryServiceModel);
@@ -37,14 +35,6 @@ public class MeasurementServiceModel extends IdServiceModel {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
-    }
-
-    public double getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
     }
 
     public RaspberryServiceModel getRaspberry() {

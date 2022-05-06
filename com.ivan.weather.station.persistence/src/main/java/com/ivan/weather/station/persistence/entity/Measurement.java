@@ -12,8 +12,6 @@ public class Measurement extends IdEntity {
     private double temperature;
     @Column(nullable = false)
     private double humidity;
-    @Column(nullable = false)
-    private double pressure;
     @Column(name = "added_on", nullable = false)
     private LocalDateTime addedOn;
     @ManyToOne
@@ -36,13 +34,6 @@ public class Measurement extends IdEntity {
         this.humidity = humidity;
     }
 
-    public double getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
-    }
 
     public LocalDateTime getAddedOn() {
         return addedOn;

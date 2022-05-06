@@ -7,7 +7,6 @@ public class MeasurementResponseModel {
     private String id;
     private double temperature;
     private double humidity;
-    private double pressure;
     private String raspberryRoute;
     private LocalDateTime addedOn;
 
@@ -41,14 +40,6 @@ public class MeasurementResponseModel {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
-    }
-
-    public double getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
     }
 
     public String getRaspberryRoute() {

@@ -4,7 +4,6 @@ public class MeasurementBindingModel {
 
     private double temperature;
     private double humidity;
-    private double pressure;
     private String raspberryRoute;
 
     public double getTemperature() {
@@ -21,14 +20,6 @@ public class MeasurementBindingModel {
 
     public void setHumidity(double humidity) {
         this.humidity = humidity;
-    }
-
-    public double getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(double pressure) {
-        this.pressure = pressure;
     }
 
     public String getRaspberryRoute() {

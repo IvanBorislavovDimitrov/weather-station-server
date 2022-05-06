@@ -60,16 +60,13 @@ public class MeasurementCalculator {
     private MeasurementResponseModel calculateAverageMeasurement(List<MeasurementServiceModel> measurements) {
         double temperature = 0;
         double humidity = 0;
-        double pressure = 0;
         for (MeasurementServiceModel measurement : measurements) {
             temperature += measurement.getTemperature();
             humidity += measurement.getHumidity();
-            pressure += measurement.getPressure();
         }
         MeasurementResponseModel measurementResponseBindingModel = new MeasurementResponseModel();
         measurementResponseBindingModel.setTemperature(temperature / measurements.size());
         measurementResponseBindingModel.setHumidity(humidity / measurements.size());
-        measurementResponseBindingModel.setPressure(pressure / measurements.size());
         return measurementResponseBindingModel;
     }
 
