@@ -13,7 +13,7 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "raspberries")
 public class Raspberry extends IdEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     @Column(nullable = false, unique = true)
     private String route;
