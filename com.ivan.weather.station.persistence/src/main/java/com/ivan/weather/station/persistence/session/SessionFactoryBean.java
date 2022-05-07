@@ -28,6 +28,7 @@ public class SessionFactoryBean {
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         configuration.addAnnotatedClass(AnomalyDetectionRule.class);
         configuration.addAnnotatedClass(TemperatureAnomalyDetectionRule.class);
+        configuration.addAnnotatedClass(SubscribedEmail.class);
         configuration.addAnnotatedClass(HumidityAnomalyDetectionRule.class);
         configuration.addAnnotatedClass(Raspberry.class);
         configuration.addAnnotatedClass(Measurement.class);

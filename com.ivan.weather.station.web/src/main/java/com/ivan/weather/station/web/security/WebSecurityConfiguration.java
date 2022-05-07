@@ -38,7 +38,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/measurement", "/raspberry/**", "/user/register", "/user/authenticate", "/user/activate/**", "/detection/**",
-                         "/power-plug/**")
+                         "/power-plug/**", "/subscribe")
             .permitAll()
             .anyRequest()
             .authenticated()

@@ -1,5 +1,7 @@
 package com.ivan.weather.station.core.service.impl;
 
+import java.time.LocalDateTime;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,12 @@ public class SubscribedEmailServiceImpl extends BaseServiceImpl<SubscribedEmail,
     @Autowired
     public SubscribedEmailServiceImpl(BaseRepository<SubscribedEmail> baseRepository, ModelMapper modelMapper) {
         super(baseRepository, modelMapper);
+    }
+
+    @Override
+    public void save(SubscribedEmailServiceModel subscribedEmailServiceModel) {
+        subscribedEmailServiceModel.setAddedOn(LocalDateTime.now());
+        super.save(subscribedEmailServiceModel);
     }
 
     @Override
