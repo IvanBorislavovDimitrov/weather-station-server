@@ -1,6 +1,7 @@
 package com.ivan.weather.station.core.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.ivan.weather.station.core.mail.Email;
@@ -39,6 +40,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
 
     @Override
     public void save(UserServiceModel userServiceModel) {
+        validateUsernameIsFree(userServiceModel);
         userServiceModel.setPassword(passwordEncoder.encode(userServiceModel.getPassword()));
         super.save(userServiceModel);
         Email email = new Email.Builder().setContent("Active user by clicking the following link " + "http://127.0.0.1:3000/user/activate/"
@@ -47,6 +49,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
                                          .setTitle("Activate profile")
                                          .build();
         emailClient.sendAsync(email);
+    }
+
+    private void validateUsernameIsFree(UserServiceModel userServiceModel) {
+        Optional<User> user = userRepository.findByUsername(userServiceModel.getUsername());
+        if (user.isPresent()) {
+            throw new IllegalArgumentException(String.format("Username \"%s\" is taken!", userServiceModel.getUsername()));
+        }
     }
 
     @Override

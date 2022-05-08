@@ -31,11 +31,11 @@ public class RaspberryController {
     @GetMapping
     public ResponseEntity<List<RaspberryBindingModel>> getAll() {
         List<RaspberryServiceModel> raspberryServiceModels = raspberryService.findAll();
-        List<RaspberryBindingModel> raspberryBindingModelStream = raspberryServiceModels.stream()
-                                                                                        .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel,
-                                                                                                                                      RaspberryBindingModel.class))
-                                                                                        .collect(Collectors.toList());
-        return ResponseEntity.ok(raspberryBindingModelStream);
+        List<RaspberryBindingModel> raspberryBindingModels = raspberryServiceModels.stream()
+                                                                                   .map(raspberryServiceModel -> modelMapper.map(raspberryServiceModel,
+                                                                                                                                 RaspberryBindingModel.class))
+                                                                                   .collect(Collectors.toList());
+        return ResponseEntity.ok(raspberryBindingModels);
     }
 
     @GetMapping("/{raspberryId}")
