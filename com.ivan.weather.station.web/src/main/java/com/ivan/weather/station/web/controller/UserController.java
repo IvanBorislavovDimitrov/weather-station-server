@@ -28,6 +28,8 @@ import com.ivan.weather.station.web.authentication.AuthenticationRequest;
 import com.ivan.weather.station.web.authentication.JwtTokenResponse;
 import com.ivan.weather.station.web.util.JwtUtil;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -44,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserRegistrationResponseModel> register(@RequestBody UserRegistrationBindingModel userRegistrationBindingModel) {
+    public ResponseEntity<UserRegistrationResponseModel> register(@RequestBody @Valid UserRegistrationBindingModel userRegistrationBindingModel) {
         if (!Objects.equals(userRegistrationBindingModel.getConfirmPassword(), userRegistrationBindingModel.getPassword())) {
             return ResponseEntity.badRequest()
                                  .build();

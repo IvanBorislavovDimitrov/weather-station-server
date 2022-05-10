@@ -1,10 +1,21 @@
 package com.ivan.weather.station.core.domain.binding.request;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class UserRegistrationBindingModel {
 
+    @NotNull
+    @NotEmpty
     private String username;
+    @NotNull
+    @NotEmpty
     private String password;
+    @NotNull
+    @NotEmpty
     private String confirmPassword;
+    @NotNull
+    @NotEmpty
     private String email;
 
     public String getUsername() {

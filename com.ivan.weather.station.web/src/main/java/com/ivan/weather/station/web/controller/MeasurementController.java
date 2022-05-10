@@ -18,6 +18,8 @@ import com.ivan.weather.station.core.domain.binding.response.MeasurementResponse
 import com.ivan.weather.station.core.domain.model.MeasurementServiceModel;
 import com.ivan.weather.station.core.service.api.MeasurementService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/measurement", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MeasurementController {
@@ -32,7 +34,7 @@ public class MeasurementController {
     }
 
     @PostMapping
-    public ResponseEntity<MeasurementBindingModel> create(@RequestBody MeasurementBindingModel measurementBindingModel) {
+    public ResponseEntity<MeasurementBindingModel> create(@RequestBody @Valid MeasurementBindingModel measurementBindingModel) {
         MeasurementServiceModel measurementServiceModel = MeasurementServiceModel.from(measurementBindingModel);
         measurementService.save(measurementServiceModel);
         return ResponseEntity.ok(measurementBindingModel);
