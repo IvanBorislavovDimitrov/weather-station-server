@@ -14,4 +14,6 @@ public interface UserService extends BaseService<UserServiceModel>, UserDetailsS
     UserServiceModel findUserByUsername(String username);
 
     List<RaspberryResponseModel> findUserRaspberries(String username);
+
+    void changeUserRole(String username, String commaSeparatedRoles);
 }

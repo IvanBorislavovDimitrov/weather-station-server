@@ -1,11 +1,11 @@
 package com.ivan.weather.station.core.service.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.ivan.weather.station.core.mail.Email;
 import com.ivan.weather.station.core.mail.EmailClient;
+import com.ivan.weather.station.persistence.entity.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -98,5 +98,41 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
                    .stream()
                    .map(raspberry -> modelMapper.map(raspberry, RaspberryResponseModel.class))
                    .collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeUserRole(String username, String commaSeparatedRoles) {
+        User user = userRepository.findByUsername(username)
+                                  .orElseThrow(() -> new UsernameNotFoundException(username));
+        String[] roleValues = commaSeparatedRoles.split(", *");
+        List<Role.RoleType> newRoleTypes = Arrays.stream(roleValues)
+                                                 .map(Role.RoleType::valueOf)
+                                                 .collect(Collectors.toList());
+        List<Role> roles = roleRepository.findAll();
+        removeUserRoles(user, roles);
+        user.setRoles(Collections.emptyList());
+        userRepository.update(user);
+        List<Role> newRoles = roles.stream()
+                                   .filter(role -> newRoleTypes.contains(role.getRoleType()))
+                                   .peek(role -> role.getUsers()
+                                                     .add(user))
+                                   .peek(roleRepository::update)
+                                   .collect(Collectors.toList());
+        user.setRoles(newRoles);
+        userRepository.update(user);
+
+    }
+
+    private void removeUserRoles(User user, List<Role> roles) {
+        for (Role role : roles) {
+            List<User> usersToRemove = role.getUsers()
+                                           .stream()
+                                           .filter(u -> u.getUsername()
+                                                         .equals(user.getUsername()))
+                                           .collect(Collectors.toList());
+            role.getUsers()
+                .removeAll(usersToRemove);
+            roleRepository.update(role);
+        }
     }
 }
