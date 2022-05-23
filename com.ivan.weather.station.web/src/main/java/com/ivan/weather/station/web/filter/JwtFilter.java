@@ -1,6 +1,7 @@
 package com.ivan.weather.station.web.filter;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.FilterChain;
@@ -18,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -57,12 +61,14 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
             if (JwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-                                                                                                                                  null,
-                                                                                                                                  userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                Map<String, Object> attributes = Map.of("token", jwt, "username", userDetails.getUsername());
+                OAuth2User oAuth2User = new DefaultOAuth2User(userDetails.getAuthorities(), attributes, "username");
+                OAuth2AuthenticationToken oAuth2AuthenticationToken = new OAuth2AuthenticationToken(oAuth2User,
+                                                                                                    userDetails.getAuthorities(),
+                                                                                                    "username");
+                oAuth2AuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext()
-                                     .setAuthentication(usernamePasswordAuthenticationToken);
+                                     .setAuthentication(oAuth2AuthenticationToken);
             }
         }
         filterChain.doFilter(request, response);
