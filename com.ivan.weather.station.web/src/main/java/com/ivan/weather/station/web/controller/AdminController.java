@@ -7,10 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -31,5 +28,12 @@ public class AdminController {
     public ResponseEntity<RoleChangeResponseModel> changeRole(@RequestBody @Valid RoleChangeBindingModel roleChangeBindingModel) {
         userService.changeUserRole(roleChangeBindingModel.getUsername(), roleChangeBindingModel.getRoles());
         return ResponseEntity.ok(modelMapper.map(roleChangeBindingModel, RoleChangeResponseModel.class));
+    }
+
+    @PostMapping(value = "/delete-user/{username}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String username) {
+        userService.deleteByUsername(username);
+        return ResponseEntity.ok()
+                             .build();
     }
 }

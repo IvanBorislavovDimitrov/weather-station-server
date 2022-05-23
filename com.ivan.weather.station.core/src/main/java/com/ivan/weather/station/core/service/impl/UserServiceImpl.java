@@ -135,4 +135,10 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
             roleRepository.update(role);
         }
     }
+
+    @Override
+    public void deleteByUsername(String username) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
+    }
 }
