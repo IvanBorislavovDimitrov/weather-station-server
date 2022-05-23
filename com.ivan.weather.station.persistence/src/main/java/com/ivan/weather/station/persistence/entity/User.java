@@ -3,6 +3,7 @@ package com.ivan.weather.station.persistence.entity;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import javax.persistence.*;
@@ -39,7 +40,9 @@ public class User extends IdEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString()))
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleType()
+                                                                          .toString()
+                                                                          .toUpperCase(Locale.ROOT)))
                     .collect(Collectors.toList());
     }
 

@@ -94,13 +94,9 @@ public abstract class BaseRepositoryImpl<E extends IdEntity> implements BaseRepo
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(E entity) {
         executeInTransaction(session -> {
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaDelete<E> criteriaDelete = criteriaBuilder.createCriteriaDelete(getEntityClass());
-            Root<E> root = criteriaDelete.from(getEntityClass());
-            criteriaDelete.where(criteriaBuilder.equal(root.get("id"), id));
-            session.createQuery(criteriaDelete).executeUpdate();
+            session.delete(entity);
             return null;
         });
     }

@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,12 +26,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/change-role")
+    @PreAuthorize("hasAnyRole('ROLE_MODERATOR ROLE_ADMIN')")
     public ResponseEntity<RoleChangeResponseModel> changeRole(@RequestBody @Valid RoleChangeBindingModel roleChangeBindingModel) {
         userService.changeUserRole(roleChangeBindingModel.getUsername(), roleChangeBindingModel.getRoles());
         return ResponseEntity.ok(modelMapper.map(roleChangeBindingModel, RoleChangeResponseModel.class));
     }
 
     @PostMapping(value = "/delete-user/{username}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable String username) {
         userService.deleteByUsername(username);
         return ResponseEntity.ok()

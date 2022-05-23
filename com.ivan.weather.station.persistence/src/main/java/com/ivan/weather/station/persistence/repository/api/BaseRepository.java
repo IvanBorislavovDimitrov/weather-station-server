@@ -17,6 +17,6 @@ public interface BaseRepository<E extends IdEntity> {
 
     long count();
 
-    void delete(String id);
+    void delete(E entity);
 
 }

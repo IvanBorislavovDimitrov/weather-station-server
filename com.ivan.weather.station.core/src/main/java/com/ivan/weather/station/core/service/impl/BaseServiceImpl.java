@@ -52,7 +52,8 @@ public abstract class BaseServiceImpl<E extends IdEntity, M extends IdServiceMod
 
     @Override
     public void delete(String id) {
-        baseRepository.delete(id);
+        Optional<E> entity = baseRepository.findById(id);
+        entity.ifPresent(baseRepository::delete);
     }
 
     @Override

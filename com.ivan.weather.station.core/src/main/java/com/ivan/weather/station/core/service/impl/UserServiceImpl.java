@@ -139,6 +139,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserServiceModel> imp
     @Override
     public void deleteByUsername(String username) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
-        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
+        optionalUser.ifPresent(userRepository::delete);
     }
 }
