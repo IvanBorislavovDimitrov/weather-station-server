@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,22 +15,23 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ivan.weather.station.core.domain.binding.request.UserRegistrationBindingModel;
 import com.ivan.weather.station.core.domain.binding.response.RaspberryResponseModel;
 import com.ivan.weather.station.core.domain.binding.response.UserRegistrationResponseModel;
 import com.ivan.weather.station.core.domain.model.UserServiceModel;
-import com.ivan.weather.station.core.mail.Email;
-import com.ivan.weather.station.core.mail.EmailClient;
 import com.ivan.weather.station.core.service.api.UserService;
 import com.ivan.weather.station.persistence.entity.Role;
 import com.ivan.weather.station.persistence.entity.User;
 import com.ivan.weather.station.web.authentication.AuthenticationRequest;
 import com.ivan.weather.station.web.authentication.JwtTokenResponse;
 import com.ivan.weather.station.web.util.JwtUtil;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +49,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<UserRegistrationResponseModel> register(@RequestBody @Valid UserRegistrationBindingModel userRegistrationBindingModel) {
+    public ResponseEntity<UserRegistrationResponseModel>
+           register(@RequestBody @Valid UserRegistrationBindingModel userRegistrationBindingModel) {
         if (!Objects.equals(userRegistrationBindingModel.getConfirmPassword(), userRegistrationBindingModel.getPassword())) {
             return ResponseEntity.badRequest()
                                  .build();

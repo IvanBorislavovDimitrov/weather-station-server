@@ -1,8 +1,5 @@
 package com.ivan.weather.station.core.initializator;
 
-import java.net.UnknownHostException;
-
-import com.ivan.weather.station.core.env.EnvironmentGetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ivan.weather.station.core.constants.Constants;
 import com.ivan.weather.station.core.domain.model.StartRaspberryRequest;
+import com.ivan.weather.station.core.env.EnvironmentGetter;
 
 @Component
 public class RaspberryRemoteControl {
