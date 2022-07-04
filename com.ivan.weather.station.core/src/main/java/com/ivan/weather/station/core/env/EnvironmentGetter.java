@@ -7,7 +7,7 @@ public class EnvironmentGetter {
 
     private static final String HOSTNAME = "HOSTNAME";
 
-    private static final String HOSTNAME_DEFAULT_VALUE = "";
+    private static final String HOSTNAME_DEFAULT_VALUE = "192.168.1.6";
 
     public String getLocalHostname() {
         return getOrDefault(HOSTNAME, HOSTNAME_DEFAULT_VALUE);

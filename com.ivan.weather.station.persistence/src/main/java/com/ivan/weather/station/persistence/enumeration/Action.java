@@ -19,8 +19,8 @@ public enum Action {
 
     public static Action from(String value) {
         return Arrays.stream(Action.values())
-                     .filter(action -> Objects.equals(action.getActionValue(), value))
+                     .filter(action -> Objects.equals(action.name(), value))
                      .findFirst()
-                     .orElseThrow(() -> new IllegalArgumentException("\"Action not found\""));
+                     .orElseThrow(() -> new IllegalArgumentException("Action not found:" + value));
     }
 }
