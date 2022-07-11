@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 class UserServiceTests {
 
     @Test
-    public void testSave() {}
+    void testSave() {}
 
     @Test
-    public void testActivate() {}
+    void testActivate() {}
 
     @Test
-    public void testFindUserByUsername() {}
+    void testFindUserByUsername() {}
 
     @Test
-    public void testFindUserRaspberries() {}
+    void testFindUserRaspberries() {}
 
 }

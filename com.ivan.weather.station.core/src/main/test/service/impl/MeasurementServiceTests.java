@@ -5,12 +5,12 @@ import org.junit.jupiter.api.Test;
 class MeasurementServiceTests {
 
     @Test
-    public void testSave() {}
+    void testSave() {}
 
     @Test
-    public void testGetMeasurementsBetween() {}
+    void testGetMeasurementsBetween() {}
 
     @Test
-    public void testDeleteMeasurementsOlderThan() {}
+    void testDeleteMeasurementsOlderThan() {}
 
 }

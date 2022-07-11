@@ -5,6 +5,6 @@ import org.junit.jupiter.api.Test;
 class SubscribedEmailServiceTest {
 
     @Test
-    public void testSave() {}
+    void testSave() {}
 
 }

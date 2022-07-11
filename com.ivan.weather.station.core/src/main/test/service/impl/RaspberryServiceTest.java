@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Test;
 class RaspberryServiceTest {
 
     @Test
-    public void testSave() {}
+    void testSave() {}
 
     @Test
-    public void testUpdate() {}
+    void testUpdate() {}
 
     @Test
-    public void testStart() {}
+    void testStart() {}
 
     @Test
-    public void testStop() {}
+    void testStop() {}
 
 }

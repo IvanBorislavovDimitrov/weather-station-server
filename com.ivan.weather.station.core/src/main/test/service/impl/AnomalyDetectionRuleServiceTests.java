@@ -5,18 +5,20 @@ import org.junit.jupiter.api.Test;
 class AnomalyDetectionRuleServiceTests {
 
     @Test
-    public void testSaveAnomalyDetection() {}
+    void testSaveAnomalyDetection() {
+
+    }
 
     @Test
-    public void testFindAll() {}
+    void testFindAll() {}
 
     @Test
-    public void testFindById() {}
+    void testFindById() {}
 
     @Test
-    public void testFindByRaspberryId() {}
+    void testFindByRaspberryId() {}
 
     @Test
-    public void testUpdate() {}
+    void testUpdate() {}
 
 }
